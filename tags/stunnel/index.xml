@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on jacoelho - personal site</title>
-    <link>https://www.jacoelho.com/post/</link>
-    <description>Recent content in Posts on jacoelho - personal site</description>
+    <title>Stunnel on jacoelho - personal site</title>
+    <link>https://www.jacoelho.com/tags/stunnel/</link>
+    <description>Recent content in Stunnel on jacoelho - personal site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>jose.alberto.coelho@gmail.com (jacoelho)</managingEditor>
     <webMaster>jose.alberto.coelho@gmail.com (jacoelho)</webMaster>
     <lastBuildDate>Fri, 20 Nov 2015 17:18:35 +0000</lastBuildDate>
-    <atom:link href="https://www.jacoelho.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.jacoelho.com/tags/stunnel/index.xml" rel="self" type="application/rss+xml" />
     
       
         
@@ -451,19 +451,6 @@ repl_backlog_histlen:575890
 
 &lt;p&gt;Although the process described above is functional, it is still non trivial. If in the near future TLS support is included in redis, this might make matters easy.&lt;/p&gt;
 </description>
-          </item>
-        
-      
-    
-      
-        
-          <item>
-            <title>test</title>
-            <link>https://www.jacoelho.com/blog/2015/11/20/test/</link>
-            <pubDate>Fri, 20 Nov 2015 15:42:57 +0000</pubDate>
-            <author>jose.alberto.coelho@gmail.com (jacoelho)</author>
-            <guid>https://www.jacoelho.com/blog/2015/11/20/test/</guid>
-            <description></description>
           </item>
         
       

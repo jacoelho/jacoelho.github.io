@@ -58,17 +58,23 @@
 				<span class="label label-primary">20.11.2015</span> in 
 				
 					
-					<a href="https://www.jacoelho.com/categories/category1">category1</a>
+					<a href="https://www.jacoelho.com/categories/operations">operations</a>
 				
 					 , 
-					<a href="https://www.jacoelho.com/categories/category2">category2</a>
+					<a href="https://www.jacoelho.com/categories/compliance">compliance</a>
 				 using tags
 				
 					
-					<a href="https://www.jacoelho.com/tags/tag1">tag1</a>
+					<a href="https://www.jacoelho.com/tags/redis">redis</a>
 				
 					 , 
-					<a href="https://www.jacoelho.com/tags/tag2">tag2</a>
+					<a href="https://www.jacoelho.com/tags/ipsec">ipsec</a>
+				
+					 , 
+					<a href="https://www.jacoelho.com/tags/haproxy">haproxy</a>
+				
+					 , 
+					<a href="https://www.jacoelho.com/tags/stunnel">stunnel</a>
 				
 			</small>
 		</div>
@@ -76,7 +82,437 @@
 	<div class="row">
 		<div class="col-md-offset-1 col-md-10">
 			<br>
-			<p>Content of the file goes here</p>
+			
+
+<h1 id="secure-redis:aac08daf8601d2cee3108414db3a5691">Secure Redis</h1>
+
+<p>Redis philosophy is that security is a second class citizen and should be implemented by a different layer. A recent post about this topic can be found here.
+However, some of us have to abide by regulations like PCI DSS or HIPAA that impose strict restrictions on how communications should be done.
+Our target will be a highly available redis setup with secure communication between nodes and its clients.</p>
+
+<h2 id="topology:aac08daf8601d2cee3108414db3a5691">Topology</h2>
+
+<p><img src="media/redis-initial.png" alt="topology" /></p>
+
+<h2 id="secure-communications:aac08daf8601d2cee3108414db3a5691">Secure Communications</h2>
+
+<p>For the purpose of securing redis communications in the most transparent way, this setup will use ipsec in transport mode:</p>
+
+<p>Install required packages (debian):</p>
+
+<pre><code>$ apt-get install ipsec-tools racoon
+</code></pre>
+
+<p>Edit file <em>/etc/ipsec-tools.conf</em> (configure a mesh):</p>
+
+<pre><code class="language-bash">#!/usr/sbin/setkey -f
+flush;
+spdflush;
+
+spdadd 192.168.205.10/32 192.168.205.11/32 any -P in ipsec
+  esp/transport//require;
+spdadd 192.168.205.11/32 192.168.205.10/32 any -P out ipsec
+  esp/transport//require;
+
+spdadd 192.168.205.10/32 192.168.205.12/32 any -P in ipsec
+  esp/transport//require;
+spdadd 192.168.205.12/32 192.168.205.10/32 any -P out ipsec
+  esp/transport//require;
+
+spdadd 192.168.205.11/32 192.168.205.10/32 any -P in ipsec
+  esp/transport//require;
+spdadd 192.168.205.10/32 192.168.205.11/32 any -P out ipsec
+  esp/transport//require;
+
+spdadd 192.168.205.11/32 192.168.205.12/32 any -P in ipsec
+  esp/transport//require;
+spdadd 192.168.205.12/32 192.168.205.11/32 any -P out ipsec
+  esp/transport//require;
+
+spdadd 192.168.205.12/32 192.168.205.10/32 any -P in ipsec
+  esp/transport//require;
+spdadd 192.168.205.10/32 192.168.205.12/32 any -P out ipsec
+  esp/transport//require;
+
+spdadd 192.168.205.12/32 192.168.205.11/32 any -P in ipsec
+  esp/transport//require;
+spdadd 192.168.205.11/32 192.168.205.12/32 any -P out ipsec
+  esp/transport//require;
+</code></pre>
+
+<p>Start the service:</p>
+
+<pre><code>service setkey start
+</code></pre>
+
+<p>Edit the file <em>/etc/racoon/racoon.conf</em>:</p>
+
+<pre><code class="language-bash">log notify;
+path pre_shared_key &quot;/etc/racoon/psk.txt&quot;;
+
+remote anonymous {
+  exchange_mode main;
+  proposal {
+    encryption_algorithm aes_256;
+    hash_algorithm sha1;
+    authentication_method pre_shared_key;
+    dh_group modp1024;
+  }
+  generate_policy off;
+  lifetime time 12 hour;
+
+}
+
+sainfo anonymous{
+  pfs_group 2;
+  encryption_algorithm aes_256;
+  authentication_algorithm hmac_sha1;
+  compression_algorithm deflate;
+}
+</code></pre>
+
+<p>Edit the file <em>/etc/racoon/psk.txt</em>:</p>
+
+<pre><code class="language-bash">192.168.205.10 securepassword
+192.168.205.11 securepassword
+192.168.205.12 securepassword
+</code></pre>
+
+<p>Start the racoon service:</p>
+
+<pre><code>service racoon restart
+</code></pre>
+
+<p>If everything is ok we should be able to ping redis-1 from redis-2:</p>
+
+<pre><code>$ ping 192.168.205.10
+PING 192.168.205.10 (192.168.205.10) 56(84) bytes of data.
+64 bytes from 192.168.205.10: icmp_seq=1 ttl=64 time=0.058 ms
+64 bytes from 192.168.205.10: icmp_seq=2 ttl=64 time=0.050 ms
+64 bytes from 192.168.205.10: icmp_seq=3 ttl=64 time=0.048 ms
+</code></pre>
+
+<p>Check with tcpdump that information is being encapsulated:</p>
+
+<pre><code>3:45:50.132031 IP (tos 0x0, ttl 64, id 22902, offset 0, flags [DF], proto ESP (50), length 104)
+192.168.205.10 &gt; 192.168.205.11: ESP(spi=0x0957a438,seq=0xaa5), length 84
+13:45:50.223091 IP (tos 0x0, ttl 64, id 17277, offset 0, flags [DF], proto ESP (50), length 104)
+192.168.205.10 &gt; 192.168.205.11: ESP(spi=0x0957a438,seq=0xaa6), length 84
+13:45:50.223268 IP (tos 0x0, ttl 64, id 37527, offset 0, flags [DF], proto ESP (50), length 232)
+192.168.205.10 &gt; 192.168.205.11: ESP(spi=0x0957a438,seq=0xaa7), length 212
+</code></pre>
+
+<p>Benchmark the connection without vpn:</p>
+
+<pre><code>$ iperf -c 192.168.205.10 -t 60
+— — — — — — — — — — — — — — — — — — — — — — — — — — — — — —
+Client connecting to 192.168.205.10, TCP port 5001
+TCP window size: 93.5 KByte (default)
+— — — — — — — — — — — — — — — — — — — — — — — — — — — — — —
+[ 3 ] local 192.168.205.11 port 33313 connected with 192.168.205.10 port 5001
+[ ID ] Interval Transfer Bandwidth
+[ 3 ] 0.0–60.0 sec 6.74 GBytes 965 Mbits/sec
+</code></pre>
+
+<p>Benchmark the connection with vpn:</p>
+
+<pre><code>$ iperf -c 192.168.205.10 -t 60
+— — — — — — — — — — — — — — — — — — — — — — — — — — — — — —
+Client connecting to 192.168.205.10, TCP port 5001
+TCP window size: 85.0 KByte (default)
+— — — — — — — — — — — — — — — — — — — — — — — — — — — — — —
+[ 3 ] local 192.168.205.11 port 36091 connected with 192.168.205.10 port 5001
+[ ID ] Interval Transfer Bandwidth
+[ 3 ] 0.0–60.2 sec 357 MBytes 49.7 Mbits/sec
+</code></pre>
+
+<p>Well that’s disappointing. I believe the culprit is related to the lack of support for the AES-NI instructions or with MTU:</p>
+
+<pre><code>AVX2 or AES-NI instructions are not detected.
+eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP mode DEFAULT group default qlen 1000
+</code></pre>
+
+<p>Let&rsquo;s move on for now.</p>
+
+<h2 id="configuring-redis-server:aac08daf8601d2cee3108414db3a5691">Configuring Redis Server</h2>
+
+<p>Redis’s configuration is quite simple, we can ignore underlying network configuration.</p>
+
+<p>Install redis-server:</p>
+
+<pre><code>apt-get install redis-server
+</code></pre>
+
+<p>Edit redis-1 <em>/etc/redis/redis.conf</em>:</p>
+
+<pre><code>bind 127.0.0.1 192.168.205.10
+requirepass password
+port 6379
+</code></pre>
+
+<p>Edit redis-2 <em>/etc/redis/redis.conf</em>:</p>
+
+<pre><code>bind 127.0.0.1 192.168.205.11
+port 6379
+slaveof 192.168.205.10 6379
+masterauth password
+requirepass password
+</code></pre>
+
+<p>Edit redis-3 <em>/etc/redis/redis.conf</em>:</p>
+
+<pre><code>bind 127.0.0.1 192.168.205.12
+port 6379
+slaveof 192.168.205.10 6379
+masterauth password
+requirepass password
+</code></pre>
+
+<p>Start redis-server</p>
+
+<pre><code>service redis-server start
+</code></pre>
+
+<p>Check wether everything is working:</p>
+
+<p>redis-1:</p>
+
+<pre><code class="language-bash">$ redis-cli
+127.0.0.1:6379&gt; auth password
+OK
+127.0.0.1:6379&gt; info replication
+# Replication
+role:master
+connected_slaves:2
+slave0:ip=192.168.205.12,port=6379,state=online,offset=105163101,lag=0
+slave1:ip=192.168.205.11,port=6379,state=online,offset=105163242,lag=0
+master_repl_offset:105163242
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:104114667
+repl_backlog_histlen:1048576
+</code></pre>
+
+<p>redis-2 and redis-3:</p>
+
+<pre><code class="language-bash">$ redis-cli
+127.0.0.1:6379&gt; auth password
+OK
+127.0.0.1:6379&gt; info replication
+# Replication
+role:slave
+master_host:192.168.205.10
+master_port:6379
+master_link_status:up
+master_last_io_seconds_ago:1
+master_sync_in_progress:0
+slave_repl_offset:105161550
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_repl_offset:0
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+</code></pre>
+
+<h2 id="configuring-redis-sentinel:aac08daf8601d2cee3108414db3a5691">Configuring Redis Sentinel</h2>
+
+<p>Redis Sentinel provides high availability for redis and will promote a slave to master if needed, among other tasks.</p>
+
+<p>On each node edit <em>/etc/redis/sentinel.conf</em>:</p>
+
+<pre><code class="language-bash">sentinel monitor master 192.168.205.10 6379 2
+sentinel auth-pass master password
+sentinel down-after-milliseconds master 5000
+sentinel failover-timeout master 5000
+daemonize yes
+</code></pre>
+
+<p>Start redis-sentinel service</p>
+
+<pre><code>service redis-sentinel start
+</code></pre>
+
+<p>Validate:</p>
+
+<pre><code class="language-bash">$ redis-cli -h 192.168.205.10 -p 26379 info
+…
+# Sentinel
+sentinel_masters:1
+sentinel_tilt:0
+sentinel_running_scripts:0
+sentinel_scripts_queue_length:0
+master0:name=master,status=ok,address=192.168.205.10:6379,slaves=2,sentinels=3
+</code></pre>
+
+<pre><code class="language-bash">$ redis-cli -h 192.168.205.10 -p 26379 sentinel sentinels master
+1) 1) “name”
+   2) “192.168.205.12:26379”
+2) 1) “name”
+   2) “192.168.205.11:26379”
+</code></pre>
+
+<pre><code class="language-bash">$ redis-cli -h 192.168.205.10 -p 26379 sentinel slaves master
+1) 1) “name”
+   2) “192.168.205.11:6379”
+2) 1) “name”
+   2) “192.168.205.12:6379”
+</code></pre>
+
+<p>Now we have achieved a highly available redis setup with secure communication between nodes.</p>
+
+<h2 id="what-about-clients:aac08daf8601d2cee3108414db3a5691">What about clients?</h2>
+
+<p>One possible configuration is adding the clients to the vpn. However the major downside would be reloading the vpn every time a new client is added or removed.
+For the sake of completeness, client access will be over tls using stunnel. Stunnel will be listening on port 6380 and redirecting to 127.0.0.1:6379</p>
+
+<p>Install stunnel:</p>
+
+<pre><code>apt-get install stunnel
+</code></pre>
+
+<p>Edit the file <em>/etc/stunnel/stunnel.conf</em>:</p>
+
+<p>redis-1:</p>
+
+<pre><code class="language-bash">key = /etc/ssl/private/ssl-cert-snakeoil.key
+cert = /etc/ssl/certs/ssl-cert-snakeoil.pem
+sslVersion = TLSv1.2
+options = NO_SSLv2
+options = NO_SSLv3
+socket = l:TCP_NODELAY=1
+socket = r:TCP_NODELAY=1
+[redis]
+accept  = 192.168.205.10:6380
+connect = 127.0.0.1:6379
+</code></pre>
+
+<p>redis-2:</p>
+
+<pre><code class="language-bash">key  = /etc/ssl/private/ssl-cert-snakeoil.key
+cert = /etc/ssl/certs/ssl-cert-snakeoil.pem
+sslVersion = TLSv1.2
+options = NO_SSLv2
+options = NO_SSLv3
+socket = l:TCP_NODELAY=1
+socket = r:TCP_NODELAY=1
+[redis]
+accept  = 192.168.205.11:6380
+connect = 127.0.0.1:6379
+</code></pre>
+
+<p>redis-3:</p>
+
+<pre><code class="language-bash">key  = /etc/ssl/private/ssl-cert-snakeoil.key
+cert = /etc/ssl/certs/ssl-cert-snakeoil.pem
+sslVersion = TLSv1.2
+options = NO_SSLv2
+options = NO_SSLv3
+socket = l:TCP_NODELAY=1
+socket = r:TCP_NODELAY=1
+[redis]
+accept  = 192.168.205.12:6380
+connect = 127.0.0.1:6379
+</code></pre>
+
+<p>Start stunnel (stunnel4 on debian) service:</p>
+
+<pre><code>service stunnel4 start
+</code></pre>
+
+<p>Check if we can connect:</p>
+
+<pre><code>$ openssl s_client -connect 192.168.205.10:6380
+CONNECTED(00000003)
+</code></pre>
+
+<p>Obtaining the address of the current master:</p>
+
+<pre><code>$ redis-cli -h 192.168.205.10 -p 26379 SENTINEL get-master-addr-by-name master
+1) “192.168.205.10”
+2) “6379”
+</code></pre>
+
+<p>Redis sentinel knows nothing about stunnel and the reported master is running on port 6379, when we were expecting the 6380 (stunnel port).</p>
+
+<h2 id="haproxy:aac08daf8601d2cee3108414db3a5691">Haproxy</h2>
+
+<p>Since we can not use redis-sentinel to discover the active master, haproxy will do that job for us.</p>
+
+<p>Haproxy 1.5 or greater is needed.</p>
+
+<p>Edit file <em>/etc/haproxy/haproxy.conf</em>:</p>
+
+<pre><code class="language-bash">defaults REDIS
+mode tcp
+timeout connect 3s
+timeout server 6s
+timeout client 6s
+
+frontend ft_redis
+  bind *:6379 ssl crt /etc/haproxy/certificate.pem ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK
+  default_backend bk_redis
+
+backend bk_redis
+  option tcp-check
+  tcp-check connect
+  tcp-check send AUTH\ password\r\n
+  tcp-check expect string +OK
+  tcp-check send PING\r\n
+  tcp-check expect string +PONG
+  tcp-check send info\ replication\r\n
+  tcp-check expect string role:master
+  tcp-check send QUIT\r\n
+  tcp-check expect string +OK
+  server redis1 192.168.205.10:6380 check-ssl inter 1s ssl verify none
+  server redis2 192.168.205.11:6380 check-ssl inter 1s ssl verify none
+  server redis3 192.168.205.12:6380 check-ssl inter 1s ssl verify none
+</code></pre>
+
+<p>Client will need support for secure communications in the redis client or you will need to use stunnel.</p>
+
+<h2 id="client-configuration:aac08daf8601d2cee3108414db3a5691">Client Configuration</h2>
+
+<p>Edit the file <em>/etc/stunnel/stunnel.conf</em></p>
+
+<pre><code class="language-bash">sslVersion = TLSv1.2
+options = NO_SSLv2
+options = NO_SSLv3
+socket = l:TCP_NODELAY=1
+socket = r:TCP_NODELAY=1
+[redis]
+client = yes
+accept = 127.0.0.1:6379
+connect = &lt;haproxy ip&gt;:6379
+</code></pre>
+
+<p>And finally access the redis server:</p>
+
+<pre><code class="language-bash">$ redis-cli -h 127.0.0.1
+127.0.0.1:6379&gt; auth password
+OK
+127.0.0.1:6379&gt; info replication
+# Replication
+role:master
+connected_slaves:2
+slave0:ip=192.168.205.11,port=6379,state=online,offset=575891,lag=1
+slave1:ip=192.168.205.12,port=6379,state=online,offset=575891,lag=0
+master_repl_offset:575891
+repl_backlog_active:1
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:2
+repl_backlog_histlen:575890
+</code></pre>
+
+<h2 id="final-topology:aac08daf8601d2cee3108414db3a5691">Final Topology</h2>
+
+<p><img src="media/redis-final.png" alt="final topology" /></p>
+
+<h2 id="conclusion:aac08daf8601d2cee3108414db3a5691">Conclusion</h2>
+
+<p>Although the process described above is functional, it is still non trivial. If in the near future TLS support is included in redis, this might make matters easy.</p>
 
 		</div>
 	</div>
