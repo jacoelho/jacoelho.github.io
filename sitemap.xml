@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://jacoelho.github.io/blog/</loc>
+    <loc>http://jacoelho.github.io/</loc>
     <lastmod>2015-11-20T17:18:35+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://jacoelho.github.io/blog/blog/2015/11/20/redis/</loc>
+    <loc>http://jacoelho.github.io/blog/2015/11/20/redis/</loc>
     <lastmod>2015-11-20T17:18:35+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://jacoelho.github.io/blog/blog/2015/11/20/test/</loc>
+    <loc>http://jacoelho.github.io/blog/2015/11/20/test/</loc>
     <lastmod>2015-11-20T15:42:57+00:00</lastmod>
   </url>
   

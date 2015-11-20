@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tag1 on My New Hugo Site</title>
-    <link>http://jacoelho.github.io/blog/tags/tag1/</link>
+    <link>http://jacoelho.github.io/tags/tag1/</link>
     <description>Recent content in Tag1 on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>jacoelho@outlook.com (jacoelho)</managingEditor>
     <webMaster>jacoelho@outlook.com (jacoelho)</webMaster>
     <lastBuildDate>Fri, 20 Nov 2015 17:18:35 +0000</lastBuildDate>
-    <atom:link href="http://jacoelho.github.io/blog/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://jacoelho.github.io/tags/tag1/index.xml" rel="self" type="application/rss+xml" />
     
       
         
           <item>
             <title>redis</title>
-            <link>http://jacoelho.github.io/blog/blog/2015/11/20/redis/</link>
+            <link>http://jacoelho.github.io/blog/2015/11/20/redis/</link>
             <pubDate>Fri, 20 Nov 2015 17:18:35 +0000</pubDate>
             <author>jacoelho@outlook.com (jacoelho)</author>
-            <guid>http://jacoelho.github.io/blog/blog/2015/11/20/redis/</guid>
+            <guid>http://jacoelho.github.io/blog/2015/11/20/redis/</guid>
             <description>&lt;p&gt;Content of the file goes here&lt;/p&gt;
 </description>
           </item>
