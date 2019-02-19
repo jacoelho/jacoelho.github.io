@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Jose Coelho" />
+  <meta property="og:url" content="https://www.jacoelho.com/blog/ansible-vs-pci/" />
+  <link rel="canonical" href="https://www.jacoelho.com/blog/ansible-vs-pci/" /><script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https://www.jacoelho.com"
+      },
+      "articleSection" : "blog",
+      "name" : "Ansible vs PCI",
+      "headline" : "Ansible vs PCI",
+      "description" : "Ansible vs PCI If you need to to comply with PCI requirements like:
+ Requirement 2: Maintain an inventory of system components in scope for PCI DSS to support effective scoping practices.
+ You will find that using public-key authentication is sometimes forbidden as it’s almost impossible to ensure employees are rotating the keys, keeping the private key safe and with a strong password.
+Using Ansible without ssh key based authentication is painful if you need to run a playbook against hundreds of servers, as you will need to insert your password ad nauseam.",
+      "inLanguage" : "en-US",
+      "author" : "Jose Coelho",
+      "creator" : "Jose Coelho",
+      "publisher": "Jose Coelho",
+      "accountablePerson" : "Jose Coelho",
+      "copyrightHolder" : "Jose Coelho",
+      "copyrightYear" : "2016",
+      "datePublished": "2016-08-16 10:24:46 &#43;0000 UTC",
+      "dateModified" : "2016-08-16 10:24:46 &#43;0000 UTC",
+      "url" : "https://www.jacoelho.com/blog/ansible-vs-pci/",
+      "keywords" : [  ]
+  }
+</script>
+<title>Ansible vs PCI - Jose Coelho</title>
+  <meta property="og:title" content="Ansible vs PCI - Jose Coelho" />
+  <meta property="og:type" content="article" />
+  <meta name="description" content="Ansible vs PCI If you need to to comply with PCI requirements like:
+ Requirement 2: Maintain an inventory of system components in scope for PCI DSS to support effective scoping practices.
+ You will find that using public-key authentication is sometimes forbidden as it’s almost impossible to ensure employees are rotating the keys, keeping the private key safe and with a strong password.
+Using Ansible without ssh key based authentication is painful if you need to run a playbook against hundreds of servers, as you will need to insert your password ad nauseam." />
+
+  <link
+    rel="stylesheet"
+    href="/css/flexboxgrid.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/highlight/dracula.min.css"
+  />
+  <link rel="stylesheet" href="/css/index.css">
+  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Jose Coelho">
+  
+  <script>
+    
+
+    (function(undefined) {}).call('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});
+  </script>
+
+  
+</head>
+
+
+  <body>
+    <article class="post " id="article">
+      <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+          <header class="post-header">
+            <h1 class="post-title">Ansible vs PCI</h1>
+            <div class="row">
+              <div class="col-xs-6">
+                <time class="post-date" datetime="2016-08-16 10:24:46 UTC">
+                  16 Aug 2016
+                </time>
+              </div>
+              <div class="col-xs-6">
+                <div class="post-author">
+                  <a target="_blank" href="https://joway.io/">@Jose Coelho</a>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="post-content markdown-body">
+            
+
+<h1 id="ansible-vs-pci">Ansible vs PCI</h1>
+
+<p>If you need to to comply with <a href="https://www.pcisecuritystandards.org/documents/PCIDSS_QRGv3_1.pdf">PCI
+requirements</a>
+like:</p>
+
+<blockquote>
+<p><em>Requirement 2: Maintain an inventory of system components in scope for PCI DSS
+to support effective scoping practices.</em></p>
+</blockquote>
+
+<p>You will find that using public-key authentication is sometimes
+<a href="https://security.stackexchange.com/questions/47213/pci-dss-2-0-and-ssh-keys">forbidden</a>
+as it’s almost impossible to ensure employees are rotating the keys, keeping the
+private key safe and with a strong password.</p>
+
+<p>Using <em>Ansible</em> without ssh key based authentication is painful if you need to
+run a playbook against hundreds of servers, as you will need to insert your
+password <em>ad nauseam</em>.</p>
+
+<h3 id="ansible-vault-to-the-rescue">Ansible Vault To The Rescue</h3>
+
+<blockquote>
+<p>“Vault” is a feature of ansible that allows keeping sensitive data such as
+passwords or keys in encrypted files.</p>
+</blockquote>
+
+<p>We can leverage <em>Ansible Vault</em> to keep the user password stored in a safe way:</p>
+
+<pre><code>mkdir group_vars
+ansible-vault create group_vars/all.yml
+</code></pre>
+
+<p>After providing a password (although I am not aware of a way to audit that the
+password is good enough), insert all the need <em>Ansible</em> credentials:</p>
+
+<pre><code>ansible_user: &lt;username&gt;
+ansible_ssh_pass: &lt;password&gt;
+ansible_become_pass: &lt;sudo password&gt;
+</code></pre>
+
+<p>We can run any <em>Ansible</em> playbook easily:</p>
+
+<pre><code>ansible-playbook -i inventory.ini playbook.yml --ask-vault-pass
+</code></pre>
+
+<p>Using <em>Ansible Vault</em> we can follow <em>PCI</em> guidelines without jeopardising
+productivity or security.</p>
+
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <script src="/js/highlight.pack.js"></script>
+<script src="/js/quicklink.umd.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({
+    container: document.getElementById('article')
+  });
+</script>
+
+<script>
+  hljs.initHighlightingOnLoad();
+
+  var posts = document.getElementById('posts-list');
+  posts && quicklink({
+    el: posts,
+    priority: true,
+  });
+</script>
+
+    
+
+  </body>
+</html>

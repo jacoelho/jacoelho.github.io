@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Jose Coelho" />
+  <meta property="og:url" content="https://www.jacoelho.com/blog/a-story-about-go-http-client/" />
+  <link rel="canonical" href="https://www.jacoelho.com/blog/a-story-about-go-http-client/" /><script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https://www.jacoelho.com"
+      },
+      "articleSection" : "blog",
+      "name" : "A story about Go http.Client",
+      "headline" : "A story about Go http.Client",
+      "description" : "Or how I have learned to embrace http.RoundTripper
+Using a http client in Go usually starts like this:
+resp, err := http.Get(&quot;http://example.com/&quot;)  Everything works, until it doesn’t: a network blip, a connection reset, a slow response, etc.
+After some research (I recommend reading The complete guide to Go net/http timeouts) you may end up writing something similar to:
+c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time.",
+      "inLanguage" : "en-US",
+      "author" : "Jose Coelho",
+      "creator" : "Jose Coelho",
+      "publisher": "Jose Coelho",
+      "accountablePerson" : "Jose Coelho",
+      "copyrightHolder" : "Jose Coelho",
+      "copyrightYear" : "2017",
+      "datePublished": "2017-08-19 10:24:46 &#43;0000 UTC",
+      "dateModified" : "2017-08-19 10:24:46 &#43;0000 UTC",
+      "url" : "https://www.jacoelho.com/blog/a-story-about-go-http-client/",
+      "keywords" : [  ]
+  }
+</script>
+<title>A story about Go http.Client - Jose Coelho</title>
+  <meta property="og:title" content="A story about Go http.Client - Jose Coelho" />
+  <meta property="og:type" content="article" />
+  <meta name="description" content="Or how I have learned to embrace http.RoundTripper
+Using a http client in Go usually starts like this:
+resp, err := http.Get(&quot;http://example.com/&quot;)  Everything works, until it doesn’t: a network blip, a connection reset, a slow response, etc.
+After some research (I recommend reading The complete guide to Go net/http timeouts) you may end up writing something similar to:
+c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time." />
+
+  <link
+    rel="stylesheet"
+    href="/css/flexboxgrid.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/highlight/dracula.min.css"
+  />
+  <link rel="stylesheet" href="/css/index.css">
+  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Jose Coelho">
+  
+  <script>
+    
+
+    (function(undefined) {}).call('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});
+  </script>
+
+  
+</head>
+
+
+  <body>
+    <article class="post " id="article">
+      <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+          <header class="post-header">
+            <h1 class="post-title">A story about Go http.Client</h1>
+            <div class="row">
+              <div class="col-xs-6">
+                <time class="post-date" datetime="2017-08-19 10:24:46 UTC">
+                  19 Aug 2017
+                </time>
+              </div>
+              <div class="col-xs-6">
+                <div class="post-author">
+                  <a target="_blank" href="https://joway.io/">@Jose Coelho</a>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="post-content markdown-body">
+            <p>Or how I have learned to embrace <em>http.RoundTripper</em></p>
+
+<p>Using a http client in <em>Go</em> usually starts like this:</p>
+
+<pre><code class="language-go">resp, err := http.Get(&quot;http://example.com/&quot;)
+</code></pre>
+
+<p>Everything works, until it doesn’t: a network blip, a connection reset, a slow
+response, etc.</p>
+
+<p>After some research (I recommend reading <a href="https://blog.cloudflare.com/the-complete-guide-to-golang-net-http-timeouts/">The complete guide to Go net/http
+timeouts</a>)
+you may end up writing something similar to:</p>
+
+<pre><code class="language-go">c := &amp;http.Client{
+    Transport: &amp;http.Transport{
+        Dial: (&amp;net.Dialer{
+            Timeout:   30 * time.Second,
+            KeepAlive: 30 * time.Second,
+        }).Dial,
+        TLSHandshakeTimeout:   10 * time.Second,
+        ResponseHeaderTimeout: 10 * time.Second,
+        ExpectContinueTimeout: 1 * time.Second,
+    },
+}
+
+req, _:= http.NewRequest(&quot;GET&quot;, &quot;https://www.google.com&quot;, nil)
+
+resp, err := c.Do(req)
+</code></pre>
+
+<p>Ok! But now the question is: how does <em>http.Client</em> really work?</p>
+
+<pre><code class="language-go">// http.Client - comments removed
+type Client struct {
+	Transport     RoundTripper
+	CheckRedirect func(req *Request, via []*Request) error
+	Jar           CookieJar
+	Timeout       time.Duration
+}
+</code></pre>
+
+<p>Ok… what is the <em>RoundTripper</em>?</p>
+
+<pre><code class="language-go">type RoundTripper interface {
+        RoundTrip(*Request) (*Response, error)
+}
+</code></pre>
+
+<p>Way simpler than I would expect: for each <em>request</em>, it receives a <em>response</em>, if everything works.</p>
+
+<p>The default <a href="https://golang.org/src/net/http/transport.go#L315">transport.go</a>
+implementation is interesting. However, what else could I use <em>RoundTripper</em>
+for?</p>
+
+<hr />
+
+<p>Implementing a naïve Retry RoundTripper without any concurrency concerns or
+request copy:</p>
+
+<pre><code class="language-go">// Retry - http client with retry support
+type Retry struct {
+	http.RoundTripper
+}
+
+// Naive Retry - every 2 seconds
+func (r *Retry) RoundTrip(req *http.Request) (*http.Response, error) {
+	for {
+		resp, err := r.RoundTripper.RoundTrip(req)
+
+		if err == nil &amp;&amp; resp.StatusCode &lt; 500 {
+			return resp, err
+		}
+
+		select {
+                // check if canceled or timed-out
+		case &lt;-req.Context().Done():
+			return resp, req.Context().Err()
+		case &lt;-time.After(2 * time.Second):
+		}
+	}
+}
+
+func main() {
+	c := &amp;http.Client{
+		Transport: &amp;Retry{http.DefaultTransport},
+	}
+
+	req, err := http.NewRequest(&quot;GET&quot;, &quot;https://www.google.com&quot;, nil)
+	if err != nil {
+		log.Fatalf(&quot;Could not create request&quot;)
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	req = req.WithContext(ctx)
+	resp, err := c.Do(req)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer resp.Body.Close()
+
+	log.Println(resp)
+
+}
+</code></pre>
+
+<p>The <em>HTTP</em> retry client continues retrying until it succeeds or the context
+timeout reached.</p>
+
+<hr />
+
+<p>A very simple http client cache:</p>
+
+<pre><code class="language-go">type Cache struct {
+	kv map[string]*bufio.Reader
+	http.RoundTripper
+}
+
+func (c *Cache) RoundTrip(req *http.Request) (*http.Response, error) {
+	if req.Method != &quot;GET&quot; {
+		return c.RoundTrip(req)
+	}
+
+	v, ok := c.kv[req.URL.String()]
+	if ok {
+		// return cached
+		return http.ReadResponse(v, nil)
+
+	}
+
+	resp, err := c.RoundTripper.RoundTrip(req)
+	if err != nil {
+		return resp, err
+	}
+
+	body, err := httputil.DumpResponse(resp, true)
+	if err != nil {
+		return resp, err
+	}
+
+	r := bufio.NewReader(bytes.NewReader(body))
+	c.kv[req.URL.String()] = r
+
+	return resp, err
+}
+
+func main() {
+	c := &amp;http.Client{
+		Transport: &amp;Cache{
+			RoundTripper: http.DefaultTransport,
+			kv:           make(map[string]*bufio.Reader),
+		},
+	}
+
+	req, err := http.NewRequest(&quot;GET&quot;, &quot;https://www.google.com&quot;, nil)
+	if err != nil {
+		log.Fatalf(&quot;Could not create request&quot;)
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	req = req.WithContext(ctx)
+	resp, err := c.Do(req)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	resp.Body.Close()
+
+	log.Println(resp)
+}
+</code></pre>
+
+<hr />
+
+<p><em>RoundTripper</em> interface enables extending the <em>HTTP</em> behaviour in a composable way.</p>
+
+<p>The more I learn about Go Standard Library, the more I acknowledge the attention
+and craft put into it.</p>
+
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <script src="/js/highlight.pack.js"></script>
+<script src="/js/quicklink.umd.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({
+    container: document.getElementById('article')
+  });
+</script>
+
+<script>
+  hljs.initHighlightingOnLoad();
+
+  var posts = document.getElementById('posts-list');
+  posts && quicklink({
+    el: posts,
+    priority: true,
+  });
+</script>
+
+    
+
+  </body>
+</html>

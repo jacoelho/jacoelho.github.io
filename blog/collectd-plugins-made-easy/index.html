@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Hugo 0.54.0" />
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Jose Coelho" />
+  <meta property="og:url" content="https://www.jacoelho.com/blog/collectd-plugins-made-easy/" />
+  <link rel="canonical" href="https://www.jacoelho.com/blog/collectd-plugins-made-easy/" /><script type="application/ld+json">
+  {
+      "@context" : "http://schema.org",
+      "@type" : "BlogPosting",
+      "mainEntityOfPage": {
+           "@type": "WebPage",
+           "@id": "https://www.jacoelho.com"
+      },
+      "articleSection" : "blog",
+      "name" : "Collectd plugins made easy",
+      "headline" : "Collectd plugins made easy",
+      "description" : "Collectd plugins made easy  Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
+ Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin.",
+      "inLanguage" : "en-US",
+      "author" : "Jose Coelho",
+      "creator" : "Jose Coelho",
+      "publisher": "Jose Coelho",
+      "accountablePerson" : "Jose Coelho",
+      "copyrightHolder" : "Jose Coelho",
+      "copyrightYear" : "2016",
+      "datePublished": "2016-08-09 10:24:46 &#43;0000 UTC",
+      "dateModified" : "2016-08-09 10:24:46 &#43;0000 UTC",
+      "url" : "https://www.jacoelho.com/blog/collectd-plugins-made-easy/",
+      "keywords" : [  ]
+  }
+</script>
+<title>Collectd plugins made easy - Jose Coelho</title>
+  <meta property="og:title" content="Collectd plugins made easy - Jose Coelho" />
+  <meta property="og:type" content="article" />
+  <meta name="description" content="Collectd plugins made easy  Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
+ Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin." />
+
+  <link
+    rel="stylesheet"
+    href="/css/flexboxgrid.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="/css/highlight/dracula.min.css"
+  />
+  <link rel="stylesheet" href="/css/index.css">
+  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Jose Coelho">
+  
+  <script>
+    
+
+    (function(undefined) {}).call('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});
+  </script>
+
+  
+</head>
+
+
+  <body>
+    <article class="post " id="article">
+      <div class="row">
+        <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+          <header class="post-header">
+            <h1 class="post-title">Collectd plugins made easy</h1>
+            <div class="row">
+              <div class="col-xs-6">
+                <time class="post-date" datetime="2016-08-09 10:24:46 UTC">
+                  09 Aug 2016
+                </time>
+              </div>
+              <div class="col-xs-6">
+                <div class="post-author">
+                  <a target="_blank" href="https://joway.io/">@Jose Coelho</a>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <div class="post-content markdown-body">
+            
+
+<h1 id="collectd-plugins-made-easy">Collectd plugins made easy</h1>
+
+<blockquote>
+<p><strong>Collectd</strong> is a Unix daemon that collects, transfers and stores performance
+data of computers and network equipment. The acquired data is meant to help
+system administrators maintain an overview over available resources to detect
+existing or looming bottlenecks.</p>
+</blockquote>
+
+<p><a href="https://collectd.org/">Collectd</a> provides a <a href="https://collectd.org/wiki/index.php/Table_of_Plugins">long list of
+plugins</a> available
+out-of-box. However, if you need to collect additional metrics, one of the
+easiest ways to do so is using the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec
+plugin</a>.</p>
+
+<p>In order to use the exec plugin, create an <em>Collectd</em> configuration file:</p>
+
+<pre><code>LoadPlugin exec
+
+&lt;Plugin exec&gt;
+  Exec &quot;myuser:mygroup&quot; &quot;/path/to/another/binary&quot; &quot;arg0&quot; &quot;arg1&quot;
+&lt;/Plugin&gt;
+</code></pre>
+
+<p>And a sample script “*/path/to/another/binary*” (extracted from the official
+documentation):</p>
+
+<pre><code>HOSTNAME=&quot;${COLLECTD_HOSTNAME:-localhost}&quot;
+INTERVAL=&quot;${COLLECTD_INTERVAL:-60}&quot;
+
+while sleep &quot;$INTERVAL&quot;; do
+  VALUE=do_magic()
+  echo &quot;PUTVAL \&quot;$HOSTNAME/exec-magic/gauge-magic_level\&quot; interval=$INTERVAL N:$VALUE&quot;
+done
+</code></pre>
+
+<p>The most important bits are contained in the outputted message :</p>
+
+<pre><code>PUTVAL &quot;$HOSTNAME/exec-magic/gauge-magic_level&quot; interval=$INTERVAL N:$VALUE
+</code></pre>
+
+<p>Where:</p>
+
+<ol>
+<li><em>exec-magic</em> is the plugin name.</li>
+<li><em>magic_level</em> is the metric name.</li>
+<li><em>gauge</em> is the data source type, according to <a href="https://collectd.org/wiki/index.php/Data_source">collectd
+types</a>.</li>
+<li><em>N:</em> is the abbreviation for “now” as defined in the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec
+plugin</a>.</li>
+</ol>
+
+<hr />
+
+<h3 id="sample-plugin">Sample plugin</h3>
+
+<p>Now, let’s create a simple *Collectd <em>plugin. In the example that follows I will
+use <a href="https://golang.org/">Go</a></em>.*</p>
+
+<p>The main loop will run the metric collection in a scheduled fashion:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;flag&quot;
+	&quot;time&quot;
+)
+
+func main() {
+	var (
+		interval = flag.Int(&quot;interval&quot;, 5, &quot;time in seconds between collection&quot;)
+	)
+
+	ticker := time.NewTicker(time.Duration(*interval) * time.Second)
+	for {
+		select {
+		case &lt;-ticker.C:
+			go collectMetric()
+		}
+	}
+}
+</code></pre>
+
+<p>And the collectMetric code:</p>
+
+<pre><code>hostname, _ := os.Hostname()
+value := someWork()
+
+fmt.Printf(&quot;PUTVAL %s/my-plugin/gauge-my_metric interval=%d N:%s\n&quot;, hostname, interval, value)
+</code></pre>
+
+<p>Just compile it and use your favorite configuration management tool to upload
+the plugin and configuration.</p>
+
+<p>The purpose of this example was to demonstrate how to create a plugin. For
+“*production-ready*” plugins I recommend using the official *Go
+*<a href="https://github.com/collectd/go-collectd">library</a>.</p>
+
+<p>Exec plugin is the simplest and fastest way to plug a custom metric collector
+into <em>Collectd</em>.</p>
+
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <script src="/js/highlight.pack.js"></script>
+<script src="/js/quicklink.umd.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script>
+  var lazyImage = new LazyLoad({
+    container: document.getElementById('article')
+  });
+</script>
+
+<script>
+  hljs.initHighlightingOnLoad();
+
+  var posts = document.getElementById('posts-list');
+  posts && quicklink({
+    el: posts,
+    priority: true,
+  });
+</script>
+
+    
+
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://www.jacoelho.com/about/</loc>
+    <lastmod>2019-02-19T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/a-story-about-go-http-client/</loc>
+    <lastmod>2017-08-19T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/kafka-accelerating/</loc>
+    <lastmod>2016-11-22T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/stability-patterns-circuit-breaker/</loc>
+    <lastmod>2016-08-20T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/ansible-vs-pci/</loc>
+    <lastmod>2016-08-16T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/docker-configuration-files/</loc>
+    <lastmod>2016-08-14T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/collectd-plugins-made-easy/</loc>
+    <lastmod>2016-08-09T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/chef-custom-resources/</loc>
+    <lastmod>2016-07-13T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/ansible-in-aws-lambda/</loc>
+    <lastmod>2016-02-18T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/secure-redis/</loc>
+    <lastmod>2015-11-18T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/docker-images/</loc>
+    <lastmod>2015-06-01T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/locally-developing-microservices/</loc>
+    <lastmod>2015-05-25T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/</loc>
+    <lastmod>2017-08-19T10:24:46+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/</loc>
+    <lastmod>2019-02-19T10:24:46+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

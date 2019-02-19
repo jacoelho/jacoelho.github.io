@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jose Coelho</title>
+    <link>https://www.jacoelho.com/</link>
+    <description>Recent content on Jose Coelho</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 19 Feb 2019 10:24:46 +0000</lastBuildDate>
+    
+	<atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>https://www.jacoelho.com/about/</link>
+      <pubDate>Tue, 19 Feb 2019 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/about/</guid>
+      <description>adsasdads</description>
+    </item>
+    
+    <item>
+      <title>A story about Go http.Client</title>
+      <link>https://www.jacoelho.com/blog/a-story-about-go-http-client/</link>
+      <pubDate>Sat, 19 Aug 2017 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/a-story-about-go-http-client/</guid>
+      <description>Or how I have learned to embrace http.RoundTripper
+Using a http client in Go usually starts like this:
+resp, err := http.Get(&amp;quot;http://example.com/&amp;quot;)  Everything works, until it doesn’t: a network blip, a connection reset, a slow response, etc.
+After some research (I recommend reading The complete guide to Go net/http timeouts) you may end up writing something similar to:
+c := &amp;amp;http.Client{ Transport: &amp;amp;http.Transport{ Dial: (&amp;amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time.</description>
+    </item>
+    
+    <item>
+      <title>Kafka — Accelerating!</title>
+      <link>https://www.jacoelho.com/blog/kafka-accelerating/</link>
+      <pubDate>Tue, 22 Nov 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/kafka-accelerating/</guid>
+      <description>Kafka — Accelerating! Quick tips and insights on how to make Apache Kafka work faster!
+Hardware  CPU doesn&amp;rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare metal.  Linux  Configure to maximize memory usage (tweak until you feel comfortable):
+vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:</description>
+    </item>
+    
+    <item>
+      <title>Stability Patterns — Circuit Breaker</title>
+      <link>https://www.jacoelho.com/blog/stability-patterns-circuit-breaker/</link>
+      <pubDate>Sat, 20 Aug 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/stability-patterns-circuit-breaker/</guid>
+      <description>Stability Patterns — Circuit Breaker  A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+ The software analogue as described in Release it! chapter 5.</description>
+    </item>
+    
+    <item>
+      <title>Ansible vs PCI</title>
+      <link>https://www.jacoelho.com/blog/ansible-vs-pci/</link>
+      <pubDate>Tue, 16 Aug 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/ansible-vs-pci/</guid>
+      <description>Ansible vs PCI If you need to to comply with PCI requirements like:
+ Requirement 2: Maintain an inventory of system components in scope for PCI DSS to support effective scoping practices.
+ You will find that using public-key authentication is sometimes forbidden as it’s almost impossible to ensure employees are rotating the keys, keeping the private key safe and with a strong password.
+Using Ansible without ssh key based authentication is painful if you need to run a playbook against hundreds of servers, as you will need to insert your password ad nauseam.</description>
+    </item>
+    
+    <item>
+      <title>Docker: Configuration files</title>
+      <link>https://www.jacoelho.com/blog/docker-configuration-files/</link>
+      <pubDate>Sun, 14 Aug 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/docker-configuration-files/</guid>
+      <description>Docker: Configuration files Things no one tells you about. One of Docker’s killer features is the environment parity, yet it feels like one little detail was left untold: how to handle configuration files.
+Unless you are using the same configuration between development, quality, production, etc. you will end up with different endpoints, API keys, secret tokens and feature switches for each environment.
+Available Options There are a couple of different ways to handle configuration in Docker.</description>
+    </item>
+    
+    <item>
+      <title>Collectd plugins made easy</title>
+      <link>https://www.jacoelho.com/blog/collectd-plugins-made-easy/</link>
+      <pubDate>Tue, 09 Aug 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/collectd-plugins-made-easy/</guid>
+      <description>Collectd plugins made easy  Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
+ Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin.</description>
+    </item>
+    
+    <item>
+      <title>Chef Custom Resources </title>
+      <link>https://www.jacoelho.com/blog/chef-custom-resources/</link>
+      <pubDate>Wed, 13 Jul 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/chef-custom-resources/</guid>
+      <description>Chef Custom Resources Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
+Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
+Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
+From the Kafka install directory, first check if the topic already exists:</description>
+    </item>
+    
+    <item>
+      <title>Ansible in AWS Lambda</title>
+      <link>https://www.jacoelho.com/blog/ansible-in-aws-lambda/</link>
+      <pubDate>Thu, 18 Feb 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/ansible-in-aws-lambda/</guid>
+      <description>Originally published at https://medium.com/@jacoelho/ansible-in-aws-lambda-980bb8b5791b</description>
+    </item>
+    
+    <item>
+      <title>Secure Redis</title>
+      <link>https://www.jacoelho.com/blog/secure-redis/</link>
+      <pubDate>Wed, 18 Nov 2015 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/secure-redis/</guid>
+      <description>Originally published at https://medium.com/@jacoelho/secure-redis-dff568ef0ea0</description>
+    </item>
+    
+    <item>
+      <title>Docker Images</title>
+      <link>https://www.jacoelho.com/blog/docker-images/</link>
+      <pubDate>Mon, 01 Jun 2015 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/docker-images/</guid>
+      <description>Originally published at https://medium.com/@jacoelho/docker-images-f3c5a39baa65</description>
+    </item>
+    
+    <item>
+      <title>Locally Developing Microservices</title>
+      <link>https://www.jacoelho.com/blog/locally-developing-microservices/</link>
+      <pubDate>Mon, 25 May 2015 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/locally-developing-microservices/</guid>
+      <description>Originally published at https://medium.com/@jacoelho/locally-developing-microservices-d06f3e384e</description>
+    </item>
+    
+  </channel>
+</rss>
