@@ -1,231 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Hugo 0.54.0" />
-
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="Jose Coelho" />
-  <meta property="og:url" content="https://www.jacoelho.com/blog/docker-configuration-files/" />
-  <link rel="canonical" href="https://www.jacoelho.com/blog/docker-configuration-files/" /><script type="application/ld+json">
-  {
-      "@context" : "http://schema.org",
-      "@type" : "BlogPosting",
-      "mainEntityOfPage": {
-           "@type": "WebPage",
-           "@id": "https://www.jacoelho.com"
-      },
-      "articleSection" : "blog",
-      "name" : "Docker: Configuration files",
-      "headline" : "Docker: Configuration files",
-      "description" : "Docker: Configuration files Things no one tells you about. One of Docker’s killer features is the environment parity, yet it feels like one little detail was left untold: how to handle configuration files.
-Unless you are using the same configuration between development, quality, production, etc. you will end up with different endpoints, API keys, secret tokens and feature switches for each environment.
-Available Options There are a couple of different ways to handle configuration in Docker.",
-      "inLanguage" : "en-US",
-      "author" : "Jose Coelho",
-      "creator" : "Jose Coelho",
-      "publisher": "Jose Coelho",
-      "accountablePerson" : "Jose Coelho",
-      "copyrightHolder" : "Jose Coelho",
-      "copyrightYear" : "2016",
-      "datePublished": "2016-08-14 10:24:46 &#43;0000 UTC",
-      "dateModified" : "2016-08-14 10:24:46 &#43;0000 UTC",
-      "url" : "https://www.jacoelho.com/blog/docker-configuration-files/",
-      "keywords" : [  ]
-  }
-</script>
-<title>Docker: Configuration files - Jose Coelho</title>
-  <meta property="og:title" content="Docker: Configuration files - Jose Coelho" />
-  <meta property="og:type" content="article" />
-  <meta name="description" content="Docker: Configuration files Things no one tells you about. One of Docker’s killer features is the environment parity, yet it feels like one little detail was left untold: how to handle configuration files.
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Jose Coelho ">
+<meta name="description" content="Things no one tells you about. One of Docker’s killer features is the environment parity, yet it feels like one little detail was left untold: how to handle configuration files.
 Unless you are using the same configuration between development, quality, production, etc. you will end up with different endpoints, API keys, secret tokens and feature switches for each environment.
 Available Options There are a couple of different ways to handle configuration in Docker." />
-
-  <link
-    rel="stylesheet"
-    href="/css/flexboxgrid.min.css"
-  />
-  <link
-    rel="stylesheet"
-    href="/css/highlight/dracula.min.css"
-  />
-  <link rel="stylesheet" href="/css/index.css">
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Jose Coelho">
-  
-  <script>
-    
-
-    (function(undefined) {}).call('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});
-  </script>
-
-  
-</head>
+<meta name="keywords" content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="https://www.jacoelho.com/blog/docker-configuration-files/" />
 
 
-  <body>
-    <article class="post " id="article">
-      <div class="row">
-        <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-          <header class="post-header">
-            <h1 class="post-title">Docker: Configuration files</h1>
-            <div class="row">
-              <div class="col-xs-6">
-                <time class="post-date" datetime="2016-08-14 10:24:46 UTC">
-                  14 Aug 2016
-                </time>
-              </div>
-              <div class="col-xs-6">
-                <div class="post-author">
-                  <a target="_blank" href="https://www.jacoelho.com">@Jose Coelho</a>
-                </div>
-              </div>
-            </div>
-          </header>
+    <title>
+        
+            Docker: Configuration files :: Posts  — Hello Friend NG Theme
+        
+    </title>
 
-          <div class="post-content markdown-body">
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://www.jacoelho.com/main.d1ea4af8fd04fb24a4f8b882ea54bd04eb245427ca4baf527c81a5dab071410b.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/favicon-16x16.png">
+    <link rel="manifest" href="https://www.jacoelho.com/site.webmanifest">
+    <link rel="mask-icon" href="https://www.jacoelho.com/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="https://www.jacoelho.com/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+
+
+<meta itemprop="name" content="Docker: Configuration files">
+<meta itemprop="description" content="Things no one tells you about. One of Docker’s killer features is the environment parity, yet it feels like one little detail was left untold: how to handle configuration files.
+Unless you are using the same configuration between development, quality, production, etc. you will end up with different endpoints, API keys, secret tokens and feature switches for each environment.
+Available Options There are a couple of different ways to handle configuration in Docker.">
+<meta itemprop="datePublished" content="2016-08-14T10:24:46+00:00" />
+<meta itemprop="dateModified" content="2016-08-14T10:24:46+00:00" />
+<meta itemprop="wordCount" content="484">
+<meta itemprop="image" content="https://www.jacoelho.com/"/>
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.jacoelho.com/"/>
+
+<meta name="twitter:title" content="Docker: Configuration files"/>
+<meta name="twitter:description" content="Things no one tells you about. One of Docker’s killer features is the environment parity, yet it feels like one little detail was left untold: how to handle configuration files.
+Unless you are using the same configuration between development, quality, production, etc. you will end up with different endpoints, API keys, secret tokens and feature switches for each environment.
+Available Options There are a couple of different ways to handle configuration in Docker."/>
+
+
+
+    <meta property="og:title" content="Docker: Configuration files" />
+<meta property="og:description" content="Things no one tells you about. One of Docker’s killer features is the environment parity, yet it feels like one little detail was left untold: how to handle configuration files.
+Unless you are using the same configuration between development, quality, production, etc. you will end up with different endpoints, API keys, secret tokens and feature switches for each environment.
+Available Options There are a couple of different ways to handle configuration in Docker." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jacoelho.com/blog/docker-configuration-files/" />
+<meta property="og:image" content="https://www.jacoelho.com/"/>
+<meta property="article:published_time" content="2016-08-14T10:24:46+00:00" />
+<meta property="article:modified_time" content="2016-08-14T10:24:46+00:00" />
+
+
+
+
+
+
+    <meta property="article:published_time" content="2016-08-14 10:24:46 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">Jose Coelho</span>
+            <span class="logo__cursor" style=
+                  "visibility:hidden;
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
             
 
-<h1 id="docker-configuration-files">Docker: Configuration files</h1>
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
 
-<h2 id="things-no-one-tells-you-about">Things no one tells you about.</h2>
 
+            <div class="content">
+                
+<main class="post">
+
+    <div class="post-info">
+        
+        </p>
+    </div>
+
+    <article>
+        <h2 class="post-title"><a href="https://www.jacoelho.com/blog/docker-configuration-files/">Docker: Configuration files</a></h2>
+
+        
+
+        
+
+        <div class="post-content">
+            <h2 id="things-no-one-tells-you-about">Things no one tells you about.</h2>
 <p>One of <a href="https://www.docker.com/">Docker</a>’s killer features is the environment
 parity, yet it feels like one little detail was left untold: <strong>how to handle
 configuration files</strong>.</p>
-
 <p>Unless you are using the same configuration between <em>development</em>, <em>quality</em>,
 <em>production</em>, <em>etc</em>. you will end up with different endpoints, API keys, secret
 tokens and feature switches for each environment.</p>
-
 <h3 id="available-options">Available Options</h3>
-
 <p>There are a couple of different ways to handle configuration in <em>Docker.</em> Below,
 you will find a non-exhaustive list.</p>
-
 <h4 id="bake-into-the-image">Bake into the image</h4>
-
 <p>The simplest way is to ignore all the complexity and bake the configuration
 files inside the container, by adding explicitly in the
 <a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a>:</p>
-
 <pre><code>COPY secrets.yml /var/www/config/secrets.yml
-</code></pre>
-
-<p>This approach could be compared to committing secrets to a <a href="https://avicoder.me/2016/07/22/Twitter-Vine-Source-code-dump/">public
+</code></pre><p>This approach could be compared to committing secrets to a <a href="https://avicoder.me/2016/07/22/Twitter-Vine-Source-code-dump/">public
 repository.</a></p>
-
 <h4 id="environment-variables">Environment Variables</h4>
-
 <p>Following <a href="http://12factor.net/">twelve-factor methodology</a>, <a href="http://12factor.net/config">point
 3</a>, configs should be set using environment
 variables:</p>
-
 <pre><code>$ docker run --env secret=foo --env othersecret=bar myapp
-</code></pre>
-
-<p>This approach lacks expressiveness and it’s quite easy to leak into logs. If you
+</code></pre><p>This approach lacks expressiveness and it’s quite easy to leak into logs. If you
 commit the running container, it’s the same as scenario 1. Several articles
 (<a href="http://movingfast.io/articles/environment-variables-considered-harmful/">article
 1</a>,
 <a href="https://support.cloud.engineyard.com/hc/en-us/articles/205407508-Environment-Variables-and-Why-You-Shouldn-t-Use-Them">article
 2</a>)
 have been written on why this is a bad idea for storing secrets.</p>
-
 <h4 id="bind-mount">Bind mount</h4>
-
 <p>Mounting a host directory/file directly in the container:</p>
-
 <pre><code>$ docker run -v /config/config.yml:/var/www/config.yml:ro myapp
-</code></pre>
-
-<p>The configuration files are mounted from the host server, probably copied using
+</code></pre><p>The configuration files are mounted from the host server, probably copied using
 a configuration management tool like <a href="https://www.chef.io/chef/">Chef</a>* *or
 <a href="https://puppetlabs.com/">Puppet</a>.</p>
-
 <p>This approach is the most similar to <em>pre-docker</em> days, issues like rollback
 configuration and keeping the configuration updated still persist.</p>
-
 <p>With this approach the docker deployment process (besides running the
 containers) should ensure that the right configuration is available and updated.</p>
-
 <p><a href="http://kubernetes.io/">Kubernetes </a>uses a similar
 <a href="http://kubernetes.io/docs/user-guide/secrets/">solution</a>.</p>
-
 <p>One possible variation is using tools like
 <a href="https://github.com/Shopify/ejson">ejson</a> or
 <a href="https://github.com/StackExchange/blackbox">blackbox</a>. Using this type of tools,
 configuration files are added along with the code. During container boot, by
 using a bind mounted secret key, configuration files are decrypted.</p>
-
 <h4 id="data-volumes">Data Volumes</h4>
-
 <p>Instead of mounting a host file directly, another solution is loading the
 configuration from another container:</p>
-
 <pre><code>$ docker run --volumes-from app-conf myapp
-</code></pre>
-
-<p>This approach is usually applicable with a entry-point script that copies the
+</code></pre><p>This approach is usually applicable with a entry-point script that copies the
 configurations into the right location before starting the application. This
 solution is the simplest in a rollback situation, although it is basically the
 same as scenario 1.</p>
-
 <h4 id="key-value-stores">Key-Value Stores</h4>
-
 <p>Using key-value stores is possible to have a <a href="https://en.wikipedia.org/wiki/Single_version_of_the_truth">single source of
 truth</a>. A couple of
 solutions are available:</p>
-
 <ul>
 <li><a href="https://vaultproject.io/">Vault</a></li>
 <li><a href="https://square.github.io/keywhiz/">Keywhiz</a></li>
 <li><a href="https://github.com/coreos/etcd">Etcd </a> <em>with</em> <a href="http://xordataexchange.github.io/crypt/">Crypt</a></li>
 <li><a href="https://zookeeper.apache.org/">Zookeeper</a></li>
 </ul>
-
 <p>The vault solution is the most interesting one. The simplest way is using *Vault
 *with <a href="https://github.com/hashicorp/consul-template">consul-template</a> and the
 most advanced scenarios will need application rewrite to use <a href="https://www.vaultproject.io/docs/http/libraries.html">native
 libraries</a> (and to a
 certain degree coupling).</p>
-
 <p>However with this approach developers will need to run a *Vault *container and
 some bootstrap process to load all the needed configurations.</p>
-
 <h4 id="conclusion">Conclusion</h4>
-
 <p>The most interesting approaches from the operational point of view are
 relatively complex for developer’s everyday use and end up sacrificing
 environment parity.</p>
-
 <p>How are you shipping configurations, any different approach?</p>
 
-          </div>
         </div>
-      </div>
     </article>
 
-    <script src="/js/highlight.pack.js"></script>
-<script src="/js/quicklink.umd.js"></script>
-<script src="/js/lazyload.min.js"></script>
-<script>
-  var lazyImage = new LazyLoad({
-    container: document.getElementById('article')
-  });
-</script>
+    <hr />
 
-<script>
-  hljs.initHighlightingOnLoad();
+    <div class="post-info">
+        
+        
+    </div>
+</main>
 
-  var posts = document.getElementById('posts-list');
-  posts && quicklink({
-    el: posts,
-    priority: true,
-  });
-</script>
+            </div>
 
-    
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
+            
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            
+            <span> <a
+                    href="https://www.jacoelho.com/posts/index.xml" target="_blank" title="rss"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-rss">
+                        <path d="M4 11a9 9 0 0 1 9 9"></path>
+                        <path d="M4 4a16 16 0 0 1 16 16"></path>
+                        <circle cx="5" cy="19" r="1"></circle>
+                    </svg></a></span>
+        </div>
+    </div>
+</footer>
+            
+        </div>
 
-  </body>
+        
+
+
+
+
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.dc716e9092c9820b77f96da294d0120aeeb189b5bcea9752309ebea27fd53bbe6b13cffb2aca8ecf32525647ceb7001f76091de4199ac5a3caa432c070247f5b.js" integrity="sha512-3HFukJLJggt3&#43;W2ilNASCu6xibW86pdSMJ6&#43;on/VO75rE8/7KsqOzzJSVkfOtwAfdgkd5BmaxaPKpDLAcCR/Ww=="></script>
+
+
+
+    </body>
 </html>

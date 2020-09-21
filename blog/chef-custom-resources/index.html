@@ -1,145 +1,197 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Hugo 0.54.0" />
-
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="Jose Coelho" />
-  <meta property="og:url" content="https://www.jacoelho.com/blog/chef-custom-resources/" />
-  <link rel="canonical" href="https://www.jacoelho.com/blog/chef-custom-resources/" /><script type="application/ld+json">
-  {
-      "@context" : "http://schema.org",
-      "@type" : "BlogPosting",
-      "mainEntityOfPage": {
-           "@type": "WebPage",
-           "@id": "https://www.jacoelho.com"
-      },
-      "articleSection" : "blog",
-      "name" : "Chef Custom Resources ",
-      "headline" : "Chef Custom Resources ",
-      "description" : "Chef Custom Resources Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
-Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
-Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
-From the Kafka install directory, first check if the topic already exists:",
-      "inLanguage" : "en-US",
-      "author" : "Jose Coelho",
-      "creator" : "Jose Coelho",
-      "publisher": "Jose Coelho",
-      "accountablePerson" : "Jose Coelho",
-      "copyrightHolder" : "Jose Coelho",
-      "copyrightYear" : "2016",
-      "datePublished": "2016-07-13 10:24:46 &#43;0000 UTC",
-      "dateModified" : "2016-07-13 10:24:46 &#43;0000 UTC",
-      "url" : "https://www.jacoelho.com/blog/chef-custom-resources/",
-      "keywords" : [  ]
-  }
-</script>
-<title>Chef Custom Resources  - Jose Coelho</title>
-  <meta property="og:title" content="Chef Custom Resources  - Jose Coelho" />
-  <meta property="og:type" content="article" />
-  <meta name="description" content="Chef Custom Resources Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Jose Coelho ">
+<meta name="description" content="Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
 Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
 Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
 From the Kafka install directory, first check if the topic already exists:" />
-
-  <link
-    rel="stylesheet"
-    href="/css/flexboxgrid.min.css"
-  />
-  <link
-    rel="stylesheet"
-    href="/css/highlight/dracula.min.css"
-  />
-  <link rel="stylesheet" href="/css/index.css">
-  <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Jose Coelho">
-  
-  <script>
-    
-
-    (function(undefined) {}).call('object' === typeof window && window || 'object' === typeof self && self || 'object' === typeof global && global || {});
-  </script>
-
-  
-</head>
+<meta name="keywords" content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="https://www.jacoelho.com/blog/chef-custom-resources/" />
 
 
-  <body>
-    <article class="post " id="article">
-      <div class="row">
-        <div class="col-xs-12 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-          <header class="post-header">
-            <h1 class="post-title">Chef Custom Resources </h1>
-            <div class="row">
-              <div class="col-xs-6">
-                <time class="post-date" datetime="2016-07-13 10:24:46 UTC">
-                  13 Jul 2016
-                </time>
-              </div>
-              <div class="col-xs-6">
-                <div class="post-author">
-                  <a target="_blank" href="https://www.jacoelho.com">@Jose Coelho</a>
-                </div>
-              </div>
-            </div>
-          </header>
+    <title>
+        
+            Chef Custom Resources :: Posts  — Hello Friend NG Theme
+        
+    </title>
 
-          <div class="post-content markdown-body">
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://www.jacoelho.com/main.d1ea4af8fd04fb24a4f8b882ea54bd04eb245427ca4baf527c81a5dab071410b.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/favicon-16x16.png">
+    <link rel="manifest" href="https://www.jacoelho.com/site.webmanifest">
+    <link rel="mask-icon" href="https://www.jacoelho.com/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="https://www.jacoelho.com/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+
+
+<meta itemprop="name" content="Chef Custom Resources">
+<meta itemprop="description" content="Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
+Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
+Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
+From the Kafka install directory, first check if the topic already exists:">
+<meta itemprop="datePublished" content="2016-07-13T10:24:46+00:00" />
+<meta itemprop="dateModified" content="2016-07-13T10:24:46+00:00" />
+<meta itemprop="wordCount" content="690">
+<meta itemprop="image" content="https://www.jacoelho.com/"/>
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.jacoelho.com/"/>
+
+<meta name="twitter:title" content="Chef Custom Resources"/>
+<meta name="twitter:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
+Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
+Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
+From the Kafka install directory, first check if the topic already exists:"/>
+
+
+
+    <meta property="og:title" content="Chef Custom Resources" />
+<meta property="og:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
+Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
+Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
+From the Kafka install directory, first check if the topic already exists:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jacoelho.com/blog/chef-custom-resources/" />
+<meta property="og:image" content="https://www.jacoelho.com/"/>
+<meta property="article:published_time" content="2016-07-13T10:24:46+00:00" />
+<meta property="article:modified_time" content="2016-07-13T10:24:46+00:00" />
+
+
+
+
+
+
+    <meta property="article:published_time" content="2016-07-13 10:24:46 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">Jose Coelho</span>
+            <span class="logo__cursor" style=
+                  "visibility:hidden;
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
             
 
-<h1 id="chef-custom-resources">Chef Custom Resources</h1>
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
 
-<p>Lately I’ve been writing some <em>Chef</em> code. One of the best things about <em>Chef</em>
+
+            <div class="content">
+                
+<main class="post">
+
+    <div class="post-info">
+        
+        </p>
+    </div>
+
+    <article>
+        <h2 class="post-title"><a href="https://www.jacoelho.com/blog/chef-custom-resources/">Chef Custom Resources</a></h2>
+
+        
+
+        
+
+        <div class="post-content">
+            <p>Lately I’ve been writing some <em>Chef</em> code. One of the best things about <em>Chef</em>
 is custom resources:
 <a href="https://docs.chef.io/custom_resources.html">https://docs.chef.io/custom_resources.html</a></p>
-
 <p>Let’s see an example on how to create a <a href="https://kafka.apache.org/">Kafka</a> topic
 using <em>Chef</em> and how to make it
 <a href="https://en.wikipedia.org/wiki/Idempotence">idempotent</a>.</p>
-
 <p>Before writing any <em>Chef</em> code it is important to understand how to manage a
 <em>topic</em> (grouping of messages of a similar type).</p>
-
 <p>From the <em>Kafka</em> install directory, first check if the <em>topic</em> already exists:</p>
-
 <pre><code>bin/kafka-topics.sh
     --zookeeper localhost:2181 \
     --describe \
     --topic &lt;name&gt;
-</code></pre>
-
-<p>If it doesn&rsquo;t exist, create it:</p>
-
+</code></pre><p>If it doesn&rsquo;t exist, create it:</p>
 <pre><code>bin/kafka-topics.sh
     --zookeeper localhost:2181 \
     --create \
     --topic &lt;name&gt; \
     --replication-factor &lt;value&gt; \
     --partitions &lt;value&gt;
-</code></pre>
-
-<p>If the <em>topic</em> exists, to increase the number of <em>partitions</em> (way to
+</code></pre><p>If the <em>topic</em> exists, to increase the number of <em>partitions</em> (way to
 parallelize the consumption of messages from a topic):</p>
-
 <pre><code>bin/kafka-topics.sh
     --zookeeper localhost:2181 \
     --alter \
     --topic &lt;name&gt; \
     --partitions &lt;value&gt;
-</code></pre>
-
-<p>If the topic exists, to increase the number of *replicas *(number of copies of
+</code></pre><p>If the topic exists, to increase the number of *replicas *(number of copies of
 the partitions for data redundancy):</p>
-
 <pre><code>bin/kafka-reassign-partitions.sh \
     --zookeeper localhost:2181 \
     --reassignment-json-file increase-replication-factor.json \
     --execute
-</code></pre>
-
-<p>Where the file <em>increase-replication-factor.json</em> follows the format:</p>
-
+</code></pre><p>Where the file <em>increase-replication-factor.json</em> follows the format:</p>
 <pre><code>{
     &quot;version&quot;: 1,
     &quot;partitions&quot;: [
@@ -150,252 +202,226 @@ the partitions for data redundancy):</p>
         }
     ]
 }
-</code></pre>
+</code></pre><p>The basic custom resource structure:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">
+property <span style="color:#e6db74">:topic</span>,      String, <span style="color:#e6db74">name_property</span>: <span style="color:#66d9ef">true</span>
+property <span style="color:#e6db74">:partitions</span>, <span style="color:#66d9ef">Fixnum</span>, <span style="color:#e6db74">default</span>: <span style="color:#ae81ff">3</span>
+property <span style="color:#e6db74">:replicas</span>,   <span style="color:#66d9ef">Fixnum</span>, <span style="color:#e6db74">default</span>: <span style="color:#ae81ff">3</span>
+property <span style="color:#e6db74">:zookeeper</span>,  String, <span style="color:#e6db74">default</span>: <span style="color:#e6db74">&#34;localhost:2181&#34;</span>
+property <span style="color:#e6db74">:directory</span>,  String, <span style="color:#e6db74">default</span>: <span style="color:#e6db74">&#34;/kafka&#34;</span>
 
-<p>The basic custom resource structure:</p>
+action <span style="color:#e6db74">:create</span> <span style="color:#66d9ef">do</span>
+  cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">%W(
+</span><span style="color:#e6db74">    </span><span style="color:#e6db74">#{</span>directory<span style="color:#e6db74">}</span><span style="color:#e6db74">/bin/kafka-topics.sh
+</span><span style="color:#e6db74">    --zookeeper </span><span style="color:#e6db74">#{</span>zookeeper<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    --create
+</span><span style="color:#e6db74">    --topic </span><span style="color:#e6db74">#{</span>topic<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    --replication-factor </span><span style="color:#e6db74">#{</span>replicas<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    --partitions </span><span style="color:#e6db74">#{</span>partitions<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">  )</span><span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#34; &#34;</span>)
 
-<pre><code class="language-ruby">
-property :topic,      String, name_property: true
-property :partitions, Fixnum, default: 3
-property :replicas,   Fixnum, default: 3
-property :zookeeper,  String, default: &quot;localhost:2181&quot;
-property :directory,  String, default: &quot;/kafka&quot;
-
-action :create do
-  cmd = %W(
-    #{directory}/bin/kafka-topics.sh
-    --zookeeper #{zookeeper}
-    --create
-    --topic #{topic}
-    --replication-factor #{replicas}
-    --partitions #{partitions}
-  ).join(&quot; &quot;)
-
-  result = shell_out(cmd)
-end
-</code></pre>
-
-<p>Using the resource (<a href="https://docs.chef.io/cookbooks.html">cookbook</a> example):</p>
-
-<pre><code class="language-ruby">example_topic &quot;example&quot; do
-  partitions  1
-  replication 1
-end
-</code></pre>
-
-<p>With this code creating <em>topics</em> is possible. However, it isn’t checking if the
+  result <span style="color:#f92672">=</span> shell_out(cmd)
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Using the resource (<a href="https://docs.chef.io/cookbooks.html">cookbook</a> example):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">example_topic <span style="color:#e6db74">&#34;example&#34;</span> <span style="color:#66d9ef">do</span>
+  partitions  <span style="color:#ae81ff">1</span>
+  replication <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>With this code creating <em>topics</em> is possible. However, it isn’t checking if the
 topic already exists or if the settings are valid.</p>
-
-<hr />
-
+<hr>
 <h4 id="chefspec">ChefSpec</h4>
-
 <p><a href="https://github.com/sethvargo/chefspec">ChefSpec</a> is a testing framework aimed
 for testing <em>Chef</em> cookbooks.</p>
-
 <p>In order to test a custom resource, first create the <em>ChefSpec</em> resource
 matcher:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> defined?(<span style="color:#66d9ef">ChefSpec</span>)
 
-<pre><code class="language-ruby">if defined?(ChefSpec)
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">create_example_topic</span>(resource_name)
+    <span style="color:#66d9ef">ChefSpec</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Matchers</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ResourceMatcher</span><span style="color:#f92672">.</span>new(<span style="color:#e6db74">:example_topic</span>, <span style="color:#e6db74">:create</span>, resource_name)
+  <span style="color:#66d9ef">end</span>
 
-  def create_example_topic(resource_name)
-    ChefSpec::Matchers::ResourceMatcher.new(:example_topic, :create, resource_name)
-  end
-
-end
-</code></pre>
-
-<p>Generate a <em>test_cookbook</em>:</p>
-
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Generate a <em>test_cookbook</em>:</p>
 <pre><code>mkdir -p test/cookbooks
 chef generate cookbook test/cookbooks/test_example
-</code></pre>
+</code></pre><p>Create the file* test/cookbooks/test_example/recipes/create.rb*:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">example_topic <span style="color:#e6db74">&#34;example&#34;</span> <span style="color:#66d9ef">do</span>
+  partitions  <span style="color:#ae81ff">1</span>
+  replication <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Update the file <em>test/cookbooks/test_example/metadata.rb</em>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">name <span style="color:#e6db74">&#34;test_example&#34;</span>
+maintainer <span style="color:#e6db74">&#34;The Authors&#34;</span>
+maintainer_email <span style="color:#e6db74">&#34;you@example.com&#34;</span>
+license <span style="color:#e6db74">&#34;all_rights&#34;</span>
+description <span style="color:#e6db74">&#34;Installs/Configures test&#34;</span>
+long_description <span style="color:#e6db74">&#34;Installs/Configures test&#34;</span>
+version <span style="color:#e6db74">&#34;0.1.0&#34;</span>
 
-<p>Create the file* test/cookbooks/test_example/recipes/create.rb*:</p>
+depends <span style="color:#e6db74">&#34;example&#34;</span> <span style="color:#75715e"># example cookbook dependency</span>
+</code></pre></div><p>Write the create test <em>spec/unit/recipes/create_spec.rb</em>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">require <span style="color:#e6db74">&#34;spec_helper&#34;</span>
 
-<pre><code class="language-ruby">example_topic &quot;example&quot; do
-  partitions  1
-  replication 1
-end
-</code></pre>
+context <span style="color:#e6db74">&#34;test_example&#34;</span> <span style="color:#66d9ef">do</span>
+  let(<span style="color:#e6db74">:chef_conf</span>) <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">ChefSpec</span><span style="color:#f92672">::</span><span style="color:#66d9ef">SoloRunner</span><span style="color:#f92672">.</span>new <span style="color:#e6db74">cookbook_path</span>: <span style="color:#e6db74">%w(./test/cookbooks ../)</span>, <span style="color:#75715e"># import test and example cookbook</span>
+                             <span style="color:#e6db74">step_into</span>:     <span style="color:#e6db74">%w(example_topic)</span> <span style="color:#75715e"># dive inside example_topic</span>
+  <span style="color:#66d9ef">end</span>
 
-<p>Update the file <em>test/cookbooks/test_example/metadata.rb</em>:</p>
+  let(<span style="color:#e6db74">:shellout</span>) { double(<span style="color:#e6db74">&#34;shellout&#34;</span>) } <span style="color:#75715e"># setup shellout double</span>
 
-<pre><code class="language-ruby">name &quot;test_example&quot;
-maintainer &quot;The Authors&quot;
-maintainer_email &quot;you@example.com&quot;
-license &quot;all_rights&quot;
-description &quot;Installs/Configures test&quot;
-long_description &quot;Installs/Configures test&quot;
-version &quot;0.1.0&quot;
-
-depends &quot;example&quot; # example cookbook dependency
-</code></pre>
-
-<p>Write the create test <em>spec/unit/recipes/create_spec.rb</em>:</p>
-
-<pre><code class="language-ruby">require &quot;spec_helper&quot;
-
-context &quot;test_example&quot; do
-  let(:chef_conf) do
-    ChefSpec::SoloRunner.new cookbook_path: %w(./test/cookbooks ../), # import test and example cookbook
-                             step_into:     %w(example_topic) # dive inside example_topic
-  end
-
-  let(:shellout) { double(&quot;shellout&quot;) } # setup shellout double
-
-  before do
-    allow(Mixlib::ShellOut).to receive(:new).and_return(shellout)
-    allow(shellout).to receive_messages(
-      :run_command =&gt; nil,
-      :error! =&gt; nil,
-      :live_stream =&gt; nil,
-      :live_stream= =&gt; nil
+  before <span style="color:#66d9ef">do</span>
+    allow(<span style="color:#66d9ef">Mixlib</span><span style="color:#f92672">::</span><span style="color:#66d9ef">ShellOut</span>)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:new</span>)<span style="color:#f92672">.</span>and_return(shellout)
+    allow(shellout)<span style="color:#f92672">.</span>to receive_messages(
+      <span style="color:#e6db74">:run_command</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">nil</span>,
+      <span style="color:#e6db74">:error!</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">nil</span>,
+      <span style="color:#e6db74">:live_stream</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">nil</span>,
+      <span style="color:#e6db74">:live_stream</span><span style="color:#f92672">=</span> <span style="color:#f92672">=&gt;</span> <span style="color:#66d9ef">nil</span>
     )
-  end
+  <span style="color:#66d9ef">end</span>
 
-  describe &quot;topic create&quot; do
-    let(:chef_run) { chef_conf.converge(&quot;test_example::create&quot;) }
+  describe <span style="color:#e6db74">&#34;topic create&#34;</span> <span style="color:#66d9ef">do</span>
+    let(<span style="color:#e6db74">:chef_run</span>) { chef_conf<span style="color:#f92672">.</span>converge(<span style="color:#e6db74">&#34;test_example::create&#34;</span>) }
 
-    it &quot;converges successfully&quot; do
-      allow(shellout).to receive(:stdout).and_return(&quot;&quot;, &quot;Created topic&quot;)
+    it <span style="color:#e6db74">&#34;converges successfully&#34;</span> <span style="color:#66d9ef">do</span>
+      allow(shellout)<span style="color:#f92672">.</span>to receive(<span style="color:#e6db74">:stdout</span>)<span style="color:#f92672">.</span>and_return(<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#e6db74">&#34;Created topic&#34;</span>)
 
-      expect { chef_run }.to_not raise_error
-      expect(chef_run).to create_example_topic(&quot;test&quot;) # custom matcher in action
-    end
-  end
-</code></pre>
-
-<p>Now we can improve our resource with confidence — and all will still be working!</p>
-
-<hr />
-
+      expect { chef_run }<span style="color:#f92672">.</span>to_not raise_error
+      expect(chef_run)<span style="color:#f92672">.</span>to create_example_topic(<span style="color:#e6db74">&#34;test&#34;</span>) <span style="color:#75715e"># custom matcher in action</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+</code></pre></div><p>Now we can improve our resource with confidence — and all will still be working!</p>
+<hr>
 <p>At the moment the resource is quite simple and will try to create the topic
 every time <em>Chef</em> runs. Now it’s time to find ways to improve it!</p>
-
 <p>As seen before we can search for a <em>topic</em>:</p>
-
 <pre><code>bin/kafka-topics.sh
     --zookeeper $ZK \
     --describe \
     --topic &lt;name&gt;
-</code></pre>
-
-<p>The output will be something like:</p>
-
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*ilfBGZvftKO0a8ljO2nx8g.png" alt="" />
-<span class="figcaption_hack">kafka describe topic</span></p>
-
+</code></pre><p>The output will be something like:</p>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*ilfBGZvftKO0a8ljO2nx8g.png" alt="">
+<!-- raw HTML omitted -->kafka describe topic<!-- raw HTML omitted --></p>
 <p>Example code to parse this output:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">list</span>(directory, zookeeper, topic)
+  cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">%W(
+</span><span style="color:#e6db74">    </span><span style="color:#e6db74">#{</span>directory<span style="color:#e6db74">}</span><span style="color:#e6db74">/bin/kafka-topics.sh
+</span><span style="color:#e6db74">    --zookeeper </span><span style="color:#e6db74">#{</span>zookeeper<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    --describe
+</span><span style="color:#e6db74">    --topic </span><span style="color:#e6db74">#{</span>topic<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">  )</span><span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#34; &#34;</span>)
 
-<pre><code class="language-ruby">def list(directory, zookeeper, topic)
-  cmd = %W(
-    #{directory}/bin/kafka-topics.sh
-    --zookeeper #{zookeeper}
-    --describe
-    --topic #{topic}
-  ).join(&quot; &quot;)
-
-  result = shell_out(cmd).stdout
-  extract = -&gt;(a) { a &amp;&amp; a.to_i }
+  result <span style="color:#f92672">=</span> shell_out(cmd)<span style="color:#f92672">.</span>stdout
+  extract <span style="color:#f92672">=</span> <span style="color:#f92672">-&gt;</span>(a) { a <span style="color:#f92672">&amp;&amp;</span> a<span style="color:#f92672">.</span>to_i }
 
   {
-    partitions: extract.call(result[/PartitionCount:\s*(\d+)/, 1]),
-    replicas: extract.call(result[/ReplicationFactor:\s*(\d+)/, 1])
+    <span style="color:#e6db74">partitions</span>: extract<span style="color:#f92672">.</span>call(result<span style="color:#f92672">[</span><span style="color:#e6db74">/PartitionCount:\s*(\d+)/</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">]</span>),
+    <span style="color:#e6db74">replicas</span>: extract<span style="color:#f92672">.</span>call(result<span style="color:#f92672">[</span><span style="color:#e6db74">/ReplicationFactor:\s*(\d+)/</span>, <span style="color:#ae81ff">1</span><span style="color:#f92672">]</span>)
   }
-end
-</code></pre>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>With this we create a consistent view between <em>Chef</em> and the actual resource:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">load_current_value <span style="color:#66d9ef">do</span>
+  current_partitions, current_replicas <span style="color:#f92672">=</span> list(directory, zookeeper, topic)
+                                         <span style="color:#f92672">.</span>values_at <span style="color:#f92672">*</span><span style="color:#e6db74">%w(partitions replicas)</span>
 
-<p>With this we create a consistent view between <em>Chef</em> and the actual resource:</p>
-
-<pre><code class="language-ruby">load_current_value do
-  current_partitions, current_replicas = list(directory, zookeeper, topic)
-                                         .values_at *%w(partitions replicas)
-
-  current_value_does_not_exist! unless current_partitions &amp;&amp; current_replicas
+  current_value_does_not_exist! <span style="color:#66d9ef">unless</span> current_partitions <span style="color:#f92672">&amp;&amp;</span> current_replicas
 
   partitions current_partitions
   replicas current_replicas
-end
-</code></pre>
-
-<p>Refactoring the “*create action*”:</p>
-
-<pre><code class="language-ruby">action :create do
-  # calls the block if current_resource does not exist
-  # or values are different from current_resource
-  converge_if_changed do
-    if current_resource
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>Refactoring the “<em>create action</em>”:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">action <span style="color:#e6db74">:create</span> <span style="color:#66d9ef">do</span>
+  <span style="color:#75715e"># calls the block if current_resource does not exist</span>
+  <span style="color:#75715e"># or values are different from current_resource</span>
+  converge_if_changed <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">if</span> current_resource
       action_update
-    else
-      converge_by &quot;Create topic #{new_resource.topic}&quot; do
-        create! new_resource.directory,
-                new_resource.zookeeper,
-                new_resource.topic,
-                new_resource.partitions,
-                new_resource.replicas
-      end
-    end
-  end
-end
-</code></pre>
+    <span style="color:#66d9ef">else</span>
+      converge_by <span style="color:#e6db74">&#34;Create topic </span><span style="color:#e6db74">#{</span>new_resource<span style="color:#f92672">.</span>topic<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> <span style="color:#66d9ef">do</span>
+        create! new_resource<span style="color:#f92672">.</span>directory,
+                new_resource<span style="color:#f92672">.</span>zookeeper,
+                new_resource<span style="color:#f92672">.</span>topic,
+                new_resource<span style="color:#f92672">.</span>partitions,
+                new_resource<span style="color:#f92672">.</span>replicas
+      <span style="color:#66d9ef">end</span>
+    <span style="color:#66d9ef">end</span>
+  <span style="color:#66d9ef">end</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>“<em>Update action</em>”:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby">action <span style="color:#e6db74">:update</span> <span style="color:#66d9ef">do</span>
+  alter! new_resource<span style="color:#f92672">.</span>directory,
+         new_resource<span style="color:#f92672">.</span>zookeeper,
+         new_resource<span style="color:#f92672">.</span>topic,
+         new_resource<span style="color:#f92672">.</span>partitions
+<span style="color:#66d9ef">end</span>
 
-<p>“*Update action*”:</p>
+require <span style="color:#e6db74">&#34;chef/log&#34;</span>
 
-<pre><code class="language-ruby">action :update do
-  alter! new_resource.directory,
-         new_resource.zookeeper,
-         new_resource.topic,
-         new_resource.partitions
-end
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">alter!</span>(directory, zookeeper, topic, partitions)
+  cmd <span style="color:#f92672">=</span> <span style="color:#e6db74">%W(
+</span><span style="color:#e6db74">    </span><span style="color:#e6db74">#{</span>directory<span style="color:#e6db74">}</span><span style="color:#e6db74">/bin/kafka-topics.sh
+</span><span style="color:#e6db74">    --zookeeper </span><span style="color:#e6db74">#{</span>zookeeper<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    --alter
+</span><span style="color:#e6db74">    --topic </span><span style="color:#e6db74">#{</span>topic<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    --partitions </span><span style="color:#e6db74">#{</span>partitions<span style="color:#e6db74">}</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">  )</span><span style="color:#f92672">.</span>join(<span style="color:#e6db74">&#34; &#34;</span>)
 
-require &quot;chef/log&quot;
-
-def alter!(directory, zookeeper, topic, partitions)
-  cmd = %W(
-    #{directory}/bin/kafka-topics.sh
-    --zookeeper #{zookeeper}
-    --alter
-    --topic #{topic}
-    --partitions #{partitions}
-  ).join(&quot; &quot;)
-
-  result = shell_out(cmd)
-  Chef::Log.error(result.stderr) unless result.stdout =~ /Adding partitions succeeded!/
-end
-</code></pre>
-
-<p>This small example goes to show just how powerful the <em>Chef</em> <em>DSL</em> is and how it
+  result <span style="color:#f92672">=</span> shell_out(cmd)
+  <span style="color:#66d9ef">Chef</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Log</span><span style="color:#f92672">.</span>error(result<span style="color:#f92672">.</span>stderr) <span style="color:#66d9ef">unless</span> result<span style="color:#f92672">.</span>stdout <span style="color:#f92672">=~</span> <span style="color:#e6db74">/Adding partitions succeeded!/</span>
+<span style="color:#66d9ef">end</span>
+</code></pre></div><p>This small example goes to show just how powerful the <em>Chef</em> <em>DSL</em> is and how it
 helps in the creation of idempotent resources.</p>
-
 <p>The full example (with tests) is available in the github:
 <a href="https://github.com/jacoelho/example">link</a></p>
 
-          </div>
         </div>
-      </div>
     </article>
 
-    <script src="/js/highlight.pack.js"></script>
-<script src="/js/quicklink.umd.js"></script>
-<script src="/js/lazyload.min.js"></script>
-<script>
-  var lazyImage = new LazyLoad({
-    container: document.getElementById('article')
-  });
-</script>
+    <hr />
 
-<script>
-  hljs.initHighlightingOnLoad();
+    <div class="post-info">
+        
+        
+    </div>
+</main>
 
-  var posts = document.getElementById('posts-list');
-  posts && quicklink({
-    el: posts,
-    priority: true,
-  });
-</script>
+            </div>
 
-    
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
+            
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            
+            <span> <a
+                    href="https://www.jacoelho.com/posts/index.xml" target="_blank" title="rss"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-rss">
+                        <path d="M4 11a9 9 0 0 1 9 9"></path>
+                        <path d="M4 4a16 16 0 0 1 16 16"></path>
+                        <circle cx="5" cy="19" r="1"></circle>
+                    </svg></a></span>
+        </div>
+    </div>
+</footer>
+            
+        </div>
 
-  </body>
+        
+
+
+
+
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.dc716e9092c9820b77f96da294d0120aeeb189b5bcea9752309ebea27fd53bbe6b13cffb2aca8ecf32525647ceb7001f76091de4199ac5a3caa432c070247f5b.js" integrity="sha512-3HFukJLJggt3&#43;W2ilNASCu6xibW86pdSMJ6&#43;on/VO75rE8/7KsqOzzJSVkfOtwAfdgkd5BmaxaPKpDLAcCR/Ww=="></script>
+
+
+
+    </body>
 </html>
