@@ -37,7 +37,7 @@ Hardware  CPU doesn&amp;rsquo;t matter that much. Memory helps a lot (a lot) in 
       <pubDate>Sat, 20 Aug 2016 10:24:46 +0000</pubDate>
       
       <guid>https://www.jacoelho.com/blog/stability-patterns-circuit-breaker/</guid>
-      <description>Stability Patterns — Circuit Breaker  A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+      <description>A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
  The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures.</description>
     </item>
     

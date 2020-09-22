@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Jose Coelho ">
-<meta name="description" content="Stability Patterns — Circuit Breaker  A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+<meta name="description" content="A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
  The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures." />
 <meta name="keywords" content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
 <meta name="robots" content="noodp" />
@@ -26,7 +26,7 @@
 
 
 
-<link rel="stylesheet" href="https://www.jacoelho.com/main.d1ea4af8fd04fb24a4f8b882ea54bd04eb245427ca4baf527c81a5dab071410b.css">
+<link rel="stylesheet" href="https://www.jacoelho.com/main.5065e7e2de9ed3289e28981aa60c3b19d30986c09df329b604aa6a4c0fe76056.css">
 
 
 
@@ -43,11 +43,11 @@
 
 
 <meta itemprop="name" content="Stability Patterns — Circuit Breaker">
-<meta itemprop="description" content="Stability Patterns — Circuit Breaker  A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+<meta itemprop="description" content="A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
  The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures.">
 <meta itemprop="datePublished" content="2016-08-20T10:24:46+00:00" />
 <meta itemprop="dateModified" content="2016-08-20T10:24:46+00:00" />
-<meta itemprop="wordCount" content="617">
+<meta itemprop="wordCount" content="612">
 <meta itemprop="image" content="https://www.jacoelho.com/"/>
 
 
@@ -58,13 +58,13 @@
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
 
 <meta name="twitter:title" content="Stability Patterns — Circuit Breaker"/>
-<meta name="twitter:description" content="Stability Patterns — Circuit Breaker  A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+<meta name="twitter:description" content="A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
  The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures."/>
 
 
 
     <meta property="og:title" content="Stability Patterns — Circuit Breaker" />
-<meta property="og:description" content="Stability Patterns — Circuit Breaker  A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+<meta property="og:description" content="A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
  The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/stability-patterns-circuit-breaker/" />
@@ -150,8 +150,7 @@
         
 
         <div class="post-content">
-            <h1 id="stability-patterns--circuit-breaker">Stability Patterns — Circuit Breaker</h1>
-<blockquote>
+            <blockquote>
 <p>A circuit breaker is an automatically operated electrical switch designed to
 protect an electrical circuit from damage caused by over-current or overload or
 short circuit. Its basic function is to interrupt current flow after protective
@@ -224,14 +223,14 @@ persists.</p>
 	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
 }
 </code></pre></div><p>And open circuit logic:</p>
-<pre><code>func (c *Circuit) isOpen() bool {
-	if c.shouldRetry() {
-		return false
-	} else {
-		return c.failuresCounter &gt; c.FailThreshold
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">isOpen</span>() <span style="color:#66d9ef">bool</span> {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">shouldRetry</span>() {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">FailThreshold</span>
 	}
 }
-</code></pre><p>An improved version of the circuit breaker main block:</p>
+</code></pre></div><p>An improved version of the circuit breaker main block:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
 <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>()) <span style="color:#66d9ef">error</span> {
 	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">isOpen</span>() {
