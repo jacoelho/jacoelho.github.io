@@ -7,18 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 13 Sep 2020 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/blog/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Writing a client library in Go</title>
-      <link>https://www.jacoelho.com/blog/client-library-in-go/</link>
-      <pubDate>Sun, 13 Sep 2020 10:24:46 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/blog/client-library-in-go/</guid>
-      <description>There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
-Without any specific order of importance, these are my thoughts on the subject.
-Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse).</description>
-    </item>
-    
+    <lastBuildDate>Sat, 19 Aug 2017 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>A story about Go http.Client</title>
       <link>https://www.jacoelho.com/blog/a-story-about-go-http-client/</link>
@@ -113,6 +102,15 @@ From the Kafka install directory, first check if the topic already exists:</desc
       
       <guid>https://www.jacoelho.com/blog/secure-redis/</guid>
       <description>Originally published at https://medium.com/@jacoelho/secure-redis-dff568ef0ea0</description>
+    </item>
+    
+    <item>
+      <title>Docker Images</title>
+      <link>https://www.jacoelho.com/blog/docker-images/</link>
+      <pubDate>Mon, 01 Jun 2015 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/docker-images/</guid>
+      <description>Originally published at https://medium.com/@jacoelho/docker-images-f3c5a39baa65</description>
     </item>
     
   </channel>

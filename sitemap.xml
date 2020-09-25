@@ -3,27 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://www.jacoelho.com/</loc>
-    <lastmod>2020-09-13T10:24:46+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jacoelho.com/blog/</loc>
-    <lastmod>2020-09-13T10:24:46+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.jacoelho.com/blog/client-library-in-go/</loc>
-    <lastmod>2020-09-13T10:24:46+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.jacoelho.com/about/</loc>
     <lastmod>2019-02-19T10:24:46+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.jacoelho.com/blog/a-story-about-go-http-client/</loc>
+    <lastmod>2017-08-19T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/</loc>
+    <lastmod>2017-08-19T10:24:46+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.jacoelho.com/blog/</loc>
     <lastmod>2017-08-19T10:24:46+00:00</lastmod>
   </url>
   
