@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Fri, 25 Sep 2020 12:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Apr 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go - On building URL strings</title>
+      <link>https://www.jacoelho.com/blog/building_url_strings/</link>
+      <pubDate>Sat, 17 Apr 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/building_url_strings/</guid>
+      <description>In Go building URL strings may be done in a couple different ways:
+ string concatenation - operator + fmt.Sprintf bytes.Buffer strings.Builder url.Parse  One may ask, which one should be used and as always the answer depends.
+URL Building One important fact to be aware is when building URLs manually, it is easy to do the encoding wrong and ignore percentage-encode.
+Before starting a quick refresh on the URL structure:</description>
+    </item>
+    
     <item>
       <title>Writing a client library in Go</title>
       <link>https://www.jacoelho.com/blog/client-library-in-go/</link>
@@ -104,15 +116,6 @@ Available Options There are a couple of different ways to handle configuration i
 Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
 Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
 From the Kafka install directory, first check if the topic already exists:</description>
-    </item>
-    
-    <item>
-      <title>Ansible in AWS Lambda</title>
-      <link>https://www.jacoelho.com/blog/ansible-in-aws-lambda/</link>
-      <pubDate>Thu, 18 Feb 2016 10:24:46 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/blog/ansible-in-aws-lambda/</guid>
-      <description>Originally published at https://medium.com/@jacoelho/ansible-in-aws-lambda-980bb8b5791b</description>
     </item>
     
   </channel>
