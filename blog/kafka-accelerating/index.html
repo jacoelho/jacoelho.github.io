@@ -6,9 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author"
     content="Jose Coelho ">
-<meta name="description"
-    content="Quick tips and insights on how to make Apache Kafka work faster!
-Hardware  CPU doesn&amp;rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare metal.  Linux  Configure to maximize memory usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka." />
 <meta name="keywords"
     content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
 <meta name="robots" content="noodp" />
@@ -18,7 +15,7 @@ Hardware  CPU doesn&amp;rsquo;t matter that much. Memory helps a lot (a lot) in 
 
 <title>
     
-    Kafka — Accelerating! :: Posts  — Hello Friend NG Theme
+    Kafka — Accelerating! :: Posts 
     
 </title>
 

@@ -6,12 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author"
     content="Jose Coelho ">
-<meta name="description"
-    content="Or how I have learned to embrace http.RoundTripper
-Using a http client in Go usually starts like this:
-resp, err := http.Get(&amp;#34;http://example.com/&amp;#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow response, etc.
-After some research (I recommend reading The complete guide to Go net/http timeouts) you may end up writing something similar to:
-c := &amp;amp;http.Client{ Transport: &amp;amp;http.Transport{ Dial: (&amp;amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time." />
 <meta name="keywords"
     content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
 <meta name="robots" content="noodp" />
@@ -21,7 +15,7 @@ c := &amp;amp;http.Client{ Transport: &amp;amp;http.Transport{ Dial: (&amp;amp;n
 
 <title>
     
-    A story about Go http.Client :: Posts  — Hello Friend NG Theme
+    A story about Go http.Client :: Posts 
     
 </title>
 
