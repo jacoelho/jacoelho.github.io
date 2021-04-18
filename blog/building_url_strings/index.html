@@ -43,13 +43,13 @@
 
 
 <meta itemprop="name" content="Go - On building URL strings">
-<meta itemprop="description" content="In Go building URL strings may be done in a couple different ways:
- string concatenation - operator &#43; fmt.Sprintf bytes.Buffer strings.Builder url.Parse  One may ask, which one should be used and as always the answer depends.
-URL Building One important fact to be aware is when building URLs manually, it is easy to do the encoding wrong and ignore percentage-encode.
-Before starting a quick refresh on the URL structure:">
+<meta itemprop="description" content="Building URL strings in Go may be accomplished in a couple different ways:
+ url.Parse string concatenation (using &#43;) fmt.Sprintf bytes.Buffer strings.Builder  You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.
+URL.Parse Before we start, a quick refresh on the URL structure:
+One important fact to be aware is that when building URLs manually, it is easy to forget the percentage-encoding.">
 <meta itemprop="datePublished" content="2021-04-17T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-04-17T10:00:00+00:00" />
-<meta itemprop="wordCount" content="737">
+<meta itemprop="wordCount" content="767">
 <meta itemprop="image" content="https://www.jacoelho.com/"/>
 
 
@@ -60,18 +60,18 @@ Before starting a quick refresh on the URL structure:">
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
 
 <meta name="twitter:title" content="Go - On building URL strings"/>
-<meta name="twitter:description" content="In Go building URL strings may be done in a couple different ways:
- string concatenation - operator &#43; fmt.Sprintf bytes.Buffer strings.Builder url.Parse  One may ask, which one should be used and as always the answer depends.
-URL Building One important fact to be aware is when building URLs manually, it is easy to do the encoding wrong and ignore percentage-encode.
-Before starting a quick refresh on the URL structure:"/>
+<meta name="twitter:description" content="Building URL strings in Go may be accomplished in a couple different ways:
+ url.Parse string concatenation (using &#43;) fmt.Sprintf bytes.Buffer strings.Builder  You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.
+URL.Parse Before we start, a quick refresh on the URL structure:
+One important fact to be aware is that when building URLs manually, it is easy to forget the percentage-encoding."/>
 
 
 
 <meta property="og:title" content="Go - On building URL strings" />
-<meta property="og:description" content="In Go building URL strings may be done in a couple different ways:
- string concatenation - operator &#43; fmt.Sprintf bytes.Buffer strings.Builder url.Parse  One may ask, which one should be used and as always the answer depends.
-URL Building One important fact to be aware is when building URLs manually, it is easy to do the encoding wrong and ignore percentage-encode.
-Before starting a quick refresh on the URL structure:" />
+<meta property="og:description" content="Building URL strings in Go may be accomplished in a couple different ways:
+ url.Parse string concatenation (using &#43;) fmt.Sprintf bytes.Buffer strings.Builder  You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.
+URL.Parse Before we start, a quick refresh on the URL structure:
+One important fact to be aware is that when building URLs manually, it is easy to forget the percentage-encoding." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/building_url_strings/" />
 <meta property="og:image" content="https://www.jacoelho.com/"/>
@@ -163,20 +163,20 @@ Before starting a quick refresh on the URL structure:" />
         
 
         <div class="post-content">
-            <p>In Go building URL strings may be done in a couple different ways:</p>
+            <p>Building URL strings in Go may be accomplished in a couple different ways:</p>
 <ul>
-<li>string concatenation - operator <code>+</code></li>
+<li><code>url.Parse</code></li>
+<li>string concatenation (using <code>+</code>)</li>
 <li><code>fmt.Sprintf</code></li>
 <li><code>bytes.Buffer</code></li>
 <li><code>strings.Builder</code></li>
-<li><code>url.Parse</code></li>
 </ul>
-<p>One may ask, which one should be used and as always the answer depends.</p>
-<h2 id="url-building">URL Building</h2>
-<p>One important fact to be aware is when building URLs manually, it is easy to do the encoding wrong and ignore <a href="https://en.wikipedia.org/wiki/Percent-encoding">percentage-encode</a>.</p>
-<p>Before starting a quick refresh on the URL structure:</p>
+<p>You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.</p>
+<h2 id="urlparse"><code>URL.Parse</code></h2>
+<p>Before we start, a quick refresh on the URL structure:</p>
 <p><img src="https://www.jacoelho.com/images/url.png" alt="url"></p>
-<p>The <a href="https://golang.org/pkg/net/url/">url package</a> implements the URL parsing and query escaping logic, although the api may be a bit awkward to use.</p>
+<p>One important fact to be aware is that when building URLs manually, it is easy to forget the <a href="https://en.wikipedia.org/wiki/Percent-encoding">percentage-encoding</a>.</p>
+<p>The <a href="https://golang.org/pkg/net/url/">url package</a> implements the URL parsing and query encoding logic, although the api may be easy to misuse, like in the examples below.</p>
 <p>Using <code>url.Parse</code> to parse a string:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
@@ -191,7 +191,7 @@ Before starting a quick refresh on the URL structure:" />
 	<span style="color:#75715e">// prints https://example.org/resource?filter[page]=1
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
 }
-</code></pre></div><p><code>url.Parse</code> does not check if the query is properly encoded, however it is possible to fix it by retrieving the query section and encoding it explicitly:</p>
+</code></pre></div><p><code>url.Parse</code> does not check if the query is properly encoded. However, it is possible to fix it by retrieving the query section and encoding it explicitly:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 <span style="color:#f92672">import</span> (
@@ -210,7 +210,7 @@ Before starting a quick refresh on the URL structure:" />
 	<span style="color:#75715e">// prints https://example.org/resource?filter%5Bpage%5D=1
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
 }
-</code></pre></div><p>Another common variation is using <code>url.Values</code>:</p>
+</code></pre></div><p>Another possible way to encode query string is using <code>url.Values</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 <span style="color:#f92672">import</span> (
@@ -232,7 +232,7 @@ Before starting a quick refresh on the URL structure:" />
 	<span style="color:#75715e">// prints https://example.org/foo?filter%5Bpage%5D=1
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
 }
-</code></pre></div><p>On query building abstractions, <a href="https://github.com/google/go-querystring">go-querystring</a> package provides some extra functionality around <code>url.Values</code>, but follows the initial <code>RawQuery</code> usage.</p>
+</code></pre></div><p>On query building abstractions, the <a href="https://github.com/google/go-querystring">go-querystring</a> package provides some extra functionality around <code>url.Values</code>, but follows the initial <code>RawQuery</code> usage.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
 <span style="color:#f92672">import</span> (
@@ -259,7 +259,7 @@ Before starting a quick refresh on the URL structure:" />
 	<span style="color:#75715e">// prints https://example.org/foo?filter%5Bpage%5D=1
 </span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
 }
-</code></pre></div><p>On the <code>url.Parse</code> something to be aware is <code>http.NewRequestWithContext</code> signature is:</p>
+</code></pre></div><p>Something to be aware with <code>url.Parse</code> is that <code>http.NewRequestWithContext</code> signature is:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">body</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">error</span>)
 </code></pre></div><p>URL argument is string, but it will be parsed to <code>url.URL</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">body</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">error</span>) {
@@ -269,8 +269,9 @@ Before starting a quick refresh on the URL structure:" />
 	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">urlpkg</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">url</span>) <span style="color:#75715e">//net/url package
 </span><span style="color:#75715e"></span>
     <span style="color:#75715e">// ...
-</span></code></pre></div><h2 id="community-usage">Community Usage</h2>
-<p>It is always interesting to check how the community tackles this issue to understand if there is a clear preference:</p>
+</span></code></pre></div><p>When using <code>http.NewRequestWithContext</code>, regardless of the method selected, <code>url.Parse</code> is going to be called at least once.</p>
+<h2 id="community-usage">Community Usage</h2>
+<p>It is always interesting to check how the community tackles this issue to understand if there is a clear preference.</p>
 <h3 id="go-github"><code>go-github</code></h3>
 <p><a href="https://github.com/google/go-github/blob/master/github/pulls.go#L165">https://github.com/google/go-github/blob/master/github/pulls.go#L165</a></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequestsService</span>) <span style="color:#a6e22e">ListPullRequestsWithCommit</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">owner</span>, <span style="color:#a6e22e">repo</span>, <span style="color:#a6e22e">sha</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequestListOptions</span>) ([]<span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequest</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
@@ -319,10 +320,10 @@ Before starting a quick refresh on the URL structure:" />
 </code></pre></div><p>In this repo <code>fmt.Sprintf</code> is used in conjunction with <code>go-querystring</code> package.</p>
 <h2 id="benchmark">Benchmark</h2>
 <p>Looking at community usage, anecdotally <code>fmt.Sprintf</code> seems to be the preferred method.</p>
-<p>Is there a numeric reason behind it? A simple way to test is benchmark common URL building techniques and formats:</p>
+<p>Is there a numeric reason behind it? A simple way to test is benchmark URL building techniques and formats:</p>
 <ul>
 <li>All fields are strings: &ldquo;<a href="https://example.com/resource/00000000-0000-0000-0000-000000000000%22">https://example.com/resource/00000000-0000-0000-0000-000000000000&quot;</a></li>
-<li>At least one field is an int which we need to convert &ldquo;<a href="https://example.com/resource/314159265%22">https://example.com/resource/314159265&quot;</a></li>
+<li>At least one field is an int which we need to convert: &ldquo;<a href="https://example.com/resource/314159265%22">https://example.com/resource/314159265&quot;</a></li>
 </ul>
 <p>Running with <code>go test -bench=. -benchtime=10s</code></p>
 <pre><code>BenchmarkBytesString-24                                 91364389               131.1 ns/op           320 B/op          3 allocs/op
@@ -338,8 +339,8 @@ BenchmarkURLParseString-24                              14717494               8
 BenchmarkURLParseResolveReference-24                     5361052              2236 ns/op            1040 B/op         16 allocs/op
 BenchmarkURLQueryEncode-24                               9121402              1312 ns/op             536 B/op         11 allocs/op
 BenchmarkURLQueryEncodePackageQueryString-24             6446503              1864 ns/op             984 B/op         17 allocs/op
-</code></pre><p>Looking at benchmark results, string concatenation and <code>strings.Builder</code> seem the fastest and doing few allocations.</p>
-<p>When not possible to ensure the URL will be correctly encoded, using <code>url.Parse</code>.</p>
+</code></pre><p>Looking at benchmark results, string concatenation and <code>strings.Builder</code> seem the fastest and doing fewer allocations.</p>
+<p>When not possible to ensure the URL will be correctly encoded, use <code>url.Parse</code> and call <code>Encode</code> explicitly.</p>
 <p>While <code>go-querystring</code> usability may be convenient, it infers a performance cost price.</p>
 <p>Benchmark code available at <a href="https://github.com/jacoelho/url_build_benchmark">https://github.com/jacoelho/url_build_benchmark</a>.</p>
 

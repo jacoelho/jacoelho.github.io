@@ -14,10 +14,10 @@
       <pubDate>Sat, 17 Apr 2021 10:00:00 +0000</pubDate>
       
       <guid>https://www.jacoelho.com/blog/building_url_strings/</guid>
-      <description>In Go building URL strings may be done in a couple different ways:
- string concatenation - operator + fmt.Sprintf bytes.Buffer strings.Builder url.Parse  One may ask, which one should be used and as always the answer depends.
-URL Building One important fact to be aware is when building URLs manually, it is easy to do the encoding wrong and ignore percentage-encode.
-Before starting a quick refresh on the URL structure:</description>
+      <description>Building URL strings in Go may be accomplished in a couple different ways:
+ url.Parse string concatenation (using +) fmt.Sprintf bytes.Buffer strings.Builder  You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.
+URL.Parse Before we start, a quick refresh on the URL structure:
+One important fact to be aware is that when building URLs manually, it is easy to forget the percentage-encoding.</description>
     </item>
     
     <item>
