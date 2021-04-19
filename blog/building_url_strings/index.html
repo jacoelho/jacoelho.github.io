@@ -49,7 +49,7 @@ URL.Parse Before we start, a quick refresh on the URL structure:
 One important fact to be aware is that when building URLs manually, it is easy to forget the percentage-encoding.">
 <meta itemprop="datePublished" content="2021-04-17T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-04-17T10:00:00+00:00" />
-<meta itemprop="wordCount" content="767">
+<meta itemprop="wordCount" content="773">
 <meta itemprop="image" content="https://www.jacoelho.com/"/>
 
 
@@ -261,7 +261,7 @@ One important fact to be aware is that when building URLs manually, it is easy t
 }
 </code></pre></div><p>Something to be aware with <code>url.Parse</code> is that <code>http.NewRequestWithContext</code> signature is:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">body</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">error</span>)
-</code></pre></div><p>URL argument is string, but it will be parsed to <code>url.URL</code>:</p>
+</code></pre></div><p>URL argument type is string, but it will be parsed to <code>url.URL</code>:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">body</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">error</span>) {
 	<span style="color:#75715e">// omitted code
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// ...
@@ -269,7 +269,7 @@ One important fact to be aware is that when building URLs manually, it is easy t
 	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">urlpkg</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">url</span>) <span style="color:#75715e">//net/url package
 </span><span style="color:#75715e"></span>
     <span style="color:#75715e">// ...
-</span></code></pre></div><p>When using <code>http.NewRequestWithContext</code>, regardless of the method selected, <code>url.Parse</code> is going to be called at least once.</p>
+</span></code></pre></div><p>When using <code>http.NewRequestWithContext</code>, regardless of the method selected to build the URL string, <code>url.Parse</code> is going to be called at least once.</p>
 <h2 id="community-usage">Community Usage</h2>
 <p>It is always interesting to check how the community tackles this issue to understand if there is a clear preference.</p>
 <h3 id="go-github"><code>go-github</code></h3>
