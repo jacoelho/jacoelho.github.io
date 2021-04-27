@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author"
+    content="Jose Coelho ">
+<meta name="keywords"
+    content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="https://www.jacoelho.com/blog/006_collectd-plugins-made-easy/" />
+
+
+<title>
+    
+    Collectd plugins made easy :: Posts 
+    
+</title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://www.jacoelho.com/main.5065e7e2de9ed3289e28981aa60c3b19d30986c09df329b604aa6a4c0fe76056.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/favicon-16x16.png">
+    <link rel="manifest" href="https://www.jacoelho.com/site.webmanifest">
+    <link rel="mask-icon" href="https://www.jacoelho.com/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="https://www.jacoelho.com/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+
+
+<meta itemprop="name" content="Collectd plugins made easy">
+<meta itemprop="description" content="Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
+ Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin.">
+<meta itemprop="datePublished" content="2016-08-09T10:24:46+00:00" />
+<meta itemprop="dateModified" content="2016-08-09T10:24:46+00:00" />
+<meta itemprop="wordCount" content="302">
+<meta itemprop="image" content="https://www.jacoelho.com/"/>
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.jacoelho.com/"/>
+
+<meta name="twitter:title" content="Collectd plugins made easy"/>
+<meta name="twitter:description" content="Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
+ Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin."/>
+
+
+
+<meta property="og:title" content="Collectd plugins made easy" />
+<meta property="og:description" content="Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
+ Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jacoelho.com/blog/006_collectd-plugins-made-easy/" />
+<meta property="og:image" content="https://www.jacoelho.com/"/>
+<meta property="article:published_time" content="2016-08-09T10:24:46+00:00" />
+<meta property="article:modified_time" content="2016-08-09T10:24:46+00:00" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2016-08-09 10:24:46 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "3wjiv20hsj");
+</script>
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">Jose Coelho</span>
+            <span class="logo__cursor" style=
+                  "visibility:hidden;
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+<main class="post">
+
+    <div class="post-info">
+        
+        </p>
+    </div>
+
+    <article>
+        <h2 class="post-title"><a href="https://www.jacoelho.com/blog/006_collectd-plugins-made-easy/">Collectd plugins made easy</a></h2>
+
+        
+
+        
+
+        <div class="post-content">
+            <blockquote>
+<p><strong>Collectd</strong> is a Unix daemon that collects, transfers and stores performance
+data of computers and network equipment. The acquired data is meant to help
+system administrators maintain an overview over available resources to detect
+existing or looming bottlenecks.</p>
+</blockquote>
+<p><a href="https://collectd.org/">Collectd</a> provides a <a href="https://collectd.org/wiki/index.php/Table_of_Plugins">long list of
+plugins</a> available
+out-of-box. However, if you need to collect additional metrics, one of the
+easiest ways to do so is using the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec
+plugin</a>.</p>
+<p>In order to use the exec plugin, create an <em>Collectd</em> configuration file:</p>
+<pre><code>LoadPlugin exec
+
+&lt;Plugin exec&gt;
+  Exec &quot;myuser:mygroup&quot; &quot;/path/to/another/binary&quot; &quot;arg0&quot; &quot;arg1&quot;
+&lt;/Plugin&gt;
+</code></pre><p>And a sample script “<em>/path/to/another/binary</em>” (extracted from the official
+documentation):</p>
+<pre><code>HOSTNAME=&quot;${COLLECTD_HOSTNAME:-localhost}&quot;
+INTERVAL=&quot;${COLLECTD_INTERVAL:-60}&quot;
+
+while sleep &quot;$INTERVAL&quot;; do
+  VALUE=do_magic()
+  echo &quot;PUTVAL \&quot;$HOSTNAME/exec-magic/gauge-magic_level\&quot; interval=$INTERVAL N:$VALUE&quot;
+done
+</code></pre><p>The most important bits are contained in the outputted message :</p>
+<pre><code>PUTVAL &quot;$HOSTNAME/exec-magic/gauge-magic_level&quot; interval=$INTERVAL N:$VALUE
+</code></pre><p>Where:</p>
+<ol>
+<li><em>exec-magic</em> is the plugin name.</li>
+<li><em>magic_level</em> is the metric name.</li>
+<li><em>gauge</em> is the data source type, according to <a href="https://collectd.org/wiki/index.php/Data_source">collectd
+types</a>.</li>
+<li><em>N:</em> is the abbreviation for “now” as defined in the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec
+plugin</a>.</li>
+</ol>
+<hr>
+<h3 id="sample-plugin">Sample plugin</h3>
+<p>Now, let’s create a simple <em>Collectd <em>plugin. In the example that follows I will
+use <a href="https://golang.org/">Go</a></em>.</em></p>
+<p>The main loop will run the metric collection in a scheduled fashion:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;flag&#34;</span>
+	<span style="color:#e6db74">&#34;time&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#66d9ef">var</span> (
+		<span style="color:#a6e22e">interval</span> = <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Int</span>(<span style="color:#e6db74">&#34;interval&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#34;time in seconds between collection&#34;</span>)
+	)
+
+	<span style="color:#a6e22e">ticker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">NewTicker</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">interval</span>) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+	<span style="color:#66d9ef">for</span> {
+		<span style="color:#66d9ef">select</span> {
+		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
+			<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">collectMetric</span>()
+		}
+	}
+}
+</code></pre></div><p>And the collectMetric code:</p>
+<pre><code>hostname, _ := os.Hostname()
+value := someWork()
+
+fmt.Printf(&quot;PUTVAL %s/my-plugin/gauge-my_metric interval=%d N:%s\n&quot;, hostname, interval, value)
+</code></pre><p>Just compile it and use your favorite configuration management tool to upload
+the plugin and configuration.</p>
+<p>The purpose of this example was to demonstrate how to create a plugin. For
+“<em>production-ready</em>” plugins I recommend using the official *Go
+*<a href="https://github.com/collectd/go-collectd">library</a>.</p>
+<p>Exec plugin is the simplest and fastest way to plug a custom metric collector
+into <em>Collectd</em>.</p>
+
+        </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+        
+        
+    </div>
+</main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2021</span>
+            
+            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
+            
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            
+            <span> <a
+                    href="https://www.jacoelho.com/posts/index.xml" target="_blank" title="rss"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-rss">
+                        <path d="M4 11a9 9 0 0 1 9 9"></path>
+                        <path d="M4 4a16 16 0 0 1 16 16"></path>
+                        <circle cx="5" cy="19" r="1"></circle>
+                    </svg></a></span>
+        </div>
+    </div>
+</footer>
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.dc716e9092c9820b77f96da294d0120aeeb189b5bcea9752309ebea27fd53bbe6b13cffb2aca8ecf32525647ceb7001f76091de4199ac5a3caa432c070247f5b.js" integrity="sha512-3HFukJLJggt3&#43;W2ilNASCu6xibW86pdSMJ6&#43;on/VO75rE8/7KsqOzzJSVkfOtwAfdgkd5BmaxaPKpDLAcCR/Ww=="></script>
+
+
+
+    </body>
+</html>
