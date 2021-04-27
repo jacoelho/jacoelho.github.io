@@ -43,10 +43,16 @@
 
 
 <meta itemprop="name" content="Ansible vs PCI">
-<meta itemprop="description" content="If you need to to comply with PCI requirements like:
- Requirement 2: Maintain an inventory of system components in scope for PCI DSS to support effective scoping practices.
- You will find that using public-key authentication is sometimes forbidden as it’s almost impossible to ensure employees are rotating the keys, keeping the private key safe and with a strong password.
-Using Ansible without ssh key based authentication is painful if you need to run a playbook against hundreds of servers, as you will need to insert your password ad nauseam.">
+<meta itemprop="description" content="If you need to to comply with PCI
+requirements
+like:
+ Requirement 2: Maintain an inventory of system components in scope for PCI DSS
+to support effective scoping practices.
+ You will find that using public-key authentication is sometimes
+forbidden
+as it’s almost impossible to ensure employees are rotating the keys, keeping the
+private key safe and with a strong password.
+Using Ansible without ssh key based authentication is painful if you need to">
 <meta itemprop="datePublished" content="2016-08-16T10:24:46+00:00" />
 <meta itemprop="dateModified" content="2016-08-16T10:24:46+00:00" />
 <meta itemprop="wordCount" content="191">
@@ -60,18 +66,30 @@ Using Ansible without ssh key based authentication is painful if you need to run
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
 
 <meta name="twitter:title" content="Ansible vs PCI"/>
-<meta name="twitter:description" content="If you need to to comply with PCI requirements like:
- Requirement 2: Maintain an inventory of system components in scope for PCI DSS to support effective scoping practices.
- You will find that using public-key authentication is sometimes forbidden as it’s almost impossible to ensure employees are rotating the keys, keeping the private key safe and with a strong password.
-Using Ansible without ssh key based authentication is painful if you need to run a playbook against hundreds of servers, as you will need to insert your password ad nauseam."/>
+<meta name="twitter:description" content="If you need to to comply with PCI
+requirements
+like:
+ Requirement 2: Maintain an inventory of system components in scope for PCI DSS
+to support effective scoping practices.
+ You will find that using public-key authentication is sometimes
+forbidden
+as it’s almost impossible to ensure employees are rotating the keys, keeping the
+private key safe and with a strong password.
+Using Ansible without ssh key based authentication is painful if you need to"/>
 
 
 
 <meta property="og:title" content="Ansible vs PCI" />
-<meta property="og:description" content="If you need to to comply with PCI requirements like:
- Requirement 2: Maintain an inventory of system components in scope for PCI DSS to support effective scoping practices.
- You will find that using public-key authentication is sometimes forbidden as it’s almost impossible to ensure employees are rotating the keys, keeping the private key safe and with a strong password.
-Using Ansible without ssh key based authentication is painful if you need to run a playbook against hundreds of servers, as you will need to insert your password ad nauseam." />
+<meta property="og:description" content="If you need to to comply with PCI
+requirements
+like:
+ Requirement 2: Maintain an inventory of system components in scope for PCI DSS
+to support effective scoping practices.
+ You will find that using public-key authentication is sometimes
+forbidden
+as it’s almost impossible to ensure employees are rotating the keys, keeping the
+private key safe and with a strong password.
+Using Ansible without ssh key based authentication is painful if you need to" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/" />
 <meta property="og:image" content="https://www.jacoelho.com/"/>
@@ -163,36 +181,36 @@ Using Ansible without ssh key based authentication is painful if you need to run
         
 
         <div class="post-content">
-            <p>If you need to to comply with <a href="https://www.pcisecuritystandards.org/documents/PCIDSS_QRGv3_1.pdf">PCI
-requirements</a>
+            <p>If you need to to comply with <a href="https://www.pcisecuritystandards.org/documents/PCIDSS_QRGv3_1.pdf">PCI<br>
+requirements</a><br>
 like:</p>
 <blockquote>
-<p><em>Requirement 2: Maintain an inventory of system components in scope for PCI DSS
+<p><em>Requirement 2: Maintain an inventory of system components in scope for PCI DSS<br>
 to support effective scoping practices.</em></p>
 </blockquote>
-<p>You will find that using public-key authentication is sometimes
-<a href="https://security.stackexchange.com/questions/47213/pci-dss-2-0-and-ssh-keys">forbidden</a>
-as it’s almost impossible to ensure employees are rotating the keys, keeping the
+<p>You will find that using public-key authentication is sometimes<br>
+<a href="https://security.stackexchange.com/questions/47213/pci-dss-2-0-and-ssh-keys">forbidden</a><br>
+as it’s almost impossible to ensure employees are rotating the keys, keeping the<br>
 private key safe and with a strong password.</p>
-<p>Using <em>Ansible</em> without ssh key based authentication is painful if you need to
-run a playbook against hundreds of servers, as you will need to insert your
+<p>Using <em>Ansible</em> without ssh key based authentication is painful if you need to<br>
+run a playbook against hundreds of servers, as you will need to insert your<br>
 password <em>ad nauseam</em>.</p>
 <h3 id="ansible-vault-to-the-rescue">Ansible Vault To The Rescue</h3>
 <blockquote>
-<p>“Vault” is a feature of ansible that allows keeping sensitive data such as
+<p>“Vault” is a feature of ansible that allows keeping sensitive data such as<br>
 passwords or keys in encrypted files.</p>
 </blockquote>
 <p>We can leverage <em>Ansible Vault</em> to keep the user password stored in a safe way:</p>
 <pre><code>mkdir group_vars
 ansible-vault create group_vars/all.yml
-</code></pre><p>After providing a password (although I am not aware of a way to audit that the
+</code></pre><p>After providing a password (although I am not aware of a way to audit that the<br>
 password is good enough), insert all the need <em>Ansible</em> credentials:</p>
 <pre><code>ansible_user: &lt;username&gt;
 ansible_ssh_pass: &lt;password&gt;
 ansible_become_pass: &lt;sudo password&gt;
 </code></pre><p>We can run any <em>Ansible</em> playbook easily:</p>
 <pre><code>ansible-playbook -i inventory.ini playbook.yml --ask-vault-pass
-</code></pre><p>Using <em>Ansible Vault</em> we can follow <em>PCI</em> guidelines without jeopardising
+</code></pre><p>Using <em>Ansible Vault</em> we can follow <em>PCI</em> guidelines without jeopardising<br>
 productivity or security.</p>
 
         </div>

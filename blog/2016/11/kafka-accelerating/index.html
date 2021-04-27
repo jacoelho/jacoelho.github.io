@@ -43,8 +43,11 @@
 
 
 <meta itemprop="name" content="Kafka — Accelerating!">
-<meta itemprop="description" content="Quick tips and insights on how to make Apache Kafka work faster!
-Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare metal.  Linux  Configure to maximize memory usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka.">
+<meta itemprop="description" content="Quick tips and insights on how to make Apache Kafka
+work faster!
+Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+metal.  Linux  Configure to maximize memory
+usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka.">
 <meta itemprop="datePublished" content="2016-11-22T10:24:46+00:00" />
 <meta itemprop="dateModified" content="2016-11-22T10:24:46+00:00" />
 <meta itemprop="wordCount" content="303">
@@ -58,14 +61,20 @@ Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in perf
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
 
 <meta name="twitter:title" content="Kafka — Accelerating!"/>
-<meta name="twitter:description" content="Quick tips and insights on how to make Apache Kafka work faster!
-Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare metal.  Linux  Configure to maximize memory usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka."/>
+<meta name="twitter:description" content="Quick tips and insights on how to make Apache Kafka
+work faster!
+Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+metal.  Linux  Configure to maximize memory
+usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka."/>
 
 
 
 <meta property="og:title" content="Kafka — Accelerating!" />
-<meta property="og:description" content="Quick tips and insights on how to make Apache Kafka work faster!
-Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare metal.  Linux  Configure to maximize memory usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka." />
+<meta property="og:description" content="Quick tips and insights on how to make Apache Kafka
+work faster!
+Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+metal.  Linux  Configure to maximize memory
+usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2016/11/kafka-accelerating/" />
 <meta property="og:image" content="https://www.jacoelho.com/"/>
@@ -157,19 +166,19 @@ Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in perf
         
 
         <div class="post-content">
-            <p>Quick tips and insights on how to make <a href="https://kafka.apache.org/">Apache Kafka</a>
+            <p>Quick tips and insights on how to make <a href="https://kafka.apache.org/">Apache Kafka</a><br>
 work faster!</p>
 <h3 id="hardware">Hardware</h3>
 <ul>
 <li>CPU doesn&rsquo;t matter that much.</li>
 <li>Memory helps a lot (a lot) in performance.</li>
 <li>SSDs are not required, since most operations are sequential read and writes.</li>
-<li>If possible run in <a href="https://www.ibm.com/blogs/cloud-computing/2014/07/bare-metal-vs-virtual-servers-choice-right/">bare
+<li>If possible run in <a href="https://www.ibm.com/blogs/cloud-computing/2014/07/bare-metal-vs-virtual-servers-choice-right/">bare<br>
 metal</a>.</li>
 </ul>
 <h3 id="linux">Linux</h3>
 <ul>
-<li>Configure to <a href="http://www.makelinux.net/books/lkd2/ch15lev1sec4">maximize memory
+<li>Configure to <a href="http://www.makelinux.net/books/lkd2/ch15lev1sec4">maximize memory<br>
 usage</a> (tweak until you feel comfortable):</li>
 </ul>
 <pre><code>vm.dirty_background_ratio = 5
@@ -205,23 +214,23 @@ net.ipv4.tcp_max_syn_backlog = 4096
 net.ipv4.tcp_syncookies = 1
 </code></pre><h3 id="kafka">Kafka</h3>
 <ul>
-<li><em>log.dirs</em> accepts a comma separated list of disks and will distribute
+<li><em>log.dirs</em> accepts a comma separated list of disks and will distribute<br>
 partitions across them, however:</li>
 </ul>
 <ol>
 <li>Doesn’t rebalance, some disks could be full and others empty.</li>
-<li>Doesn’t tolerate any disk failure, more info in
+<li>Doesn’t tolerate any disk failure, more info in<br>
 <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-18+-+JBOD+Support">KIP-18</a>.</li>
-<li><em>Raid 10</em> is probably the best middle ground between performance and
+<li><em>Raid 10</em> is probably the best middle ground between performance and<br>
 reliability.</li>
 </ol>
 <ul>
-<li>*num.io.threads, *number of I/O threads that the server uses for executing
+<li>*num.io.threads, *number of I/O threads that the server uses for executing<br>
 requests. You should have at least as many threads as you have disks.</li>
-<li><em>num.network.threads</em>, number of network threads that the server uses for
-handling network requests. Increase based on number of producers/consumers and
+<li><em>num.network.threads</em>, number of network threads that the server uses for<br>
+handling network requests. Increase based on number of producers/consumers and<br>
 replication factor.</li>
-<li>Use Java 1.8 and <a href="http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html">G1 Garbage
+<li>Use Java 1.8 and <a href="http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html">G1 Garbage<br>
 collector</a>:</li>
 </ul>
 <pre><code>-XX:MetaspaceSize=96m
@@ -231,10 +240,10 @@ collector</a>:</li>
 -XX:G1HeapRegionSize=16M
 -XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80
 </code></pre><ul>
-<li><em>KAFKA_HEAP_OPTS</em>, 5–8Gb heap should be enough for most deployments, file system
-cache is way more important. <em>Linkedin</em> runs <a href="http://docs.confluent.io/1.0/kafka/deployment.html">5Gb heap in 32Gb RAM
+<li><em>KAFKA_HEAP_OPTS</em>, 5–8Gb heap should be enough for most deployments, file system<br>
+cache is way more important. <em>Linkedin</em> runs <a href="http://docs.confluent.io/1.0/kafka/deployment.html">5Gb heap in 32Gb RAM<br>
 servers</a>.</li>
-<li><a href="https://github.com/tobert/pcstat">pcstat</a> can help understand how well the
+<li><a href="https://github.com/tobert/pcstat">pcstat</a> can help understand how well the<br>
 system is caching:</li>
 </ul>
 <pre><code>./pcstat /kafka/data/*

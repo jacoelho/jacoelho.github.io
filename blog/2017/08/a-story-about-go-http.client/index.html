@@ -45,8 +45,11 @@
 <meta itemprop="name" content="A story about Go http.Client">
 <meta itemprop="description" content="Or how I have learned to embrace http.RoundTripper
 Using a http client in Go usually starts like this:
-resp, err := http.Get(&#34;http://example.com/&#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow response, etc.
-After some research (I recommend reading The complete guide to Go net/http timeouts) you may end up writing something similar to:
+resp, err := http.Get(&#34;http://example.com/&#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow
+response, etc.
+After some research (I recommend reading The complete guide to Go net/http
+timeouts)
+you may end up writing something similar to:
 c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time.">
 <meta itemprop="datePublished" content="2017-08-19T10:24:46+00:00" />
 <meta itemprop="dateModified" content="2017-08-19T10:24:46+00:00" />
@@ -63,8 +66,11 @@ c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ T
 <meta name="twitter:title" content="A story about Go http.Client"/>
 <meta name="twitter:description" content="Or how I have learned to embrace http.RoundTripper
 Using a http client in Go usually starts like this:
-resp, err := http.Get(&#34;http://example.com/&#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow response, etc.
-After some research (I recommend reading The complete guide to Go net/http timeouts) you may end up writing something similar to:
+resp, err := http.Get(&#34;http://example.com/&#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow
+response, etc.
+After some research (I recommend reading The complete guide to Go net/http
+timeouts)
+you may end up writing something similar to:
 c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time."/>
 
 
@@ -72,8 +78,11 @@ c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ T
 <meta property="og:title" content="A story about Go http.Client" />
 <meta property="og:description" content="Or how I have learned to embrace http.RoundTripper
 Using a http client in Go usually starts like this:
-resp, err := http.Get(&#34;http://example.com/&#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow response, etc.
-After some research (I recommend reading The complete guide to Go net/http timeouts) you may end up writing something similar to:
+resp, err := http.Get(&#34;http://example.com/&#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow
+response, etc.
+After some research (I recommend reading The complete guide to Go net/http
+timeouts)
+you may end up writing something similar to:
 c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2017/08/a-story-about-go-http.client/" />
@@ -169,10 +178,10 @@ c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ T
             <p>Or how I have learned to embrace <em>http.RoundTripper</em></p>
 <p>Using a http client in <em>Go</em> usually starts like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;http://example.com/&#34;</span>)
-</code></pre></div><p>Everything works, until it doesn’t: a network blip, a connection reset, a slow
+</code></pre></div><p>Everything works, until it doesn’t: a network blip, a connection reset, a slow<br>
 response, etc.</p>
-<p>After some research (I recommend reading <a href="https://blog.cloudflare.com/the-complete-guide-to-golang-net-http-timeouts/">The complete guide to Go net/http
-timeouts</a>)
+<p>After some research (I recommend reading <a href="https://blog.cloudflare.com/the-complete-guide-to-golang-net-http-timeouts/">The complete guide to Go net/http<br>
+timeouts</a>)<br>
 you may end up writing something similar to:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{
     <span style="color:#a6e22e">Transport</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Transport</span>{
@@ -202,11 +211,11 @@ you may end up writing something similar to:</p>
         <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>)
 }
 </code></pre></div><p>Way simpler than I would expect: for each <em>request</em>, it receives a <em>response</em>, if everything works.</p>
-<p>The default <a href="https://golang.org/src/net/http/transport.go#L315">transport.go</a>
-implementation is interesting. However, what else could I use <em>RoundTripper</em>
+<p>The default <a href="https://golang.org/src/net/http/transport.go#L315">transport.go</a><br>
+implementation is interesting. However, what else could I use <em>RoundTripper</em><br>
 for?</p>
 <hr>
-<p>Implementing a naïve Retry RoundTripper without any concurrency concerns or
+<p>Implementing a naïve Retry RoundTripper without any concurrency concerns or<br>
 request copy:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Retry - http client with retry support
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Retry</span> <span style="color:#66d9ef">struct</span> {
@@ -254,7 +263,7 @@ request copy:</p>
 	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">resp</span>)
 
 }
-</code></pre></div><p>The <em>HTTP</em> retry client continues retrying until it succeeds or the context
+</code></pre></div><p>The <em>HTTP</em> retry client continues retrying until it succeeds or the context<br>
 timeout reached.</p>
 <hr>
 <p>A very simple http client cache:</p>
@@ -316,7 +325,7 @@ timeout reached.</p>
 }
 </code></pre></div><hr>
 <p><em>RoundTripper</em> interface enables extending the <em>HTTP</em> behaviour in a composable way.</p>
-<p>The more I learn about Go Standard Library, the more I acknowledge the attention
+<p>The more I learn about Go Standard Library, the more I acknowledge the attention<br>
 and craft put into it.</p>
 
         </div>

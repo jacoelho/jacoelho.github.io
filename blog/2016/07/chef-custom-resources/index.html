@@ -43,9 +43,14 @@
 
 
 <meta itemprop="name" content="Chef Custom Resources">
-<meta itemprop="description" content="Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
-Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
-Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
+<meta itemprop="description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
+is custom resources:
+https://docs.chef.io/custom_resources.html
+Let’s see an example on how to create a Kafka topic
+using Chef and how to make it
+idempotent.
+Before writing any Chef code it is important to understand how to manage a
+topic (grouping of messages of a similar type).
 From the Kafka install directory, first check if the topic already exists:">
 <meta itemprop="datePublished" content="2016-07-13T10:24:46+00:00" />
 <meta itemprop="dateModified" content="2016-07-13T10:24:46+00:00" />
@@ -60,17 +65,27 @@ From the Kafka install directory, first check if the topic already exists:">
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
 
 <meta name="twitter:title" content="Chef Custom Resources"/>
-<meta name="twitter:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
-Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
-Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
+<meta name="twitter:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
+is custom resources:
+https://docs.chef.io/custom_resources.html
+Let’s see an example on how to create a Kafka topic
+using Chef and how to make it
+idempotent.
+Before writing any Chef code it is important to understand how to manage a
+topic (grouping of messages of a similar type).
 From the Kafka install directory, first check if the topic already exists:"/>
 
 
 
 <meta property="og:title" content="Chef Custom Resources" />
-<meta property="og:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef is custom resources: https://docs.chef.io/custom_resources.html
-Let’s see an example on how to create a Kafka topic using Chef and how to make it idempotent.
-Before writing any Chef code it is important to understand how to manage a topic (grouping of messages of a similar type).
+<meta property="og:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
+is custom resources:
+https://docs.chef.io/custom_resources.html
+Let’s see an example on how to create a Kafka topic
+using Chef and how to make it
+idempotent.
+Before writing any Chef code it is important to understand how to manage a
+topic (grouping of messages of a similar type).
 From the Kafka install directory, first check if the topic already exists:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2016/07/chef-custom-resources/" />
@@ -163,13 +178,13 @@ From the Kafka install directory, first check if the topic already exists:" />
         
 
         <div class="post-content">
-            <p>Lately I’ve been writing some <em>Chef</em> code. One of the best things about <em>Chef</em>
-is custom resources:
+            <p>Lately I’ve been writing some <em>Chef</em> code. One of the best things about <em>Chef</em><br>
+is custom resources:<br>
 <a href="https://docs.chef.io/custom_resources.html">https://docs.chef.io/custom_resources.html</a></p>
-<p>Let’s see an example on how to create a <a href="https://kafka.apache.org/">Kafka</a> topic
-using <em>Chef</em> and how to make it
+<p>Let’s see an example on how to create a <a href="https://kafka.apache.org/">Kafka</a> topic<br>
+using <em>Chef</em> and how to make it<br>
 <a href="https://en.wikipedia.org/wiki/Idempotence">idempotent</a>.</p>
-<p>Before writing any <em>Chef</em> code it is important to understand how to manage a
+<p>Before writing any <em>Chef</em> code it is important to understand how to manage a<br>
 <em>topic</em> (grouping of messages of a similar type).</p>
 <p>From the <em>Kafka</em> install directory, first check if the <em>topic</em> already exists:</p>
 <pre><code>bin/kafka-topics.sh
@@ -183,14 +198,14 @@ using <em>Chef</em> and how to make it
     --topic &lt;name&gt; \
     --replication-factor &lt;value&gt; \
     --partitions &lt;value&gt;
-</code></pre><p>If the <em>topic</em> exists, to increase the number of <em>partitions</em> (way to
+</code></pre><p>If the <em>topic</em> exists, to increase the number of <em>partitions</em> (way to<br>
 parallelize the consumption of messages from a topic):</p>
 <pre><code>bin/kafka-topics.sh
     --zookeeper localhost:2181 \
     --alter \
     --topic &lt;name&gt; \
     --partitions &lt;value&gt;
-</code></pre><p>If the topic exists, to increase the number of *replicas *(number of copies of
+</code></pre><p>If the topic exists, to increase the number of *replicas *(number of copies of<br>
 the partitions for data redundancy):</p>
 <pre><code>bin/kafka-reassign-partitions.sh \
     --zookeeper localhost:2181 \
@@ -232,13 +247,13 @@ action <span style="color:#e6db74">:create</span> <span style="color:#66d9ef">do
   partitions  <span style="color:#ae81ff">1</span>
   replication <span style="color:#ae81ff">1</span>
 <span style="color:#66d9ef">end</span>
-</code></pre></div><p>With this code creating <em>topics</em> is possible. However, it isn’t checking if the
+</code></pre></div><p>With this code creating <em>topics</em> is possible. However, it isn’t checking if the<br>
 topic already exists or if the settings are valid.</p>
 <hr>
 <h4 id="chefspec">ChefSpec</h4>
-<p><a href="https://github.com/sethvargo/chefspec">ChefSpec</a> is a testing framework aimed
+<p><a href="https://github.com/sethvargo/chefspec">ChefSpec</a> is a testing framework aimed<br>
 for testing <em>Chef</em> cookbooks.</p>
-<p>In order to test a custom resource, first create the <em>ChefSpec</em> resource
+<p>In order to test a custom resource, first create the <em>ChefSpec</em> resource<br>
 matcher:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">if</span> defined?(<span style="color:#66d9ef">ChefSpec</span>)
 
@@ -298,7 +313,7 @@ context <span style="color:#e6db74">&#34;test_example&#34;</span> <span style="c
   <span style="color:#66d9ef">end</span>
 </code></pre></div><p>Now we can improve our resource with confidence — and all will still be working!</p>
 <hr>
-<p>At the moment the resource is quite simple and will try to create the topic
+<p>At the moment the resource is quite simple and will try to create the topic<br>
 every time <em>Chef</em> runs. Now it’s time to find ways to improve it!</p>
 <p>As seen before we can search for a <em>topic</em>:</p>
 <pre><code>bin/kafka-topics.sh
@@ -306,7 +321,7 @@ every time <em>Chef</em> runs. Now it’s time to find ways to improve it!</p>
     --describe \
     --topic &lt;name&gt;
 </code></pre><p>The output will be something like:</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*ilfBGZvftKO0a8ljO2nx8g.png" alt="">
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*ilfBGZvftKO0a8ljO2nx8g.png" alt=""><br>
 <!-- raw HTML omitted -->kafka describe topic<!-- raw HTML omitted --></p>
 <p>Example code to parse this output:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-ruby" data-lang="ruby"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">list</span>(directory, zookeeper, topic)
@@ -375,9 +390,9 @@ require <span style="color:#e6db74">&#34;chef/log&#34;</span>
   result <span style="color:#f92672">=</span> shell_out(cmd)
   <span style="color:#66d9ef">Chef</span><span style="color:#f92672">::</span><span style="color:#66d9ef">Log</span><span style="color:#f92672">.</span>error(result<span style="color:#f92672">.</span>stderr) <span style="color:#66d9ef">unless</span> result<span style="color:#f92672">.</span>stdout <span style="color:#f92672">=~</span> <span style="color:#e6db74">/Adding partitions succeeded!/</span>
 <span style="color:#66d9ef">end</span>
-</code></pre></div><p>This small example goes to show just how powerful the <em>Chef</em> <em>DSL</em> is and how it
+</code></pre></div><p>This small example goes to show just how powerful the <em>Chef</em> <em>DSL</em> is and how it<br>
 helps in the creation of idempotent resources.</p>
-<p>The full example (with tests) is available in the github:
+<p>The full example (with tests) is available in the github:<br>
 <a href="https://github.com/jacoelho/example">link</a></p>
 
         </div>

@@ -43,8 +43,15 @@
 
 
 <meta itemprop="name" content="Collectd plugins made easy">
-<meta itemprop="description" content="Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
- Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin.">
+<meta itemprop="description" content="Collectd is a Unix daemon that collects, transfers and stores performance
+data of computers and network equipment. The acquired data is meant to help
+system administrators maintain an overview over available resources to detect
+existing or looming bottlenecks.
+ Collectd provides a long list of
+plugins available
+out-of-box. However, if you need to collect additional metrics, one of the
+easiest ways to do so is using the exec
+plugin.">
 <meta itemprop="datePublished" content="2016-08-09T10:24:46+00:00" />
 <meta itemprop="dateModified" content="2016-08-09T10:24:46+00:00" />
 <meta itemprop="wordCount" content="302">
@@ -58,14 +65,28 @@
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
 
 <meta name="twitter:title" content="Collectd plugins made easy"/>
-<meta name="twitter:description" content="Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
- Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin."/>
+<meta name="twitter:description" content="Collectd is a Unix daemon that collects, transfers and stores performance
+data of computers and network equipment. The acquired data is meant to help
+system administrators maintain an overview over available resources to detect
+existing or looming bottlenecks.
+ Collectd provides a long list of
+plugins available
+out-of-box. However, if you need to collect additional metrics, one of the
+easiest ways to do so is using the exec
+plugin."/>
 
 
 
 <meta property="og:title" content="Collectd plugins made easy" />
-<meta property="og:description" content="Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
- Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin." />
+<meta property="og:description" content="Collectd is a Unix daemon that collects, transfers and stores performance
+data of computers and network equipment. The acquired data is meant to help
+system administrators maintain an overview over available resources to detect
+existing or looming bottlenecks.
+ Collectd provides a long list of
+plugins available
+out-of-box. However, if you need to collect additional metrics, one of the
+easiest ways to do so is using the exec
+plugin." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/" />
 <meta property="og:image" content="https://www.jacoelho.com/"/>
@@ -158,15 +179,15 @@
 
         <div class="post-content">
             <blockquote>
-<p><strong>Collectd</strong> is a Unix daemon that collects, transfers and stores performance
-data of computers and network equipment. The acquired data is meant to help
-system administrators maintain an overview over available resources to detect
+<p><strong>Collectd</strong> is a Unix daemon that collects, transfers and stores performance<br>
+data of computers and network equipment. The acquired data is meant to help<br>
+system administrators maintain an overview over available resources to detect<br>
 existing or looming bottlenecks.</p>
 </blockquote>
-<p><a href="https://collectd.org/">Collectd</a> provides a <a href="https://collectd.org/wiki/index.php/Table_of_Plugins">long list of
-plugins</a> available
-out-of-box. However, if you need to collect additional metrics, one of the
-easiest ways to do so is using the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec
+<p><a href="https://collectd.org/">Collectd</a> provides a <a href="https://collectd.org/wiki/index.php/Table_of_Plugins">long list of<br>
+plugins</a> available<br>
+out-of-box. However, if you need to collect additional metrics, one of the<br>
+easiest ways to do so is using the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec<br>
 plugin</a>.</p>
 <p>In order to use the exec plugin, create an <em>Collectd</em> configuration file:</p>
 <pre><code>LoadPlugin exec
@@ -174,7 +195,7 @@ plugin</a>.</p>
 &lt;Plugin exec&gt;
   Exec &quot;myuser:mygroup&quot; &quot;/path/to/another/binary&quot; &quot;arg0&quot; &quot;arg1&quot;
 &lt;/Plugin&gt;
-</code></pre><p>And a sample script “<em>/path/to/another/binary</em>” (extracted from the official
+</code></pre><p>And a sample script “<em>/path/to/another/binary</em>” (extracted from the official<br>
 documentation):</p>
 <pre><code>HOSTNAME=&quot;${COLLECTD_HOSTNAME:-localhost}&quot;
 INTERVAL=&quot;${COLLECTD_INTERVAL:-60}&quot;
@@ -189,14 +210,14 @@ done
 <ol>
 <li><em>exec-magic</em> is the plugin name.</li>
 <li><em>magic_level</em> is the metric name.</li>
-<li><em>gauge</em> is the data source type, according to <a href="https://collectd.org/wiki/index.php/Data_source">collectd
+<li><em>gauge</em> is the data source type, according to <a href="https://collectd.org/wiki/index.php/Data_source">collectd<br>
 types</a>.</li>
-<li><em>N:</em> is the abbreviation for “now” as defined in the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec
+<li><em>N:</em> is the abbreviation for “now” as defined in the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec<br>
 plugin</a>.</li>
 </ol>
 <hr>
 <h3 id="sample-plugin">Sample plugin</h3>
-<p>Now, let’s create a simple <em>Collectd <em>plugin. In the example that follows I will
+<p>Now, let’s create a simple <em>Collectd <em>plugin. In the example that follows I will<br>
 use <a href="https://golang.org/">Go</a></em>.</em></p>
 <p>The main loop will run the metric collection in a scheduled fashion:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
@@ -224,12 +245,12 @@ use <a href="https://golang.org/">Go</a></em>.</em></p>
 value := someWork()
 
 fmt.Printf(&quot;PUTVAL %s/my-plugin/gauge-my_metric interval=%d N:%s\n&quot;, hostname, interval, value)
-</code></pre><p>Just compile it and use your favorite configuration management tool to upload
+</code></pre><p>Just compile it and use your favorite configuration management tool to upload<br>
 the plugin and configuration.</p>
-<p>The purpose of this example was to demonstrate how to create a plugin. For
-“<em>production-ready</em>” plugins I recommend using the official *Go
+<p>The purpose of this example was to demonstrate how to create a plugin. For<br>
+“<em>production-ready</em>” plugins I recommend using the official *Go<br>
 *<a href="https://github.com/collectd/go-collectd">library</a>.</p>
-<p>Exec plugin is the simplest and fastest way to plug a custom metric collector
+<p>Exec plugin is the simplest and fastest way to plug a custom metric collector<br>
 into <em>Collectd</em>.</p>
 
         </div>
