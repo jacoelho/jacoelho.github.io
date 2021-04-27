@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author"
+    content="Jose Coelho ">
+<meta name="keywords"
+    content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<link rel="canonical" href="https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/" />
+
+
+<title>
+    
+    Stability Patterns — Circuit Breaker :: Posts 
+    
+</title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://www.jacoelho.com/main.5065e7e2de9ed3289e28981aa60c3b19d30986c09df329b604aa6a4c0fe76056.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/favicon-16x16.png">
+    <link rel="manifest" href="https://www.jacoelho.com/site.webmanifest">
+    <link rel="mask-icon" href="https://www.jacoelho.com/safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="https://www.jacoelho.com/favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+
+
+<meta itemprop="name" content="Stability Patterns — Circuit Breaker">
+<meta itemprop="description" content="A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+ The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures.">
+<meta itemprop="datePublished" content="2016-08-20T10:24:46+00:00" />
+<meta itemprop="dateModified" content="2016-08-20T10:24:46+00:00" />
+<meta itemprop="wordCount" content="612">
+<meta itemprop="image" content="https://www.jacoelho.com/"/>
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.jacoelho.com/"/>
+
+<meta name="twitter:title" content="Stability Patterns — Circuit Breaker"/>
+<meta name="twitter:description" content="A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+ The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures."/>
+
+
+
+<meta property="og:title" content="Stability Patterns — Circuit Breaker" />
+<meta property="og:description" content="A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
+ The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/" />
+<meta property="og:image" content="https://www.jacoelho.com/"/>
+<meta property="article:published_time" content="2016-08-20T10:24:46+00:00" />
+<meta property="article:modified_time" content="2016-08-20T10:24:46+00:00" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2016-08-20 10:24:46 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "3wjiv20hsj");
+</script>
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">Jose Coelho</span>
+            <span class="logo__cursor" style=
+                  "visibility:hidden;
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+<main class="post">
+
+    <div class="post-info">
+        
+        </p>
+    </div>
+
+    <article>
+        <h2 class="post-title"><a href="https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/">Stability Patterns — Circuit Breaker</a></h2>
+
+        
+
+        
+
+        <div class="post-content">
+            <blockquote>
+<p>A circuit breaker is an automatically operated electrical switch designed to
+protect an electrical circuit from damage caused by over-current or overload or
+short circuit. Its basic function is to interrupt current flow after protective
+relays detect a fault. A circuit breaker can be reset (either manually or
+automatically) to resume normal operation.</p>
+</blockquote>
+<p>The software analogue as described in <a href="https://pragprog.com/book/mnee/release-it">Release
+it!</a> chapter 5.2 can prevent repeated
+calls to a failing service by detecting issues and providing a fallback, by
+using this pattern it is possible to avoid cascading failures.</p>
+<h3 id="sample-implementation-in-go">Sample implementation in Go</h3>
+<p>Potential failing calls will be wrapped in a circuit breaker to help minimize
+issues.</p>
+<p>Imagine the following weather information service (an unreliable source):</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#a6e22e">location</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+    <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">5</span>)) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;sunny&#34;</span>
+}
+</code></pre></div><p>A potential circuit breaker function signature, using high order functions:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>())
+</code></pre></div><p>We will attempt to use the <em>call function</em>, however if it returns an error or
+the circuit is <strong>Open</strong>, the <em>fallback function</em> is going to be invoked instead.</p>
+<p>Usually circuit breakers are used with another stability pattern,
+<strong>Time-outs</strong>*.*</p>
+<p>Instead of waiting indefinitely until the service returns the expected answer,
+we set a stopwatch. This way, if the answer takes longer, we just return an
+error.</p>
+<p>Improving the circuit breaker:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>()) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">isOpen</span>() {
+		<span style="color:#a6e22e">wait</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">error</span>, <span style="color:#ae81ff">1</span>)
+
+		<span style="color:#75715e">// run function with timeout
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">wait</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">call</span>() }()
+
+		<span style="color:#66d9ef">select</span> {
+		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">wait</span>:
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+				<span style="color:#66d9ef">break</span>
+			}
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">TimeOut</span>):
+			<span style="color:#66d9ef">break</span>
+		}
+	}
+
+	<span style="color:#a6e22e">fallback</span>()
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrorCircuitTripped</span>
+}
+</code></pre></div><p>The only bit missing is
+<a href="https://en.wikipedia.org/wiki/Finite-state_machine">state-machine</a> controlling
+the transitions between circuit <strong>Open</strong>, <strong>Closed</strong>, <strong>Half-Open</strong>,
+<strong>Half-Closed</strong> (to keep it simple I will ignore the half states).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Circuit</span> <span style="color:#66d9ef">struct</span> {
+	<span style="color:#a6e22e">TimeOut</span>         <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span> <span style="color:#75715e">// how long to wait for the execution
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">FailThreshold</span>   <span style="color:#66d9ef">uint32</span>        <span style="color:#75715e">// how many fails until circuit is tripped
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">RetryThreshold</span>  <span style="color:#66d9ef">uint32</span>        <span style="color:#75715e">// how many failed requests until try again
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">failuresCounter</span> <span style="color:#66d9ef">uint32</span>
+	<span style="color:#a6e22e">retriesCounter</span>  <span style="color:#66d9ef">uint32</span>
+}
+</code></pre></div><p>To automatically recover from failures I will use a retry mechanism: every <em>N</em>
+calls in a open state, circuit will allow one request to see if the issue still
+persists.</p>
+<p>The retry logic:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">shouldRetry</span>() <span style="color:#66d9ef">bool</span> {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RetryThreshold</span> {
+		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> = <span style="color:#ae81ff">0</span>
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+}
+</code></pre></div><p>And open circuit logic:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">isOpen</span>() <span style="color:#66d9ef">bool</span> {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">shouldRetry</span>() {
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+	} <span style="color:#66d9ef">else</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">FailThreshold</span>
+	}
+}
+</code></pre></div><p>An improved version of the circuit breaker main block:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
+<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>()) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">isOpen</span>() {
+		<span style="color:#a6e22e">wait</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">error</span>, <span style="color:#ae81ff">1</span>)
+
+		<span style="color:#75715e">// run function with timeout
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">wait</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">call</span>() }()
+
+		<span style="color:#66d9ef">select</span> {
+		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">wait</span>:
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+				<span style="color:#66d9ef">break</span>
+			}
+			<span style="color:#a6e22e">c</span>.close()
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">TimeOut</span>):
+			<span style="color:#66d9ef">break</span>
+		}
+	}
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">incrementFailures</span>()
+	<span style="color:#a6e22e">fallback</span>()
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrorCircuitTripped</span>
+}
+</code></pre></div><p>And the helpers:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// close circuit
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) close() {
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span> = <span style="color:#ae81ff">0</span>
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> = <span style="color:#ae81ff">0</span>
+}
+
+<span style="color:#75715e">// increase failures counter circuit
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">incrementFailures</span>() {
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span><span style="color:#f92672">++</span>
+	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span><span style="color:#f92672">++</span>
+}
+</code></pre></div><p>Using the circuit breaker:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#a6e22e">location</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">10</span>)) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;sunny&#34;</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fallbackWeather</span>() <span style="color:#66d9ef">string</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;raining&#34;</span>
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">fuse</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Circuit</span>{
+		<span style="color:#a6e22e">TimeOut</span>:        <span style="color:#ae81ff">3</span>,
+		<span style="color:#a6e22e">FailThreshold</span>:  <span style="color:#ae81ff">5</span>,
+		<span style="color:#a6e22e">RetryThreshold</span>: <span style="color:#ae81ff">5</span>,
+	}
+
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">localWeather</span> <span style="color:#66d9ef">string</span>
+
+	<span style="color:#66d9ef">for</span> {
+		<span style="color:#a6e22e">fuse</span>.<span style="color:#a6e22e">WithCircuit</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
+			<span style="color:#a6e22e">localWeather</span> = <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#e6db74">&#34;London&#34;</span>)
+			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+		},
+			<span style="color:#66d9ef">func</span>() {
+				<span style="color:#a6e22e">localWeather</span> = <span style="color:#a6e22e">fallbackWeather</span>()
+			})
+
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">localWeather</span>)
+	}
+}
+</code></pre></div><hr>
+<p>This example shows the concepts behind circuit breaker pattern. Although it’s
+easy to understand, as it matches a real life example, a “*production ready”
+*circuit breaker is way more complex and should include additional
+functionalities like:</p>
+<ol>
+<li>Logging</li>
+<li>Manual Override</li>
+<li>Concurrency support</li>
+</ol>
+<p>A perfect example to follow is <a href="https://www.netflix.com/">Netflix</a><a href="https://github.com/Netflix/Hystrix">Hystrix</a>.</p>
+
+        </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+        
+        
+    </div>
+</main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2021</span>
+            
+            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
+            
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            
+            <span> <a
+                    href="https://www.jacoelho.com/posts/index.xml" target="_blank" title="rss"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-rss">
+                        <path d="M4 11a9 9 0 0 1 9 9"></path>
+                        <path d="M4 4a16 16 0 0 1 16 16"></path>
+                        <circle cx="5" cy="19" r="1"></circle>
+                    </svg></a></span>
+        </div>
+    </div>
+</footer>
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.dc716e9092c9820b77f96da294d0120aeeb189b5bcea9752309ebea27fd53bbe6b13cffb2aca8ecf32525647ceb7001f76091de4199ac5a3caa432c070247f5b.js" integrity="sha512-3HFukJLJggt3&#43;W2ilNASCu6xibW86pdSMJ6&#43;on/VO75rE8/7KsqOzzJSVkfOtwAfdgkd5BmaxaPKpDLAcCR/Ww=="></script>
+
+
+
+    </body>
+</html>

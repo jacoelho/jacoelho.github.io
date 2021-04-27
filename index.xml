@@ -10,10 +10,10 @@
     <lastBuildDate>Tue, 27 Apr 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go - Embed</title>
-      <link>https://www.jacoelho.com/blog/014_embed/</link>
+      <link>https://www.jacoelho.com/blog/2021/04/go-embed/</link>
       <pubDate>Tue, 27 Apr 2021 10:00:00 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/014_embed/</guid>
+      <guid>https://www.jacoelho.com/blog/2021/04/go-embed/</guid>
       <description>Go 1.16 added a new embed package.
 While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:
  go-bindata go-rice  Having an official package is always a welcome addition to the batteries-included standard library.
@@ -23,10 +23,10 @@ package web import ( &amp;#34;embed&amp;#34; &amp;#34;io/fs&amp;#34; ) //go:embe
     
     <item>
       <title>Go - On building URL strings</title>
-      <link>https://www.jacoelho.com/blog/013_building_url_strings-copy/</link>
+      <link>https://www.jacoelho.com/blog/2021/04/go-on-building-url-strings/</link>
       <pubDate>Sat, 17 Apr 2021 10:00:00 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/013_building_url_strings-copy/</guid>
+      <guid>https://www.jacoelho.com/blog/2021/04/go-on-building-url-strings/</guid>
       <description>Building URL strings in Go may be accomplished in a couple different ways:
  url.Parse string concatenation (using +) fmt.Sprintf bytes.Buffer strings.Builder  You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.
 URL.Parse Before we start, a quick refresh on the URL structure:
@@ -35,10 +35,10 @@ One important fact to be aware is that when building URLs manually, it is easy t
     
     <item>
       <title>Writing a client library in Go</title>
-      <link>https://www.jacoelho.com/blog/012_client-library-in-go/</link>
+      <link>https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/</link>
       <pubDate>Fri, 25 Sep 2020 12:00:00 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/012_client-library-in-go/</guid>
+      <guid>https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/</guid>
       <description>There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
 Without any specific order of importance, these are my thoughts on the subject.
 Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse).</description>
@@ -55,10 +55,10 @@ Usage and Examples Like a book can be judged by its cover, a project can be judg
     
     <item>
       <title>A story about Go http.Client</title>
-      <link>https://www.jacoelho.com/blog/011_a-story-about-go-http-client/</link>
+      <link>https://www.jacoelho.com/blog/2017/08/a-story-about-go-http.client/</link>
       <pubDate>Sat, 19 Aug 2017 10:24:46 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/011_a-story-about-go-http-client/</guid>
+      <guid>https://www.jacoelho.com/blog/2017/08/a-story-about-go-http.client/</guid>
       <description>Or how I have learned to embrace http.RoundTripper
 Using a http client in Go usually starts like this:
 resp, err := http.Get(&amp;#34;http://example.com/&amp;#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow response, etc.
@@ -68,30 +68,30 @@ c := &amp;amp;http.Client{ Transport: &amp;amp;http.Transport{ Dial: (&amp;amp;n
     
     <item>
       <title>Kafka — Accelerating!</title>
-      <link>https://www.jacoelho.com/blog/010_kafka-accelerating/</link>
+      <link>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</link>
       <pubDate>Tue, 22 Nov 2016 10:24:46 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/010_kafka-accelerating/</guid>
+      <guid>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</guid>
       <description>Quick tips and insights on how to make Apache Kafka work faster!
 Hardware  CPU doesn&amp;rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare metal.  Linux  Configure to maximize memory usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka.</description>
     </item>
     
     <item>
       <title>Stability Patterns — Circuit Breaker</title>
-      <link>https://www.jacoelho.com/blog/009_stability-patterns-circuit-breaker/</link>
+      <link>https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/</link>
       <pubDate>Sat, 20 Aug 2016 10:24:46 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/009_stability-patterns-circuit-breaker/</guid>
+      <guid>https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/</guid>
       <description>A circuit breaker is an automatically operated electrical switch designed to protect an electrical circuit from damage caused by over-current or overload or short circuit. Its basic function is to interrupt current flow after protective relays detect a fault. A circuit breaker can be reset (either manually or automatically) to resume normal operation.
  The software analogue as described in Release it! chapter 5.2 can prevent repeated calls to a failing service by detecting issues and providing a fallback, by using this pattern it is possible to avoid cascading failures.</description>
     </item>
     
     <item>
       <title>Ansible vs PCI</title>
-      <link>https://www.jacoelho.com/blog/008_ansible-vs-pci/</link>
+      <link>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</link>
       <pubDate>Tue, 16 Aug 2016 10:24:46 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/008_ansible-vs-pci/</guid>
+      <guid>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</guid>
       <description>If you need to to comply with PCI requirements like:
  Requirement 2: Maintain an inventory of system components in scope for PCI DSS to support effective scoping practices.
  You will find that using public-key authentication is sometimes forbidden as it’s almost impossible to ensure employees are rotating the keys, keeping the private key safe and with a strong password.
@@ -100,10 +100,10 @@ Using Ansible without ssh key based authentication is painful if you need to run
     
     <item>
       <title>Docker: Configuration files</title>
-      <link>https://www.jacoelho.com/blog/007_docker-configuration-files/</link>
+      <link>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</link>
       <pubDate>Sun, 14 Aug 2016 10:24:46 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/007_docker-configuration-files/</guid>
+      <guid>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</guid>
       <description>Things no one tells you about. One of Docker’s killer features is the environment parity, yet it feels like one little detail was left untold: how to handle configuration files.
 Unless you are using the same configuration between development, quality, production, etc. you will end up with different endpoints, API keys, secret tokens and feature switches for each environment.
 Available Options There are a couple of different ways to handle configuration in Docker.</description>
@@ -111,10 +111,10 @@ Available Options There are a couple of different ways to handle configuration i
     
     <item>
       <title>Collectd plugins made easy</title>
-      <link>https://www.jacoelho.com/blog/006_collectd-plugins-made-easy/</link>
+      <link>https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/</link>
       <pubDate>Tue, 09 Aug 2016 10:24:46 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/006_collectd-plugins-made-easy/</guid>
+      <guid>https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/</guid>
       <description>Collectd is a Unix daemon that collects, transfers and stores performance data of computers and network equipment. The acquired data is meant to help system administrators maintain an overview over available resources to detect existing or looming bottlenecks.
  Collectd provides a long list of plugins available out-of-box. However, if you need to collect additional metrics, one of the easiest ways to do so is using the exec plugin.</description>
     </item>

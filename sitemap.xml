@@ -3,7 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://www.jacoelho.com/blog/014_embed/</loc>
+    <loc>https://www.jacoelho.com/blog/2021/04/go-embed/</loc>
     <lastmod>2021-04-27T10:00:00+00:00</lastmod>
   </url>
   
@@ -18,12 +18,12 @@
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/013_building_url_strings-copy/</loc>
+    <loc>https://www.jacoelho.com/blog/2021/04/go-on-building-url-strings/</loc>
     <lastmod>2021-04-17T10:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/012_client-library-in-go/</loc>
+    <loc>https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/</loc>
     <lastmod>2020-09-25T12:00:00+00:00</lastmod>
   </url>
   
@@ -33,57 +33,57 @@
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/011_a-story-about-go-http-client/</loc>
+    <loc>https://www.jacoelho.com/blog/2017/08/a-story-about-go-http.client/</loc>
     <lastmod>2017-08-19T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/010_kafka-accelerating/</loc>
+    <loc>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</loc>
     <lastmod>2016-11-22T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/009_stability-patterns-circuit-breaker/</loc>
+    <loc>https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/</loc>
     <lastmod>2016-08-20T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/008_ansible-vs-pci/</loc>
+    <loc>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</loc>
     <lastmod>2016-08-16T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/007_docker-configuration-files/</loc>
+    <loc>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</loc>
     <lastmod>2016-08-14T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/006_collectd-plugins-made-easy/</loc>
+    <loc>https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/</loc>
     <lastmod>2016-08-09T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/005_chef-custom-resources/</loc>
+    <loc>https://www.jacoelho.com/blog/2016/07/chef-custom-resources/</loc>
     <lastmod>2016-07-13T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/004_ansible-in-aws-lambda/</loc>
+    <loc>https://www.jacoelho.com/blog/2016/02/ansible-in-aws-lambda/</loc>
     <lastmod>2016-02-18T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/003_secure-redis/</loc>
+    <loc>https://www.jacoelho.com/blog/2015/11/secure-redis/</loc>
     <lastmod>2015-11-18T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/002_docker-images/</loc>
+    <loc>https://www.jacoelho.com/blog/2015/06/docker-images/</loc>
     <lastmod>2015-06-01T10:24:46+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.jacoelho.com/blog/001_locally-developing-microservices/</loc>
+    <loc>https://www.jacoelho.com/blog/2015/05/locally-developing-microservices/</loc>
     <lastmod>2015-05-25T10:24:46+00:00</lastmod>
   </url>
   
