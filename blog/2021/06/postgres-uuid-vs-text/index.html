@@ -163,7 +163,7 @@ Each field is treated as an integer and has its value printed as a zero-filled h
 
         <div class="post-content">
             <p>In PostgreSQL one can represent <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a> as <code>UUID</code>, <code>TEXT</code> or <code>VARCHAR</code> built-in types.</p>
-<h3 id="which-type-better-represents-a-uuid-more-efficiently-mainly-in-the-jsonb-context">Which type better represents a <code>UUID</code> more efficiently? Mainly in the <code>JSONB</code> context?</h3>
+<h3 id="which-type-better-represents-a-uuid-more-efficiently-mainly-in-the-jsonb-context">Which type better represents a UUID more efficiently? Mainly in the JSONB context?</h3>
 <p>My gut feeling says built-in type <code>UUID</code> is way better.</p>
 <p>One trap with using <code>TEXT</code> is trying to compare different cases with equals:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#e6db74">&#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&#39;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&#39;</span> <span style="color:#66d9ef">as</span> equal;
