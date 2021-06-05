@@ -7,7 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Tue, 27 Apr 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 05 Jun 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Postgres - UUID vs TEXT</title>
+      <link>https://www.jacoelho.com/blog/2021/06/postgres-uuid-vs-text/</link>
+      <pubDate>Sat, 05 Jun 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2021/06/postgres-uuid-vs-text/</guid>
+      <description>In PostgreSQL one can represent UUID as UUID, TEXT or VARCHAR built-in types.
+Which type better represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
+One trap with using TEXT is trying to compare different cases with equals:
+select &amp;#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&amp;#39; = &amp;#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&amp;#39; as equal; equal -------  f Checking the relevant RFC4122 section:
+Each field is treated as an integer and has its value printed as a zero-filled hexadecimal digit string with the most significant digit first.</description>
+    </item>
+    
     <item>
       <title>Go - Embed</title>
       <link>https://www.jacoelho.com/blog/2021/04/go-embed/</link>
@@ -137,23 +150,6 @@ plugins available
 out-of-box. However, if you need to collect additional metrics, one of the
 easiest ways to do so is using the exec
 plugin.</description>
-    </item>
-    
-    <item>
-      <title>Chef Custom Resources</title>
-      <link>https://www.jacoelho.com/blog/2016/07/chef-custom-resources/</link>
-      <pubDate>Wed, 13 Jul 2016 10:24:46 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/blog/2016/07/chef-custom-resources/</guid>
-      <description>Lately I’ve been writing some Chef code. One of the best things about Chef
-is custom resources:
-https://docs.chef.io/custom_resources.html
-Let’s see an example on how to create a Kafka topic
-using Chef and how to make it
-idempotent.
-Before writing any Chef code it is important to understand how to manage a
-topic (grouping of messages of a similar type).
-From the Kafka install directory, first check if the topic already exists:</description>
     </item>
     
   </channel>

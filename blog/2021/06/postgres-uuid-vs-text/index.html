@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author"
+    content="Jose Coelho ">
+<meta name="keywords"
+    content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="#252627" />
+<meta name="description" content="Notes on building software">
+<link rel="canonical" href="https://www.jacoelho.com/blog/2021/06/postgres-uuid-vs-text/" />
+
+
+<title>
+    
+    Postgres - UUID vs TEXT :: Posts 
+    
+</title>
+
+
+
+
+
+<link rel="stylesheet" href="https://www.jacoelho.com/main.6730ffdfb90f5728762854c1de7bb953241b15b22d49786707a32a63e1acacc1.css">
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/%20apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/%20favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/%20favicon-16x16.png">
+    <link rel="mask-icon" href="https://www.jacoelho.com/%20safari-pinned-tab.svg" color="#252627">
+    <link rel="shortcut icon" href="https://www.jacoelho.com/%20favicon.ico">
+    <meta name="msapplication-TileColor" content="#252627">
+    <meta name="theme-color" content="#252627">
+
+
+<meta itemprop="name" content="Postgres - UUID vs TEXT">
+<meta itemprop="description" content="In PostgreSQL one can represent UUID as UUID, TEXT or VARCHAR built-in types.
+Which type better represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
+One trap with using TEXT is trying to compare different cases with equals:
+select &#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&#39; = &#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&#39; as equal; equal -------  f Checking the relevant RFC4122 section:
+Each field is treated as an integer and has its value printed as a zero-filled hexadecimal digit string with the most significant digit first.">
+<meta itemprop="datePublished" content="2021-06-05T10:00:00+00:00" />
+<meta itemprop="dateModified" content="2021-06-05T10:00:00+00:00" />
+<meta itemprop="wordCount" content="1118">
+<meta itemprop="image" content="https://www.jacoelho.com/"/>
+
+
+
+<meta itemprop="keywords" content="" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://www.jacoelho.com/"/>
+
+<meta name="twitter:title" content="Postgres - UUID vs TEXT"/>
+<meta name="twitter:description" content="In PostgreSQL one can represent UUID as UUID, TEXT or VARCHAR built-in types.
+Which type better represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
+One trap with using TEXT is trying to compare different cases with equals:
+select &#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&#39; = &#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&#39; as equal; equal -------  f Checking the relevant RFC4122 section:
+Each field is treated as an integer and has its value printed as a zero-filled hexadecimal digit string with the most significant digit first."/>
+
+
+
+<meta property="og:title" content="Postgres - UUID vs TEXT" />
+<meta property="og:description" content="In PostgreSQL one can represent UUID as UUID, TEXT or VARCHAR built-in types.
+Which type better represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
+One trap with using TEXT is trying to compare different cases with equals:
+select &#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&#39; = &#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&#39; as equal; equal -------  f Checking the relevant RFC4122 section:
+Each field is treated as an integer and has its value printed as a zero-filled hexadecimal digit string with the most significant digit first." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.jacoelho.com/blog/2021/06/postgres-uuid-vs-text/" />
+<meta property="og:image" content="https://www.jacoelho.com/"/>
+<meta property="article:published_time" content="2021-06-05T10:00:00+00:00" />
+<meta property="article:modified_time" content="2021-06-05T10:00:00+00:00" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2021-06-05 10:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    })(window, document, "clarity", "script", "3wjiv20hsj");
+</script>
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">Jose Coelho</span>
+            <span class="logo__cursor" style=
+                  "visibility:hidden;
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+<main class="post">
+
+    <div class="post-info">
+        
+        </p>
+    </div>
+
+    <article>
+        <h2 class="post-title"><a href="https://www.jacoelho.com/blog/2021/06/postgres-uuid-vs-text/">Postgres - UUID vs TEXT</a></h2>
+
+        
+
+        
+
+        <div class="post-content">
+            <p>In PostgreSQL one can represent <a href="https://en.wikipedia.org/wiki/Universally_unique_identifier">UUID</a> as <code>UUID</code>, <code>TEXT</code> or <code>VARCHAR</code> built-in types.</p>
+<h3 id="which-type-better-represents-a-uuid-more-efficiently-mainly-in-the-jsonb-context">Which type better represents a <code>UUID</code> more efficiently? Mainly in the <code>JSONB</code> context?</h3>
+<p>My gut feeling says built-in type <code>UUID</code> is way better.</p>
+<p>One trap with using <code>TEXT</code> is trying to compare different cases with equals:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#e6db74">&#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&#39;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&#39;</span> <span style="color:#66d9ef">as</span> equal;
+ equal
+<span style="color:#75715e">-------
+</span><span style="color:#75715e"></span> f
+</code></pre></div><p>Checking the relevant <a href="https://datatracker.ietf.org/doc/html/rfc4122#section-3">RFC4122</a> section:</p>
+<pre><code>Each field is treated as an integer and has its value printed as a
+zero-filled hexadecimal digit string with the most significant
+digit first.  The hexadecimal values &quot;a&quot; through &quot;f&quot; are output as
+lower case characters and are case insensitive on input.
+</code></pre><p>Which the <code>UUID</code> type correctly handles:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#e6db74">&#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&#39;</span>::uuid <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&#39;</span>::uuid <span style="color:#66d9ef">as</span> equal;
+ equal
+<span style="color:#75715e">-------
+</span><span style="color:#75715e"></span> t
+</code></pre></div><p>Looking at type size comparison:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>
+    pg_column_size(<span style="color:#e6db74">&#39;00000000-0000-0000-0000-000000000000&#39;</span>::UUID) <span style="color:#66d9ef">as</span> uuid,
+    pg_column_size(<span style="color:#e6db74">&#39;00000000-0000-0000-0000-000000000000&#39;</span>::TEXT) <span style="color:#66d9ef">as</span> text,
+    pg_column_size(<span style="color:#e6db74">&#39;00000000-0000-0000-0000-000000000000&#39;</span>::VARCHAR(<span style="color:#ae81ff">36</span>)) <span style="color:#66d9ef">as</span> char;
+
+ uuid <span style="color:#f92672">|</span> text <span style="color:#f92672">|</span> char
+<span style="color:#75715e">------+------+------
+</span><span style="color:#75715e"></span>   <span style="color:#ae81ff">16</span> <span style="color:#f92672">|</span>   <span style="color:#ae81ff">40</span> <span style="color:#f92672">|</span>   <span style="color:#ae81ff">40</span>
+(<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">row</span>)
+</code></pre></div><p>In PostgreSQL <code>text</code> and <code>varchar</code> are the same: when using <code>varchar(36)</code> we are defining a <code>text</code> column with a check constraint of 36 characters.</p>
+<p>Managing <code>UUID</code> as a proper <code>UUID</code> in PostgreSQL seems like a good idea, as PostgreSQL represents it in 128 bits (or 16 bytes).</p>
+<h4 id="what-does-the-query-planner-say">What does the query planner say?</h4>
+<p>Generating some data to run comparisons:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exists</span> a;
+<span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exists</span> b;
+<span style="color:#66d9ef">drop</span> <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">exists</span> <span style="color:#66d9ef">c</span>;
+
+<span style="color:#66d9ef">create</span> unlogged <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> a (
+    id   uuid <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    <span style="color:#66d9ef">data</span> json
+);
+
+<span style="color:#66d9ef">create</span> unlogged <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> b (
+    id   uuid <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    <span style="color:#66d9ef">data</span> json
+);
+
+<span style="color:#66d9ef">create</span> unlogged <span style="color:#66d9ef">table</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> <span style="color:#66d9ef">c</span> (
+    id   uuid <span style="color:#66d9ef">primary</span> <span style="color:#66d9ef">key</span>,
+    <span style="color:#66d9ef">data</span> json
+);
+
+<span style="color:#66d9ef">with</span> insert_a <span style="color:#66d9ef">as</span> (
+  <span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> a
+  <span style="color:#66d9ef">select</span> a_id, jsonb_build_object(<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;foobar&#39;</span>)
+  <span style="color:#66d9ef">from</span> (<span style="color:#66d9ef">select</span> gen_random_uuid() <span style="color:#66d9ef">as</span> a_id <span style="color:#66d9ef">from</span> generate_series(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>e4)) <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">data</span>
+  <span style="color:#66d9ef">on</span> conflict <span style="color:#66d9ef">do</span> <span style="color:#66d9ef">nothing</span>
+  returning a.id
+),
+insert_b <span style="color:#66d9ef">as</span> (
+  <span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> b
+  <span style="color:#66d9ef">select</span> b_id, jsonb_build_object(<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;foobar&#39;</span>, <span style="color:#e6db74">&#39;a&#39;</span>, a_id)
+  <span style="color:#66d9ef">from</span>
+  (<span style="color:#66d9ef">select</span> gen_random_uuid() <span style="color:#66d9ef">as</span> b_id  <span style="color:#66d9ef">from</span> generate_series(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>e4)) <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">data</span>,
+  (<span style="color:#66d9ef">select</span> id <span style="color:#66d9ef">as</span> a_id <span style="color:#66d9ef">from</span> insert_a) <span style="color:#66d9ef">as</span> data_a
+  <span style="color:#66d9ef">on</span> conflict <span style="color:#66d9ef">do</span> <span style="color:#66d9ef">nothing</span>
+  returning b.id
+),
+insert_c <span style="color:#66d9ef">as</span> (
+  <span style="color:#66d9ef">insert</span> <span style="color:#66d9ef">into</span> <span style="color:#66d9ef">c</span>
+  <span style="color:#66d9ef">select</span> c_id, jsonb_build_object(<span style="color:#e6db74">&#39;foo&#39;</span>, <span style="color:#e6db74">&#39;foobar&#39;</span>, <span style="color:#e6db74">&#39;b&#39;</span>, b_id)
+  <span style="color:#66d9ef">from</span>
+  (<span style="color:#66d9ef">select</span> gen_random_uuid() <span style="color:#66d9ef">as</span> c_id <span style="color:#66d9ef">from</span> generate_series(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>e4)) <span style="color:#66d9ef">as</span> <span style="color:#66d9ef">data</span>,
+  (<span style="color:#66d9ef">select</span> id <span style="color:#66d9ef">as</span> b_id <span style="color:#66d9ef">from</span> insert_b) <span style="color:#66d9ef">as</span> data_b
+  <span style="color:#66d9ef">on</span> conflict <span style="color:#66d9ef">do</span> <span style="color:#66d9ef">nothing</span>
+  returning <span style="color:#66d9ef">c</span>.id
+)
+<span style="color:#66d9ef">select</span> <span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">from</span> insert_c;
+</code></pre></div><p>With this setup the following number of rows were inserted:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">from</span> a
+<span style="color:#66d9ef">union</span> <span style="color:#66d9ef">all</span>
+<span style="color:#66d9ef">select</span> <span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">from</span> b
+<span style="color:#66d9ef">union</span> <span style="color:#66d9ef">all</span>
+<span style="color:#66d9ef">select</span> <span style="color:#66d9ef">count</span>(<span style="color:#f92672">*</span>) <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">c</span>;
+
+ <span style="color:#66d9ef">count</span>
+<span style="color:#75715e">-------
+</span><span style="color:#75715e"></span> <span style="color:#ae81ff">10000</span>
+ <span style="color:#ae81ff">10000</span>
+ <span style="color:#ae81ff">10000</span>
+</code></pre></div><h4 id="creating-a-baseline">Creating a baseline:</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">explain</span> <span style="color:#66d9ef">analyze</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">c</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> b <span style="color:#66d9ef">on</span> b.id::text <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> a <span style="color:#66d9ef">on</span> a.id::text <span style="color:#f92672">=</span> b.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>
+<span style="color:#66d9ef">where</span> <span style="color:#66d9ef">c</span>.id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>;
+
+                                                            QUERY PLAN
+<span style="color:#75715e">-----------------------------------------------------------------------------------------------------------------------------------
+</span><span style="color:#75715e"></span> Hash <span style="color:#66d9ef">Right</span> <span style="color:#66d9ef">Join</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">273</span>.<span style="color:#ae81ff">67</span>..<span style="color:#ae81ff">757</span>.<span style="color:#ae81ff">66</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2500</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">157</span>.<span style="color:#ae81ff">340</span>..<span style="color:#ae81ff">299</span>.<span style="color:#ae81ff">387</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+   Hash Cond: ((a.id)::text <span style="color:#f92672">=</span> (b.<span style="color:#66d9ef">data</span> <span style="color:#f92672">-&gt;&gt;</span> <span style="color:#e6db74">&#39;a&#39;</span>::text))
+   <span style="color:#f92672">-&gt;</span>  Seq Scan <span style="color:#66d9ef">on</span> a  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">00</span>..<span style="color:#ae81ff">184</span>.<span style="color:#ae81ff">00</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">34</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">014</span>..<span style="color:#ae81ff">67</span>.<span style="color:#ae81ff">927</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+   <span style="color:#f92672">-&gt;</span>  Hash  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">273</span>.<span style="color:#ae81ff">04</span>..<span style="color:#ae81ff">273</span>.<span style="color:#ae81ff">04</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">50</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">158</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">157</span>.<span style="color:#ae81ff">255</span>..<span style="color:#ae81ff">157</span>.<span style="color:#ae81ff">312</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+         Buckets: <span style="color:#ae81ff">1024</span>  Batches: <span style="color:#ae81ff">1</span>  Memory <span style="color:#66d9ef">Usage</span>: <span style="color:#ae81ff">9</span>kB
+         <span style="color:#f92672">-&gt;</span>  Hash <span style="color:#66d9ef">Right</span> <span style="color:#66d9ef">Join</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">31</span>..<span style="color:#ae81ff">273</span>.<span style="color:#ae81ff">04</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">50</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">158</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">149</span>..<span style="color:#ae81ff">157</span>.<span style="color:#ae81ff">268</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+               Hash Cond: ((b.id)::text <span style="color:#f92672">=</span> (<span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span> <span style="color:#f92672">-&gt;&gt;</span> <span style="color:#e6db74">&#39;b&#39;</span>::text))
+               <span style="color:#f92672">-&gt;</span>  Seq Scan <span style="color:#66d9ef">on</span> b  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">00</span>..<span style="color:#ae81ff">234</span>.<span style="color:#ae81ff">00</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">79</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">025</span>..<span style="color:#ae81ff">74</span>.<span style="color:#ae81ff">235</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+               <span style="color:#f92672">-&gt;</span>  Hash  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">30</span>..<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">30</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">79</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">091</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">110</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+                     Buckets: <span style="color:#ae81ff">1024</span>  Batches: <span style="color:#ae81ff">1</span>  Memory <span style="color:#66d9ef">Usage</span>: <span style="color:#ae81ff">9</span>kB
+                     <span style="color:#f92672">-&gt;</span>  <span style="color:#66d9ef">Index</span> Scan <span style="color:#66d9ef">using</span> c_pkey <span style="color:#66d9ef">on</span> <span style="color:#66d9ef">c</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">29</span>..<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">30</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">79</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">045</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">064</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+                           <span style="color:#66d9ef">Index</span> Cond: (id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>::uuid)
+ Planning Time: <span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">175</span> ms
+ Execution Time: <span style="color:#ae81ff">299</span>.<span style="color:#ae81ff">458</span> ms
+</code></pre></div><p>Setting timing on:</p>
+<pre><code> \timing
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">c</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> b <span style="color:#66d9ef">on</span> b.id::text <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> a <span style="color:#66d9ef">on</span> a.id::text <span style="color:#f92672">=</span> b.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>
+<span style="color:#66d9ef">where</span> <span style="color:#66d9ef">c</span>.id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>;
+
+<span style="color:#f92672">-</span>[ RECORD <span style="color:#ae81ff">1</span> ]<span style="color:#75715e">--------------------------------------------------------
+</span><span style="color:#75715e"></span>id   <span style="color:#f92672">|</span> <span style="color:#ae81ff">685</span>c304c<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>ce0<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>e08<span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>b97<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>b32d6dd4e78
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;b&#34;</span>: <span style="color:#e6db74">&#34;e907b6c8-a41a-47d2-b312-4f118d69c030&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+id   <span style="color:#f92672">|</span> e907b6c8<span style="color:#f92672">-</span>a41a<span style="color:#f92672">-</span><span style="color:#ae81ff">47</span>d2<span style="color:#f92672">-</span>b312<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>f118d69c030
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;a&#34;</span>: <span style="color:#e6db74">&#34;acfa1f62-c271-4ad4-9daf-818c4921fb0e&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+id   <span style="color:#f92672">|</span> acfa1f62<span style="color:#f92672">-</span>c271<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>ad4<span style="color:#f92672">-</span><span style="color:#ae81ff">9</span>daf<span style="color:#f92672">-</span><span style="color:#ae81ff">818</span>c4921fb0e
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+
+Time: <span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">473</span> ms
+</code></pre></div><h4 id="text-index">Text Index</h4>
+<p>If we create an index on data as <code>text</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">index</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> b_a_text <span style="color:#66d9ef">on</span> b(((<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>)));
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">index</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> c_b_text <span style="color:#66d9ef">on</span> <span style="color:#66d9ef">c</span>(((<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>)));
+<span style="color:#66d9ef">vacuum</span> <span style="color:#66d9ef">analyze</span>;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">explain</span> <span style="color:#66d9ef">analyse</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">c</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> b <span style="color:#66d9ef">on</span> b.id::text <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> a <span style="color:#66d9ef">on</span> a.id::text <span style="color:#f92672">=</span> b.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>
+<span style="color:#66d9ef">where</span> <span style="color:#66d9ef">c</span>.id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>;
+
+                                                         QUERY PLAN
+<span style="color:#75715e">-----------------------------------------------------------------------------------------------------------------------------
+</span><span style="color:#75715e"></span> Hash <span style="color:#66d9ef">Left</span> <span style="color:#66d9ef">Join</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">317</span>.<span style="color:#ae81ff">31</span>..<span style="color:#ae81ff">857</span>.<span style="color:#ae81ff">16</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">2500</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">158</span>.<span style="color:#ae81ff">851</span>..<span style="color:#ae81ff">300</span>.<span style="color:#ae81ff">858</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+   Hash Cond: ((b.<span style="color:#66d9ef">data</span> <span style="color:#f92672">-&gt;&gt;</span> <span style="color:#e6db74">&#39;a&#39;</span>::text) <span style="color:#f92672">=</span> (a.id)::text)
+   <span style="color:#f92672">-&gt;</span>  Hash <span style="color:#66d9ef">Right</span> <span style="color:#66d9ef">Join</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">31</span>..<span style="color:#ae81ff">273</span>.<span style="color:#ae81ff">04</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">50</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">158</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">127</span>..<span style="color:#ae81ff">142</span>.<span style="color:#ae81ff">084</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+         Hash Cond: ((b.id)::text <span style="color:#f92672">=</span> (<span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span> <span style="color:#f92672">-&gt;&gt;</span> <span style="color:#e6db74">&#39;b&#39;</span>::text))
+         <span style="color:#f92672">-&gt;</span>  Seq Scan <span style="color:#66d9ef">on</span> b  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">00</span>..<span style="color:#ae81ff">234</span>.<span style="color:#ae81ff">00</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">79</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">012</span>..<span style="color:#ae81ff">67</span>.<span style="color:#ae81ff">688</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+         <span style="color:#f92672">-&gt;</span>  Hash  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">30</span>..<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">30</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">79</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">071</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">090</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+               Buckets: <span style="color:#ae81ff">1024</span>  Batches: <span style="color:#ae81ff">1</span>  Memory <span style="color:#66d9ef">Usage</span>: <span style="color:#ae81ff">9</span>kB
+               <span style="color:#f92672">-&gt;</span>  <span style="color:#66d9ef">Index</span> Scan <span style="color:#66d9ef">using</span> c_pkey <span style="color:#66d9ef">on</span> <span style="color:#66d9ef">c</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">29</span>..<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">30</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">79</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">023</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">041</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+                     <span style="color:#66d9ef">Index</span> Cond: (id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>::uuid)
+   <span style="color:#f92672">-&gt;</span>  Hash  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">184</span>.<span style="color:#ae81ff">00</span>..<span style="color:#ae81ff">184</span>.<span style="color:#ae81ff">00</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">34</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">158</span>.<span style="color:#ae81ff">673</span>..<span style="color:#ae81ff">158</span>.<span style="color:#ae81ff">692</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+         Buckets: <span style="color:#ae81ff">16384</span>  Batches: <span style="color:#ae81ff">1</span>  Memory <span style="color:#66d9ef">Usage</span>: <span style="color:#ae81ff">773</span>kB
+         <span style="color:#f92672">-&gt;</span>  Seq Scan <span style="color:#66d9ef">on</span> a  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">00</span>..<span style="color:#ae81ff">184</span>.<span style="color:#ae81ff">00</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">34</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">012</span>..<span style="color:#ae81ff">75</span>.<span style="color:#ae81ff">828</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">10000</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+ Planning Time: <span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">302</span> ms
+ Execution Time: <span style="color:#ae81ff">301</span>.<span style="color:#ae81ff">021</span> ms
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">c</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> b <span style="color:#66d9ef">on</span> b.id::text <span style="color:#f92672">=</span> <span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> a <span style="color:#66d9ef">on</span> a.id::text <span style="color:#f92672">=</span> b.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>
+<span style="color:#66d9ef">where</span> <span style="color:#66d9ef">c</span>.id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>;
+
+<span style="color:#f92672">-</span>[ RECORD <span style="color:#ae81ff">1</span> ]<span style="color:#75715e">--------------------------------------------------------
+</span><span style="color:#75715e"></span>id   <span style="color:#f92672">|</span> <span style="color:#ae81ff">685</span>c304c<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>ce0<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>e08<span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>b97<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>b32d6dd4e78
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;b&#34;</span>: <span style="color:#e6db74">&#34;e907b6c8-a41a-47d2-b312-4f118d69c030&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+id   <span style="color:#f92672">|</span> e907b6c8<span style="color:#f92672">-</span>a41a<span style="color:#f92672">-</span><span style="color:#ae81ff">47</span>d2<span style="color:#f92672">-</span>b312<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>f118d69c030
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;a&#34;</span>: <span style="color:#e6db74">&#34;acfa1f62-c271-4ad4-9daf-818c4921fb0e&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+id   <span style="color:#f92672">|</span> acfa1f62<span style="color:#f92672">-</span>c271<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>ad4<span style="color:#f92672">-</span><span style="color:#ae81ff">9</span>daf<span style="color:#f92672">-</span><span style="color:#ae81ff">818</span>c4921fb0e
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+
+Time: <span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">894</span> ms
+</code></pre></div><p>In this case it doesn&rsquo;t seem like the index is even useful, as we are getting a value similiar to the baseline.</p>
+<h4 id="uuid-index">UUID Index</h4>
+<p>If we create an index on data as <code>uuid</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">create</span> <span style="color:#66d9ef">index</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> b_a_uuid <span style="color:#66d9ef">on</span> b(((<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>)::uuid));
+<span style="color:#66d9ef">create</span> <span style="color:#66d9ef">index</span> <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">not</span> <span style="color:#66d9ef">exists</span> c_b_uuid <span style="color:#66d9ef">on</span> <span style="color:#66d9ef">c</span>(((<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>)::uuid));
+<span style="color:#66d9ef">vacuum</span> <span style="color:#66d9ef">analyze</span>;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">explain</span> <span style="color:#66d9ef">analyze</span> <span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">c</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> b <span style="color:#66d9ef">on</span> b.id <span style="color:#f92672">=</span> (<span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>)::uuid
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> a <span style="color:#66d9ef">on</span> a.id <span style="color:#f92672">=</span> (b.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>)::uuid
+<span style="color:#66d9ef">where</span> <span style="color:#66d9ef">c</span>.id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>;
+                                                      QUERY PLAN
+<span style="color:#75715e">-----------------------------------------------------------------------------------------------------------------------
+</span><span style="color:#75715e"></span> Nested Loop <span style="color:#66d9ef">Left</span> <span style="color:#66d9ef">Join</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">87</span>..<span style="color:#ae81ff">16</span>.<span style="color:#ae81ff">98</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">192</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">146</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">293</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+   <span style="color:#f92672">-&gt;</span>  Nested Loop <span style="color:#66d9ef">Left</span> <span style="color:#66d9ef">Join</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">58</span>..<span style="color:#ae81ff">16</span>.<span style="color:#ae81ff">61</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">158</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">094</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">177</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+         <span style="color:#f92672">-&gt;</span>  <span style="color:#66d9ef">Index</span> Scan <span style="color:#66d9ef">using</span> c_pkey <span style="color:#66d9ef">on</span> <span style="color:#66d9ef">c</span>  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">29</span>..<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">30</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">79</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">023</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">045</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+               <span style="color:#66d9ef">Index</span> Cond: (id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>::uuid)
+         <span style="color:#f92672">-&gt;</span>  <span style="color:#66d9ef">Index</span> Scan <span style="color:#66d9ef">using</span> b_pkey <span style="color:#66d9ef">on</span> b  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">29</span>..<span style="color:#ae81ff">8</span>.<span style="color:#ae81ff">31</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">79</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">026</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">037</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+               <span style="color:#66d9ef">Index</span> Cond: (id <span style="color:#f92672">=</span> ((<span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span> <span style="color:#f92672">-&gt;&gt;</span> <span style="color:#e6db74">&#39;b&#39;</span>::text))::uuid)
+   <span style="color:#f92672">-&gt;</span>  <span style="color:#66d9ef">Index</span> Scan <span style="color:#66d9ef">using</span> a_pkey <span style="color:#66d9ef">on</span> a  (cost<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">29</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">37</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> width<span style="color:#f92672">=</span><span style="color:#ae81ff">34</span>) (actual time<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">020</span>..<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">032</span> <span style="color:#66d9ef">rows</span><span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> loops<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+         <span style="color:#66d9ef">Index</span> Cond: (id <span style="color:#f92672">=</span> ((b.<span style="color:#66d9ef">data</span> <span style="color:#f92672">-&gt;&gt;</span> <span style="color:#e6db74">&#39;a&#39;</span>::text))::uuid)
+ Planning Time: <span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">258</span> ms
+ Execution Time: <span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">366</span> ms
+(<span style="color:#ae81ff">10</span> <span style="color:#66d9ef">rows</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">from</span> <span style="color:#66d9ef">c</span>
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> b <span style="color:#66d9ef">on</span> b.id <span style="color:#f92672">=</span> (<span style="color:#66d9ef">c</span>.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;b&#39;</span>)::uuid
+<span style="color:#66d9ef">left</span> <span style="color:#66d9ef">join</span> a <span style="color:#66d9ef">on</span> a.id <span style="color:#f92672">=</span> (b.<span style="color:#66d9ef">data</span><span style="color:#f92672">-&gt;&gt;</span><span style="color:#e6db74">&#39;a&#39;</span>)::uuid
+<span style="color:#66d9ef">where</span> <span style="color:#66d9ef">c</span>.id <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;685c304c-2ce0-4e08-8b97-4b32d6dd4e78&#39;</span>;
+
+<span style="color:#f92672">-</span>[ RECORD <span style="color:#ae81ff">1</span> ]<span style="color:#75715e">--------------------------------------------------------
+</span><span style="color:#75715e"></span>id   <span style="color:#f92672">|</span> <span style="color:#ae81ff">685</span>c304c<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>ce0<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>e08<span style="color:#f92672">-</span><span style="color:#ae81ff">8</span>b97<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>b32d6dd4e78
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;b&#34;</span>: <span style="color:#e6db74">&#34;e907b6c8-a41a-47d2-b312-4f118d69c030&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+id   <span style="color:#f92672">|</span> e907b6c8<span style="color:#f92672">-</span>a41a<span style="color:#f92672">-</span><span style="color:#ae81ff">47</span>d2<span style="color:#f92672">-</span>b312<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>f118d69c030
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;a&#34;</span>: <span style="color:#e6db74">&#34;acfa1f62-c271-4ad4-9daf-818c4921fb0e&#34;</span>, <span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+id   <span style="color:#f92672">|</span> acfa1f62<span style="color:#f92672">-</span>c271<span style="color:#f92672">-</span><span style="color:#ae81ff">4</span>ad4<span style="color:#f92672">-</span><span style="color:#ae81ff">9</span>daf<span style="color:#f92672">-</span><span style="color:#ae81ff">818</span>c4921fb0e
+<span style="color:#66d9ef">data</span> <span style="color:#f92672">|</span> <span style="color:#960050;background-color:#1e0010">{</span><span style="color:#e6db74">&#34;foo&#34;</span>: <span style="color:#e6db74">&#34;foobar&#34;</span><span style="color:#960050;background-color:#1e0010">}</span>
+
+Time: <span style="color:#ae81ff">1</span>.<span style="color:#ae81ff">044</span> ms
+</code></pre></div><p>Massive improvement with the uuid index. 1.044ms vs 8.894 ms which is way faster and we&rsquo;re fully utilising the index we just created.</p>
+<h4 id="conclusion">Conclusion</h4>
+<p>Using the built-in type <code>UUID</code> is more efficient at the cost of a slightly more complicated query writing, with the extra benefit of avoiding handling possible pitfalls when comparing <code>UUID</code>s.</p>
+
+        </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+        
+        
+    </div>
+</main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2021</span>
+            
+            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
+            
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            
+            <span> <a
+                    href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-rss">
+                        <path d="M4 11a9 9 0 0 1 9 9"></path>
+                        <path d="M4 4a16 16 0 0 1 16 16"></path>
+                        <circle cx="5" cy="19" r="1"></circle>
+                    </svg></a></span>
+        </div>
+    </div>
+</footer>
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.dc716e9092c9820b77f96da294d0120aeeb189b5bcea9752309ebea27fd53bbe6b13cffb2aca8ecf32525647ceb7001f76091de4199ac5a3caa432c070247f5b.js" integrity="sha512-3HFukJLJggt3&#43;W2ilNASCu6xibW86pdSMJ6&#43;on/VO75rE8/7KsqOzzJSVkfOtwAfdgkd5BmaxaPKpDLAcCR/Ww=="></script>
+
+
+
+    </body>
+</html>
