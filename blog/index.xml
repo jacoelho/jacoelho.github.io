@@ -15,7 +15,7 @@
       
       <guid>https://www.jacoelho.com/blog/2021/06/postgresql-uuid-vs-text/</guid>
       <description>In PostgreSQL one can represent UUID as UUID, TEXT or VARCHAR built-in types.
-Which type better represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
+Which type represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
 One trap with using TEXT is trying to compare different cases with equals:
 select &amp;#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&amp;#39; = &amp;#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&amp;#39; as equal; equal -------  f Checking the relevant RFC4122 section:
 Each field is treated as an integer and has its value printed as a zero-filled hexadecimal digit string with the most significant digit first.</description>
