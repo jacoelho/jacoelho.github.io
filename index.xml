@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sat, 05 Jun 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 08 Jun 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go - Client logging</title>
+      <link>https://www.jacoelho.com/blog/2021/06/go-client-logging/</link>
+      <pubDate>Tue, 08 Jun 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2021/06/go-client-logging/</guid>
+      <description>Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
+While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
+A typical example would be something like the following snippet:
+func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&amp;#34;sending get request&amp;#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !</description>
+    </item>
+    
     <item>
       <title>PostgreSQL - UUID vs TEXT</title>
       <link>https://www.jacoelho.com/blog/2021/06/postgresql-uuid-vs-text/</link>
@@ -127,21 +139,6 @@ forbidden
 as it’s almost impossible to ensure employees are rotating the keys, keeping the
 private key safe and with a strong password.
 Using Ansible without ssh key based authentication is painful if you need to</description>
-    </item>
-    
-    <item>
-      <title>Docker: Configuration files</title>
-      <link>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</link>
-      <pubDate>Sun, 14 Aug 2016 10:24:46 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</guid>
-      <description>Things no one tells you about. One of Docker’s killer features is the environment
-parity, yet it feels like one little detail was left untold: how to handle
-configuration files.
-Unless you are using the same configuration between development, quality,
-production, etc. you will end up with different endpoints, API keys, secret
-tokens and feature switches for each environment.
-Available Options There are a couple of different ways to handle configuration in Docker.</description>
     </item>
     
   </channel>
