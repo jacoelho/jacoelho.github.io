@@ -45,7 +45,7 @@ A typical example would be something like the following snippet:
 func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;sending get request&#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !">
 <meta itemprop="datePublished" content="2021-06-08T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-06-08T10:00:00+00:00" />
-<meta itemprop="wordCount" content="343">
+<meta itemprop="wordCount" content="346">
 <meta itemprop="image" content="https://www.jacoelho.com/"/>
 
 
@@ -184,7 +184,7 @@ func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;send
 <p>Russ Cox wrote an excellent <a href="https://research.swtch.com/deps">blog post</a> on what considerations one should make when picking software.</p>
 <p>There are multiples ways to improve observability; for an in-depth post on the subject check <a href="https://martinfowler.com/articles/domain-oriented-observability.html">Domain-Oriented Observability</a></p>
 <hr>
-<p>Using the http.Client example, in Go it is possible to improve observability without <em>poluting</em> the code or adding dependencies by leveraging the <a href="https://golang.org/pkg/net/http/#RoundTripper">http.RoundTripper</a>.</p>
+<p>Using the http.Client example, in Go it is possible to improve observability without <em>poluting</em> the code or adding dependencies by leveraging the <a href="https://golang.org/pkg/net/http/#RoundTripper">http.RoundTripper</a> and <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a>.</p>
 <p>One way to implement it could be:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Logger</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
 
