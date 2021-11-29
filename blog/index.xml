@@ -14,7 +14,7 @@
       <pubDate>Mon, 29 Nov 2021 10:00:00 +0000</pubDate>
       
       <guid>https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/</guid>
-      <description>Go Type Parameters Proposal is expected to be available with Go 1.18 early 2022.
+      <description>Go Type Parameters Proposal is expected to be implemented with Go 1.18 early 2022.
 The Very high level overview section contains a nice overview of what to expect.
 If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:
 type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints.</description>
