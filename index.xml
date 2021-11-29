@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Tue, 08 Jun 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 29 Nov 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go Generic Programming - Testing the waters</title>
+      <link>https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/</link>
+      <pubDate>Mon, 29 Nov 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/</guid>
+      <description>Go Type Parameters Proposal is expected to be available with Go 1.18 early 2022.
+The Very high level overview section contains a nice overview of what to expect.
+If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:
+type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints.</description>
+    </item>
+    
     <item>
       <title>Go - On logging and dependencies</title>
       <link>https://www.jacoelho.com/blog/2021/06/go-on-logging-and-dependencies/</link>
@@ -121,24 +133,6 @@ automatically) to resume normal operation.
  The software analogue as described in Release
 it! chapter 5.2 can prevent repeated
 calls to a failing service by detecting issues and providing a fallback, by</description>
-    </item>
-    
-    <item>
-      <title>Ansible vs PCI</title>
-      <link>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</link>
-      <pubDate>Tue, 16 Aug 2016 10:24:46 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</guid>
-      <description>If you need to to comply with PCI
-requirements
-like:
- Requirement 2: Maintain an inventory of system components in scope for PCI DSS
-to support effective scoping practices.
- You will find that using public-key authentication is sometimes
-forbidden
-as it’s almost impossible to ensure employees are rotating the keys, keeping the
-private key safe and with a strong password.
-Using Ansible without ssh key based authentication is painful if you need to</description>
     </item>
     
   </channel>
