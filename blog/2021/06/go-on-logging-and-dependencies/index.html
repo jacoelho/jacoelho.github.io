@@ -42,7 +42,7 @@
 <meta itemprop="description" content="Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
 While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
 A typical example would be something like the following snippet:
-func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;sending get request&#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !"><meta itemprop="datePublished" content="2021-06-08T10:00:00+00:00" />
+func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sending get request&#34;)  req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil)  if err != nil {  return err  }   resp, err := c."><meta itemprop="datePublished" content="2021-06-08T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-06-08T10:00:00+00:00" />
 <meta itemprop="wordCount" content="346"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
@@ -53,7 +53,7 @@ func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;send
 <meta name="twitter:description" content="Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
 While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
 A typical example would be something like the following snippet:
-func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;sending get request&#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !"/>
+func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sending get request&#34;)  req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil)  if err != nil {  return err  }   resp, err := c."/>
 
 
 
@@ -61,7 +61,7 @@ func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;send
 <meta property="og:description" content="Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
 While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
 A typical example would be something like the following snippet:
-func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;sending get request&#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !" />
+func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sending get request&#34;)  req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil)  if err != nil {  return err  }   resp, err := c." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2021/06/go-on-logging-and-dependencies/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2021-06-08T10:00:00+00:00" />
@@ -156,70 +156,70 @@ func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;send
             <p>Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.</p>
 <p>While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.</p>
 <p>A typical example would be something like the following snippet:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Client</span>) <span style="color:#a6e22e">HealthCheck</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#66d9ef">error</span> {
-    <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Debug</span>(<span style="color:#e6db74">&#34;sending get request&#34;</span>)
-    <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">url</span>, <span style="color:#66d9ef">nil</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
-    }
-
-    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
-    }
-
-    <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;http status code was %d&#34;</span>, <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span>)
-
-    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-
-    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p>Using logrus, as example, picking this code, one would need to check how logrus works, which configurations are available, which version should be used and so on.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Client</span>) <span style="color:#a6e22e">HealthCheck</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Debug</span>(<span style="color:#e6db74">&#34;sending get request&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">url</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">client</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Debugf</span>(<span style="color:#e6db74">&#34;http status code was %d&#34;</span>, <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Using logrus, as example, picking this code, one would need to check how logrus works, which configurations are available, which version should be used and so on.</p>
 <p>Russ Cox wrote an excellent <a href="https://research.swtch.com/deps">blog post</a> on what considerations one should make when picking software.</p>
 <p>There are multiples ways to improve observability; for an in-depth post on the subject check <a href="https://martinfowler.com/articles/domain-oriented-observability.html">Domain-Oriented Observability</a></p>
 <hr>
 <p>Using the http.Client example, in Go it is possible to improve observability without <em>poluting</em> the code or adding dependencies by leveraging the <a href="https://golang.org/pkg/net/http/#RoundTripper">http.RoundTripper</a> and <a href="https://en.wikipedia.org/wiki/Dependency_injection">dependency injection</a>.</p>
 <p>One way to implement it could be:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Logger</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">DebugTransport</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">rt</span>     <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span>
-    <span style="color:#a6e22e">logger</span> <span style="color:#a6e22e">Logger</span>
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DebugTransport</span>) <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">request</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
-    <span style="color:#a6e22e">requestBody</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httputil</span>.<span style="color:#a6e22e">DumpRequestOut</span>(<span style="color:#a6e22e">request</span>, <span style="color:#66d9ef">true</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-    }
-
-    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">logger</span>(string(<span style="color:#a6e22e">requestBody</span>))
-
-    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">rt</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">request</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-    }
-
-    <span style="color:#a6e22e">respBody</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httputil</span>.<span style="color:#a6e22e">DumpResponse</span>(<span style="color:#a6e22e">resp</span>, <span style="color:#66d9ef">true</span>)
-    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-    }
-
-    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">logger</span>(string(<span style="color:#a6e22e">respBody</span>))
-
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p>This code allows logging requests and responses without deciding which logger to use and remove logging calls from the library.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Logger</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">args</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">DebugTransport</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">rt</span>     <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">logger</span> <span style="color:#a6e22e">Logger</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DebugTransport</span>) <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">request</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">requestBody</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httputil</span>.<span style="color:#a6e22e">DumpRequestOut</span>(<span style="color:#a6e22e">request</span>, <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">logger</span>(string(<span style="color:#a6e22e">requestBody</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">rt</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">request</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">respBody</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httputil</span>.<span style="color:#a6e22e">DumpResponse</span>(<span style="color:#a6e22e">resp</span>, <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">d</span>.<span style="color:#a6e22e">logger</span>(string(<span style="color:#a6e22e">respBody</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This code allows logging requests and responses without deciding which logger to use and remove logging calls from the library.</p>
 <p>Example output:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">GET / HTTP/1.1
-Host: 127.0.0.1:43411
-User-Agent: Go-http-client/1.1
-Accept-Encoding: gzip
-
-HTTP/1.1 <span style="color:#ae81ff">500</span> Internal Server Error
-Date: Tue, <span style="color:#ae81ff">08</span> Jun <span style="color:#ae81ff">2021</span> 20:33:38 GMT
-Content-Length: <span style="color:#ae81ff">0</span>
-</code></pre></div><p>Similar logic could be implemented to add tracing, for example, the way <a href="https://opentelemetry.io/">opentelemetry</a> implements <a href="https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp">otelhttp.Transport</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>GET / HTTP/1.1
+</span></span><span style="display:flex;"><span>Host: 127.0.0.1:43411
+</span></span><span style="display:flex;"><span>User-Agent: Go-http-client/1.1
+</span></span><span style="display:flex;"><span>Accept-Encoding: gzip
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>HTTP/1.1 <span style="color:#ae81ff">500</span> Internal Server Error
+</span></span><span style="display:flex;"><span>Date: Tue, <span style="color:#ae81ff">08</span> Jun <span style="color:#ae81ff">2021</span> 20:33:38 GMT
+</span></span><span style="display:flex;"><span>Content-Length: <span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>Similar logic could be implemented to add tracing, for example, the way <a href="https://opentelemetry.io/">opentelemetry</a> implements <a href="https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp">otelhttp.Transport</a></p>
 <p>When developing libraries (or anything to be fair), one should think: Is this dependency needed? Can I implement a feature while not committing to any concrete implementation?</p>
 <p>Your users will appreciate it.</p>
 <!-- raw HTML omitted -->
@@ -242,7 +242,7 @@ Content-Length: <span style="color:#ae81ff">0</span>
                 <footer class="footer">
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2021</span>
+            <span>&copy; 2022</span>
             
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             
@@ -269,7 +269,7 @@ Content-Length: <span style="color:#ae81ff">0</span>
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.e04b073c2032103c667b58ffc6b723d2286b938c2f3332b91dc55c0bb05c0fbf87ced198ad2c6b2270bb66fd6783d34c7a0909a176d25cfc5da95115c472ad53.js" integrity="sha512-4EsHPCAyEDxme1j/xrcj0ihrk4wvMzK5HcVcC7BcD7&#43;HztGYrSxrInC7Zv1ng9NMegkJoXbSXPxdqVEVxHKtUw=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.7ba9714f6ea238a83d8aebf00f3ffd56fb8444e92ff7a3bfa2bda5f863f23dce4b1ce1d400379c4464c93b4cf8841d65bd3c799529efa06df38f21696e83e628.js" integrity="sha512-e6lxT26iOKg9iuvwDz/9VvuEROkv96O/or2l&#43;GPyPc5LHOHUADecRGTJO0z4hB1lvTx5lSnvoG3zjyFpboPmKA=="></script>
 
 
 

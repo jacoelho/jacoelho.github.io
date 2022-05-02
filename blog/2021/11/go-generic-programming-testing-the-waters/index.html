@@ -42,7 +42,7 @@
 <meta itemprop="description" content="Go Type Parameters Proposal is expected to be implemented with Go 1.18 early 2022.
 The Very high level overview section contains a nice overview of what to expect.
 If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:
-type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints."><meta itemprop="datePublished" content="2021-11-29T10:00:00+00:00" />
+type SignedIntegers interface { 	int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints."><meta itemprop="datePublished" content="2021-11-29T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-11-29T10:00:00+00:00" />
 <meta itemprop="wordCount" content="346"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
@@ -53,7 +53,7 @@ type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in 
 <meta name="twitter:description" content="Go Type Parameters Proposal is expected to be implemented with Go 1.18 early 2022.
 The Very high level overview section contains a nice overview of what to expect.
 If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:
-type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints."/>
+type SignedIntegers interface { 	int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints."/>
 
 
 
@@ -61,7 +61,7 @@ type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in 
 <meta property="og:description" content="Go Type Parameters Proposal is expected to be implemented with Go 1.18 early 2022.
 The Very high level overview section contains a nice overview of what to expect.
 If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:
-type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints." />
+type SignedIntegers interface { 	int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2021-11-29T10:00:00+00:00" />
@@ -156,52 +156,52 @@ type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in 
             <p>Go <a href="https://go.googlesource.com/proposal/+/refs/heads/master/design/43651-type-parameters.md">Type Parameters Proposal</a> is expected to be implemented with Go 1.18 early 2022.</p>
 <p>The <code>Very high level overview</code> section contains a nice overview of what to expect.</p>
 <p>If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SignedIntegers</span> <span style="color:#66d9ef">interface</span> {
-	<span style="color:#66d9ef">int</span> | <span style="color:#66d9ef">int8</span> | <span style="color:#66d9ef">int16</span> | <span style="color:#66d9ef">int32</span> | <span style="color:#66d9ef">int64</span>
-}
-</code></pre></div><p>Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints. The type set of this union element is the set {int, int8, int16, int32, int64}.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">SignedIntegers</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">int</span> | <span style="color:#66d9ef">int8</span> | <span style="color:#66d9ef">int16</span> | <span style="color:#66d9ef">int32</span> | <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints. The type set of this union element is the set {int, int8, int16, int32, int64}.</p>
 <p>Another interesting difference is the Approximation Constraint, written as <code>~T</code>. The type set of <code>~T</code> is the set of all types whose underlying type is <code>T</code>.</p>
 <h2 id="testing-the-waters">Testing the waters</h2>
 <p>A <code>map</code> function can be written as:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-	<span style="color:#e6db74">&#34;fmt&#34;</span>
-)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">mapFunc</span>[<span style="color:#a6e22e">A</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">B</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">F</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">A</span>) <span style="color:#a6e22e">B</span>, <span style="color:#a6e22e">S</span> <span style="color:#960050;background-color:#1e0010">~</span>[]<span style="color:#a6e22e">A</span>](<span style="color:#a6e22e">f</span> <span style="color:#a6e22e">F</span>, <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">S</span>) []<span style="color:#a6e22e">B</span> {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-	}
-
-	<span style="color:#a6e22e">res</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">B</span>, <span style="color:#ae81ff">0</span>, len(<span style="color:#a6e22e">a</span>))
-	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">a</span> {
-		<span style="color:#a6e22e">res</span> = append(<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">e</span>))
-	}
-
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">User</span> <span style="color:#66d9ef">struct</span> {
-		<span style="color:#a6e22e">ID</span>   <span style="color:#66d9ef">int</span>
-		<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
-	}
-
-	<span style="color:#a6e22e">usernames</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mapFunc</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">u</span> <span style="color:#a6e22e">User</span>) <span style="color:#66d9ef">string</span> { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Name</span> },
-		[]<span style="color:#a6e22e">User</span>{
-			{
-				<span style="color:#a6e22e">ID</span>:   <span style="color:#ae81ff">1</span>,
-				<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Foo&#34;</span>,
-			},
-			{
-				<span style="color:#a6e22e">ID</span>:   <span style="color:#ae81ff">2</span>,
-				<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bar&#34;</span>,
-			},
-		})
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">usernames</span>)
-}
-</code></pre></div><p>Go can infer types, allowing us to omit them, which helps readability.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">mapFunc</span>[<span style="color:#a6e22e">A</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">B</span> <span style="color:#a6e22e">any</span>, <span style="color:#a6e22e">F</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">A</span>) <span style="color:#a6e22e">B</span>, <span style="color:#a6e22e">S</span> <span style="color:#960050;background-color:#1e0010">~</span>[]<span style="color:#a6e22e">A</span>](<span style="color:#a6e22e">f</span> <span style="color:#a6e22e">F</span>, <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">S</span>) []<span style="color:#a6e22e">B</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">res</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">B</span>, <span style="color:#ae81ff">0</span>, len(<span style="color:#a6e22e">a</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">a</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">res</span> = append(<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">f</span>(<span style="color:#a6e22e">e</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">res</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">User</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ID</span>   <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">usernames</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mapFunc</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">u</span> <span style="color:#a6e22e">User</span>) <span style="color:#66d9ef">string</span> { <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Name</span> },
+</span></span><span style="display:flex;"><span>		[]<span style="color:#a6e22e">User</span>{
+</span></span><span style="display:flex;"><span>			{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">ID</span>:   <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Foo&#34;</span>,
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>			{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">ID</span>:   <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bar&#34;</span>,
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		})
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">usernames</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Go can infer types, allowing us to omit them, which helps readability.</p>
 <h2 id="collections">Collections</h2>
 <p>So far few new packages have been added around generics:</p>
 <ul>
@@ -243,7 +243,7 @@ type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in 
                 <footer class="footer">
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2021</span>
+            <span>&copy; 2022</span>
             
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             
@@ -270,7 +270,7 @@ type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in 
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.e04b073c2032103c667b58ffc6b723d2286b938c2f3332b91dc55c0bb05c0fbf87ced198ad2c6b2270bb66fd6783d34c7a0909a176d25cfc5da95115c472ad53.js" integrity="sha512-4EsHPCAyEDxme1j/xrcj0ihrk4wvMzK5HcVcC7BcD7&#43;HztGYrSxrInC7Zv1ng9NMegkJoXbSXPxdqVEVxHKtUw=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.7ba9714f6ea238a83d8aebf00f3ffd56fb8444e92ff7a3bfa2bda5f863f23dce4b1ce1d400379c4464c93b4cf8841d65bd3c799529efa06df38f21696e83e628.js" integrity="sha512-e6lxT26iOKg9iuvwDz/9VvuEROkv96O/or2l&#43;GPyPc5LHOHUADecRGTJO0z4hB1lvTx5lSnvoG3zjyFpboPmKA=="></script>
 
 
 
