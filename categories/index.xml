@@ -6,6 +6,61 @@
     <description>Recent content in Categories on Posts</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright><atom:link href="https://www.jacoelho.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 02 May 2022 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>cdc</title>
+      <link>https://www.jacoelho.com/categories/cdc/</link>
+      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/cdc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>change data capture</title>
+      <link>https://www.jacoelho.com/categories/change-data-capture/</link>
+      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/change-data-capture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>go</title>
+      <link>https://www.jacoelho.com/categories/go/</link>
+      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://www.jacoelho.com/categories/golang/</link>
+      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>opentelemetry</title>
+      <link>https://www.jacoelho.com/categories/opentelemetry/</link>
+      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/opentelemetry/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>otel</title>
+      <link>https://www.jacoelho.com/categories/otel/</link>
+      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/otel/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
