@@ -24,7 +24,7 @@
 
 
 
-<link rel="stylesheet" href="https://www.jacoelho.com/main.10e68ed9a253283c2cdc3c7ddcdd9846cb5b79c29a6042175b49fa99b91c5fc1.css">
+<link rel="stylesheet" href="https://www.jacoelho.com/main.6730ffdfb90f5728762854c1de7bb953241b15b22d49786707a32a63e1acacc1.css">
 
 
 
@@ -168,146 +168,146 @@ One important fact to be aware is that when building URLs manually, it is easy t
 <p>One important fact to be aware is that when building URLs manually, it is easy to forget the <a href="https://en.wikipedia.org/wiki/Percent-encoding">percentage-encoding</a>.</p>
 <p>The <a href="https://golang.org/pkg/net/url/">url package</a> implements the URL parsing and query encoding logic, although the api may be easy to misuse, like in the examples below.</p>
 <p>Using <code>url.Parse</code> to parse a string:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-	<span style="color:#e6db74">&#34;fmt&#34;</span>
-	<span style="color:#e6db74">&#34;net/url&#34;</span>
-)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#e6db74">&#34;https://example.org/resource?filter[page]=1&#34;</span>)
-
-	<span style="color:#75715e">// prints https://example.org/resource?filter[page]=1
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
-}
-</code></pre></div><p><code>url.Parse</code> does not check if the query is properly encoded. However, it is possible to fix it by retrieving the query section and encoding it explicitly:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-	<span style="color:#e6db74">&#34;fmt&#34;</span>
-	<span style="color:#e6db74">&#34;net/url&#34;</span>
-)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#e6db74">&#34;https://example.org/resource?filter[page]=1&#34;</span>)
-
-	<span style="color:#75715e">// prints https://example.org/resource?filter[page]=1
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
-
-	<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span> = <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Query</span>().<span style="color:#a6e22e">Encode</span>()
-
-	<span style="color:#75715e">// prints https://example.org/resource?filter%5Bpage%5D=1
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
-}
-</code></pre></div><p>Another possible way to encode query string is using <code>url.Values</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-	<span style="color:#e6db74">&#34;fmt&#34;</span>
-	<span style="color:#e6db74">&#34;net/url&#34;</span>
-)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#e6db74">&#34;https://example.org/foo&#34;</span>)
-
-	<span style="color:#75715e">// prints https://example.org/foo
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
-
-	<span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Values</span>{}
-	<span style="color:#a6e22e">query</span>.<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;filter[page]&#34;</span>, <span style="color:#e6db74">&#34;1&#34;</span>)
-
-	<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span> = <span style="color:#a6e22e">query</span>.<span style="color:#a6e22e">Encode</span>()
-
-	<span style="color:#75715e">// prints https://example.org/foo?filter%5Bpage%5D=1
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
-}
-</code></pre></div><p>On query building abstractions, the <a href="https://github.com/google/go-querystring">go-querystring</a> package provides some extra functionality around <code>url.Values</code>, but follows the initial <code>RawQuery</code> usage.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-	<span style="color:#e6db74">&#34;fmt&#34;</span>
-	<span style="color:#e6db74">&#34;net/url&#34;</span>
-
-	<span style="color:#e6db74">&#34;github.com/google/go-querystring/query&#34;</span>
-)
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Options</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Page</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`url:&#34;filter[page]&#34;`</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#e6db74">&#34;https://example.org/foo&#34;</span>)
-
-	<span style="color:#75715e">// prints https://example.org/foo
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
-
-	<span style="color:#a6e22e">q</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>.<span style="color:#a6e22e">Values</span>(<span style="color:#a6e22e">Options</span>{<span style="color:#a6e22e">Page</span>: <span style="color:#e6db74">&#34;1&#34;</span>})
-
-	<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span> = <span style="color:#a6e22e">q</span>.<span style="color:#a6e22e">Encode</span>()
-
-	<span style="color:#75715e">// prints https://example.org/foo?filter%5Bpage%5D=1
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
-}
-</code></pre></div><p>Something to be aware with <code>url.Parse</code> is that <code>http.NewRequestWithContext</code> signature is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">body</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">error</span>)
-</code></pre></div><p>URL argument type is string, but it will be parsed to <code>url.URL</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">body</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#75715e">// omitted code
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>
-	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">urlpkg</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">url</span>) <span style="color:#75715e">//net/url package
-</span><span style="color:#75715e"></span>
-    <span style="color:#75715e">// ...
-</span></code></pre></div><p>When using <code>http.NewRequestWithContext</code>, regardless of the method selected to build the URL string, <code>url.Parse</code> is going to be called at least once.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;net/url&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#e6db74">&#34;https://example.org/resource?filter[page]=1&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// prints https://example.org/resource?filter[page]=1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>url.Parse</code> does not check if the query is properly encoded. However, it is possible to fix it by retrieving the query section and encoding it explicitly:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;net/url&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#e6db74">&#34;https://example.org/resource?filter[page]=1&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// prints https://example.org/resource?filter[page]=1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span> = <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">Query</span>().<span style="color:#a6e22e">Encode</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// prints https://example.org/resource?filter%5Bpage%5D=1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Another possible way to encode query string is using <code>url.Values</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;net/url&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#e6db74">&#34;https://example.org/foo&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// prints https://example.org/foo
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Values</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">query</span>.<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;filter[page]&#34;</span>, <span style="color:#e6db74">&#34;1&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span> = <span style="color:#a6e22e">query</span>.<span style="color:#a6e22e">Encode</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// prints https://example.org/foo?filter%5Bpage%5D=1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>On query building abstractions, the <a href="https://github.com/google/go-querystring">go-querystring</a> package provides some extra functionality around <code>url.Values</code>, but follows the initial <code>RawQuery</code> usage.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;net/url&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/google/go-querystring/query&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Options</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Page</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`url:&#34;filter[page]&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#e6db74">&#34;https://example.org/foo&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// prints https://example.org/foo
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">q</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>.<span style="color:#a6e22e">Values</span>(<span style="color:#a6e22e">Options</span>{<span style="color:#a6e22e">Page</span>: <span style="color:#e6db74">&#34;1&#34;</span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span> = <span style="color:#a6e22e">q</span>.<span style="color:#a6e22e">Encode</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// prints https://example.org/foo?filter%5Bpage%5D=1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Something to be aware with <code>url.Parse</code> is that <code>http.NewRequestWithContext</code> signature is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">body</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">error</span>)
+</span></span></code></pre></div><p>URL argument type is string, but it will be parsed to <code>url.URL</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">method</span>, <span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">body</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Reader</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// omitted code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">urlpkg</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">url</span>) <span style="color:#75715e">//net/url package
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span></code></pre></div><p>When using <code>http.NewRequestWithContext</code>, regardless of the method selected to build the URL string, <code>url.Parse</code> is going to be called at least once.</p>
 <h2 id="community-usage">Community Usage</h2>
 <p>It is always interesting to check how the community tackles this issue to understand if there is a clear preference.</p>
 <h3 id="go-github"><code>go-github</code></h3>
 <p><a href="https://github.com/google/go-github/blob/master/github/pulls.go#L165">https://github.com/google/go-github/blob/master/github/pulls.go#L165</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequestsService</span>) <span style="color:#a6e22e">ListPullRequestsWithCommit</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">owner</span>, <span style="color:#a6e22e">repo</span>, <span style="color:#a6e22e">sha</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequestListOptions</span>) ([]<span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequest</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">u</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;repos/%v/%v/commits/%v/pulls&#34;</span>, <span style="color:#a6e22e">owner</span>, <span style="color:#a6e22e">repo</span>, <span style="color:#a6e22e">sha</span>)
-	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">addOptions</span>(<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">opts</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
-	}
-    <span style="color:#75715e">// ...
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// https://github.com/google/go-github/blob/master/github/github.go#L242
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">addOptions</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">opts</span> <span style="color:#66d9ef">interface</span>{}) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">opts</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Kind</span>() <span style="color:#f92672">==</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Ptr</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">IsNil</span>() {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>, <span style="color:#66d9ef">nil</span>
-	}
-
-	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">s</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">err</span>
-	}
-
-	<span style="color:#a6e22e">qs</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>.<span style="color:#a6e22e">Values</span>(<span style="color:#a6e22e">opts</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">err</span>
-	}
-
-	<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span> = <span style="color:#a6e22e">qs</span>.<span style="color:#a6e22e">Encode</span>()
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#66d9ef">nil</span>
-}
-</code></pre></div><p>In this repo <code>fmt.Sprintf</code> is used in conjunction with <code>go-querystring</code> package.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequestsService</span>) <span style="color:#a6e22e">ListPullRequestsWithCommit</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">owner</span>, <span style="color:#a6e22e">repo</span>, <span style="color:#a6e22e">sha</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">opts</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequestListOptions</span>) ([]<span style="color:#f92672">*</span><span style="color:#a6e22e">PullRequest</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;repos/%v/%v/commits/%v/pulls&#34;</span>, <span style="color:#a6e22e">owner</span>, <span style="color:#a6e22e">repo</span>, <span style="color:#a6e22e">sha</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">addOptions</span>(<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">opts</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// https://github.com/google/go-github/blob/master/github/github.go#L242
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">addOptions</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">opts</span> <span style="color:#66d9ef">interface</span>{}) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">opts</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">Kind</span>() <span style="color:#f92672">==</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Ptr</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">IsNil</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">url</span>.<span style="color:#a6e22e">Parse</span>(<span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">qs</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">query</span>.<span style="color:#a6e22e">Values</span>(<span style="color:#a6e22e">opts</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">RawQuery</span> = <span style="color:#a6e22e">qs</span>.<span style="color:#a6e22e">Encode</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">u</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In this repo <code>fmt.Sprintf</code> is used in conjunction with <code>go-querystring</code> package.</p>
 <h3 id="consul-client"><code>consul client</code></h3>
 <p><a href="https://github.com/hashicorp/consul/blob/api/v1.8.1/api/acl.go#L616">https://github.com/hashicorp/consul/blob/api/v1.8.1/api/acl.go#L616</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ACL</span>) <span style="color:#a6e22e">TokenClone</span>(<span style="color:#a6e22e">tokenID</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">description</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">q</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">WriteOptions</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">ACLToken</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">WriteMeta</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">tokenID</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Must specify a tokenID for Token Cloning&#34;</span>)
-	}
-
-	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">newRequest</span>(<span style="color:#e6db74">&#34;PUT&#34;</span>, <span style="color:#e6db74">&#34;/v1/acl/token/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">tokenID</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/clone&#34;</span>)
-</code></pre></div><p>String concatenation is used in this case.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ACL</span>) <span style="color:#a6e22e">TokenClone</span>(<span style="color:#a6e22e">tokenID</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">description</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">q</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">WriteOptions</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">ACLToken</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">WriteMeta</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">tokenID</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;Must specify a tokenID for Token Cloning&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">newRequest</span>(<span style="color:#e6db74">&#34;PUT&#34;</span>, <span style="color:#e6db74">&#34;/v1/acl/token/&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">tokenID</span><span style="color:#f92672">+</span><span style="color:#e6db74">&#34;/clone&#34;</span>)
+</span></span></code></pre></div><p>String concatenation is used in this case.</p>
 <h3 id="godo">godo</h3>
 <p><a href="https://github.com/digitalocean/godo/blob/main/droplets.go#L322">https://github.com/digitalocean/godo/blob/main/droplets.go#L322</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// ListByTag lists all Droplets matched by a Tag.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DropletsServiceOp</span>) <span style="color:#a6e22e">ListByTag</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">tag</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">opt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ListOptions</span>) ([]<span style="color:#a6e22e">Droplet</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#a6e22e">path</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%s?tag_name=%s&#34;</span>, <span style="color:#a6e22e">dropletBasePath</span>, <span style="color:#a6e22e">tag</span>)
-</code></pre></div><p>In this repo <code>fmt.Sprintf</code> is used in conjunction with <code>go-querystring</code> package.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// ListByTag lists all Droplets matched by a Tag.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DropletsServiceOp</span>) <span style="color:#a6e22e">ListByTag</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">tag</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">opt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">ListOptions</span>) ([]<span style="color:#a6e22e">Droplet</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">path</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%s?tag_name=%s&#34;</span>, <span style="color:#a6e22e">dropletBasePath</span>, <span style="color:#a6e22e">tag</span>)
+</span></span></code></pre></div><p>In this repo <code>fmt.Sprintf</code> is used in conjunction with <code>go-querystring</code> package.</p>
 <h2 id="benchmark">Benchmark</h2>
 <p>Looking at community usage, anecdotally <code>fmt.Sprintf</code> seems to be the preferred method.</p>
 <p>Is there a numeric reason behind it? A simple way to test is benchmark URL building techniques and formats:</p>
@@ -351,7 +351,7 @@ BenchmarkURLQueryEncodePackageQueryString-24             6446503              18
                 <footer class="footer">
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2021</span>
+            <span>&copy; 2022</span>
             
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             
@@ -378,7 +378,7 @@ BenchmarkURLQueryEncodePackageQueryString-24             6446503              18
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.e04b073c2032103c667b58ffc6b723d2286b938c2f3332b91dc55c0bb05c0fbf87ced198ad2c6b2270bb66fd6783d34c7a0909a176d25cfc5da95115c472ad53.js" integrity="sha512-4EsHPCAyEDxme1j/xrcj0ihrk4wvMzK5HcVcC7BcD7&#43;HztGYrSxrInC7Zv1ng9NMegkJoXbSXPxdqVEVxHKtUw=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.87b3f38a3db2ce75b475923acfbff5600a03aacd3156e48741ecf79702087c8447b1c14b2d42ac3d33ce3f45bb346feeee85c8751f1510cf5cf92a8a5a36801c.js" integrity="sha512-h7Pzij2yznW0dZI6z7/1YAoDqs0xVuSHQez3lwIIfIRHscFLLUKsPTPOP0W7NG/u7oXIdR8VEM9c&#43;SqKWjaAHA=="></script>
 
 
 

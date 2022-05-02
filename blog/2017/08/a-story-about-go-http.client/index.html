@@ -24,7 +24,7 @@
 
 
 
-<link rel="stylesheet" href="https://www.jacoelho.com/main.10e68ed9a253283c2cdc3c7ddcdd9846cb5b79c29a6042175b49fa99b91c5fc1.css">
+<link rel="stylesheet" href="https://www.jacoelho.com/main.6730ffdfb90f5728762854c1de7bb953241b15b22d49786707a32a63e1acacc1.css">
 
 
 
@@ -46,7 +46,7 @@ response, etc.
 After some research (I recommend reading The complete guide to Go net/http
 timeouts)
 you may end up writing something similar to:
-c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time."><meta itemprop="datePublished" content="2017-08-19T10:24:46+00:00" />
+c := &amp;http.Client{  Transport: &amp;http.Transport{  Dial: (&amp;net.Dialer{  Timeout: 30 * time."><meta itemprop="datePublished" content="2017-08-19T10:24:46+00:00" />
 <meta itemprop="dateModified" content="2017-08-19T10:24:46+00:00" />
 <meta itemprop="wordCount" content="491"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
@@ -61,7 +61,7 @@ response, etc.
 After some research (I recommend reading The complete guide to Go net/http
 timeouts)
 you may end up writing something similar to:
-c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time."/>
+c := &amp;http.Client{  Transport: &amp;http.Transport{  Dial: (&amp;net.Dialer{  Timeout: 30 * time."/>
 
 
 
@@ -73,7 +73,7 @@ response, etc.
 After some research (I recommend reading The complete guide to Go net/http
 timeouts)
 you may end up writing something similar to:
-c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time." />
+c := &amp;http.Client{  Transport: &amp;http.Transport{  Dial: (&amp;net.Dialer{  Timeout: 30 * time." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2017/08/a-story-about-go-http.client/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2017-08-19T10:24:46+00:00" />
@@ -167,153 +167,153 @@ c := &amp;http.Client{ Transport: &amp;http.Transport{ Dial: (&amp;net.Dialer{ T
         <div class="post-content">
             <p>Or how I have learned to embrace <em>http.RoundTripper</em></p>
 <p>Using a http client in <em>Go</em> usually starts like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;http://example.com/&#34;</span>)
-</code></pre></div><p>Everything works, until it doesn’t: a network blip, a connection reset, a slow<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;http://example.com/&#34;</span>)
+</span></span></code></pre></div><p>Everything works, until it doesn’t: a network blip, a connection reset, a slow<br>
 response, etc.</p>
 <p>After some research (I recommend reading <a href="https://blog.cloudflare.com/the-complete-guide-to-golang-net-http-timeouts/">The complete guide to Go net/http<br>
 timeouts</a>)<br>
 you may end up writing something similar to:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{
-    <span style="color:#a6e22e">Transport</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Transport</span>{
-        <span style="color:#a6e22e">Dial</span>: (<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Dialer</span>{
-            <span style="color:#a6e22e">Timeout</span>:   <span style="color:#ae81ff">30</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
-            <span style="color:#a6e22e">KeepAlive</span>: <span style="color:#ae81ff">30</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
-        }).<span style="color:#a6e22e">Dial</span>,
-        <span style="color:#a6e22e">TLSHandshakeTimeout</span>:   <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
-        <span style="color:#a6e22e">ResponseHeaderTimeout</span>: <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
-        <span style="color:#a6e22e">ExpectContinueTimeout</span>: <span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
-    },
-}
-
-<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">_</span><span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;https://www.google.com&#34;</span>, <span style="color:#66d9ef">nil</span>)
-
-<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
-</code></pre></div><p>Ok! But now the question is: how does <em>http.Client</em> really work?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// http.Client - comments removed
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Client</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Transport</span>     <span style="color:#a6e22e">RoundTripper</span>
-	<span style="color:#a6e22e">CheckRedirect</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">via</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>) <span style="color:#66d9ef">error</span>
-	<span style="color:#a6e22e">Jar</span>           <span style="color:#a6e22e">CookieJar</span>
-	<span style="color:#a6e22e">Timeout</span>       <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
-}
-</code></pre></div><p>Ok… what is the <em>RoundTripper</em>?</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RoundTripper</span> <span style="color:#66d9ef">interface</span> {
-        <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>)
-}
-</code></pre></div><p>Way simpler than I would expect: for each <em>request</em>, it receives a <em>response</em>, if everything works.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Transport</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Transport</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">Dial</span>: (<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Dialer</span>{
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">Timeout</span>:   <span style="color:#ae81ff">30</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">KeepAlive</span>: <span style="color:#ae81ff">30</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+</span></span><span style="display:flex;"><span>        }).<span style="color:#a6e22e">Dial</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">TLSHandshakeTimeout</span>:   <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ResponseHeaderTimeout</span>: <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">ExpectContinueTimeout</span>: <span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">_</span><span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequest</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;https://www.google.com&#34;</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+</span></span></code></pre></div><p>Ok! But now the question is: how does <em>http.Client</em> really work?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// http.Client - comments removed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Client</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Transport</span>     <span style="color:#a6e22e">RoundTripper</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">CheckRedirect</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>, <span style="color:#a6e22e">via</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>) <span style="color:#66d9ef">error</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Jar</span>           <span style="color:#a6e22e">CookieJar</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Timeout</span>       <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Ok… what is the <em>RoundTripper</em>?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">RoundTripper</span> <span style="color:#66d9ef">interface</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Way simpler than I would expect: for each <em>request</em>, it receives a <em>response</em>, if everything works.</p>
 <p>The default <a href="https://golang.org/src/net/http/transport.go#L315">transport.go</a><br>
 implementation is interesting. However, what else could I use <em>RoundTripper</em><br>
 for?</p>
 <hr>
 <p>Implementing a naïve Retry RoundTripper without any concurrency concerns or<br>
 request copy:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Retry - http client with retry support
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Retry</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span>
-}
-
-<span style="color:#75715e">// Naive Retry - every 2 seconds
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Retry</span>) <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#66d9ef">for</span> {
-		<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RoundTripper</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
-
-		<span style="color:#75715e">// just an example
-</span><span style="color:#75715e"></span>		<span style="color:#75715e">// we potentially could retry on 429 for example
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span> &lt; <span style="color:#ae81ff">500</span> {
-			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
-		}
-
-		<span style="color:#66d9ef">select</span> {
-		<span style="color:#75715e">// check if canceled or timed-out
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Context</span>().<span style="color:#a6e22e">Done</span>():
-			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Context</span>().<span style="color:#a6e22e">Err</span>()
-		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>):
-		}
-	}
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{
-		<span style="color:#a6e22e">Transport</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Retry</span>{<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultTransport</span>},
-	}
-
-	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
-
-	<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;https://www.google.com&#34;</span>, <span style="color:#66d9ef">nil</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not create request&#34;</span>)
-	}
-	<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#a6e22e">err</span>)
-	}
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-
-	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">resp</span>)
-
-}
-</code></pre></div><p>The <em>HTTP</em> retry client continues retrying until it succeeds or the context<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Retry - http client with retry support
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Retry</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Naive Retry - every 2 seconds
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Retry</span>) <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">RoundTripper</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// just an example
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// we potentially could retry on 429 for example
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">StatusCode</span> &lt; <span style="color:#ae81ff">500</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// check if canceled or timed-out
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Context</span>().<span style="color:#a6e22e">Done</span>():
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Context</span>().<span style="color:#a6e22e">Err</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>):
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Transport</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Retry</span>{<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultTransport</span>},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;https://www.google.com&#34;</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not create request&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">resp</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <em>HTTP</em> retry client continues retrying until it succeeds or the context<br>
 timeout reached.</p>
 <hr>
 <p>A very simple http client cache:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Cache</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">kv</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">Reader</span>
-	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span>
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Cache</span>) <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Method</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
-	}
-
-	<span style="color:#a6e22e">v</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">kv</span>[<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">String</span>()]
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
-		<span style="color:#75715e">// return cached
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ReadResponse</span>(<span style="color:#a6e22e">v</span>, <span style="color:#66d9ef">nil</span>)
-
-	}
-
-	<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RoundTripper</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
-	}
-
-	<span style="color:#a6e22e">body</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httputil</span>.<span style="color:#a6e22e">DumpResponse</span>(<span style="color:#a6e22e">resp</span>, <span style="color:#66d9ef">true</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
-	}
-
-	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">body</span>))
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">kv</span>[<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">String</span>()] = <span style="color:#a6e22e">r</span>
-
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{
-		<span style="color:#a6e22e">Transport</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Cache</span>{
-			<span style="color:#a6e22e">RoundTripper</span>: <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultTransport</span>,
-			<span style="color:#a6e22e">kv</span>:           make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">Reader</span>),
-		},
-	}
-
-	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
-
-	<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;https://www.google.com&#34;</span>, <span style="color:#66d9ef">nil</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not create request&#34;</span>)
-	}
-	<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#a6e22e">err</span>)
-	}
-	<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-
-	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">resp</span>)
-}
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Cache</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">kv</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">Reader</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">RoundTripper</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Cache</span>) <span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">Method</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">v</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">kv</span>[<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">String</span>()]
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// return cached
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ReadResponse</span>(<span style="color:#a6e22e">v</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RoundTripper</span>.<span style="color:#a6e22e">RoundTrip</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">body</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">httputil</span>.<span style="color:#a6e22e">DumpResponse</span>(<span style="color:#a6e22e">resp</span>, <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">bytes</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">body</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">kv</span>[<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">URL</span>.<span style="color:#a6e22e">String</span>()] = <span style="color:#a6e22e">r</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Client</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Transport</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Cache</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">RoundTripper</span>: <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultTransport</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">kv</span>:           make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#f92672">*</span><span style="color:#a6e22e">bufio</span>.<span style="color:#a6e22e">Reader</span>),
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">cancel</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">WithTimeout</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">cancel</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">NewRequestWithContext</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">MethodGet</span>, <span style="color:#e6db74">&#34;https://www.google.com&#34;</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalf</span>(<span style="color:#e6db74">&#34;Could not create request&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Do</span>(<span style="color:#a6e22e">req</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatalln</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">resp</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
 <p><em>RoundTripper</em> interface enables extending the <em>HTTP</em> behaviour in a composable way.</p>
 <p>The more I learn about Go Standard Library, the more I acknowledge the attention<br>
 and craft put into it.</p>
@@ -335,7 +335,7 @@ and craft put into it.</p>
                 <footer class="footer">
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2021</span>
+            <span>&copy; 2022</span>
             
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             
@@ -362,7 +362,7 @@ and craft put into it.</p>
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.e04b073c2032103c667b58ffc6b723d2286b938c2f3332b91dc55c0bb05c0fbf87ced198ad2c6b2270bb66fd6783d34c7a0909a176d25cfc5da95115c472ad53.js" integrity="sha512-4EsHPCAyEDxme1j/xrcj0ihrk4wvMzK5HcVcC7BcD7&#43;HztGYrSxrInC7Zv1ng9NMegkJoXbSXPxdqVEVxHKtUw=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.87b3f38a3db2ce75b475923acfbff5600a03aacd3156e48741ecf79702087c8447b1c14b2d42ac3d33ce3f45bb346feeee85c8751f1510cf5cf92a8a5a36801c.js" integrity="sha512-h7Pzij2yznW0dZI6z7/1YAoDqs0xVuSHQez3lwIIfIRHscFLLUKsPTPOP0W7NG/u7oXIdR8VEM9c&#43;SqKWjaAHA=="></script>
 
 
 

@@ -24,7 +24,7 @@
 
 
 
-<link rel="stylesheet" href="https://www.jacoelho.com/main.10e68ed9a253283c2cdc3c7ddcdd9846cb5b79c29a6042175b49fa99b91c5fc1.css">
+<link rel="stylesheet" href="https://www.jacoelho.com/main.6730ffdfb90f5728762854c1de7bb953241b15b22d49786707a32a63e1acacc1.css">
 
 
 
@@ -180,13 +180,13 @@ using this pattern it is possible to avoid cascading failures.</p>
 <p>Potential failing calls will be wrapped in a circuit breaker to help minimize<br>
 issues.</p>
 <p>Imagine the following weather information service (an unreliable source):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#a6e22e">location</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
-    <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">5</span>)) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;sunny&#34;</span>
-}
-</code></pre></div><p>A potential circuit breaker function signature, using high order functions:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>())
-</code></pre></div><p>We will attempt to use the <em>call function</em>, however if it returns an error or<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#a6e22e">location</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">5</span>)) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;sunny&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A potential circuit breaker function signature, using high order functions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>())
+</span></span></code></pre></div><p>We will attempt to use the <em>call function</em>, however if it returns an error or<br>
 the circuit is <strong>Open</strong>, the <em>fallback function</em> is going to be invoked instead.</p>
 <p>Usually circuit breakers are used with another stability pattern,<br>
 <strong>Time-outs</strong>*.*</p>
@@ -194,125 +194,125 @@ the circuit is <strong>Open</strong>, the <em>fallback function</em> is going to
 we set a stopwatch. This way, if the answer takes longer, we just return an<br>
 error.</p>
 <p>Improving the circuit breaker:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>()) <span style="color:#66d9ef">error</span> {
-	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">isOpen</span>() {
-		<span style="color:#a6e22e">wait</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">error</span>, <span style="color:#ae81ff">1</span>)
-
-		<span style="color:#75715e">// run function with timeout
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">wait</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">call</span>() }()
-
-		<span style="color:#66d9ef">select</span> {
-		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">wait</span>:
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-				<span style="color:#66d9ef">break</span>
-			}
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">TimeOut</span>):
-			<span style="color:#66d9ef">break</span>
-		}
-	}
-
-	<span style="color:#a6e22e">fallback</span>()
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrorCircuitTripped</span>
-}
-</code></pre></div><p>The only bit missing is<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>()) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">isOpen</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">wait</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">error</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// run function with timeout
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">wait</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">call</span>() }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">wait</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">TimeOut</span>):
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fallback</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrorCircuitTripped</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The only bit missing is<br>
 <a href="https://en.wikipedia.org/wiki/Finite-state_machine">state-machine</a> controlling<br>
 the transitions between circuit <strong>Open</strong>, <strong>Closed</strong>, <strong>Half-Open</strong>,<br>
 <strong>Half-Closed</strong> (to keep it simple I will ignore the half states).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Circuit</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">TimeOut</span>         <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span> <span style="color:#75715e">// how long to wait for the execution
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">FailThreshold</span>   <span style="color:#66d9ef">uint32</span>        <span style="color:#75715e">// how many fails until circuit is tripped
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">RetryThreshold</span>  <span style="color:#66d9ef">uint32</span>        <span style="color:#75715e">// how many failed requests until try again
-</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">failuresCounter</span> <span style="color:#66d9ef">uint32</span>
-	<span style="color:#a6e22e">retriesCounter</span>  <span style="color:#66d9ef">uint32</span>
-}
-</code></pre></div><p>To automatically recover from failures I will use a retry mechanism: every <em>N</em><br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Circuit</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">TimeOut</span>         <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span> <span style="color:#75715e">// how long to wait for the execution
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">FailThreshold</span>   <span style="color:#66d9ef">uint32</span>        <span style="color:#75715e">// how many fails until circuit is tripped
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">RetryThreshold</span>  <span style="color:#66d9ef">uint32</span>        <span style="color:#75715e">// how many failed requests until try again
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">failuresCounter</span> <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">retriesCounter</span>  <span style="color:#66d9ef">uint32</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>To automatically recover from failures I will use a retry mechanism: every <em>N</em><br>
 calls in a open state, circuit will allow one request to see if the issue still<br>
 persists.</p>
 <p>The retry logic:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">shouldRetry</span>() <span style="color:#66d9ef">bool</span> {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RetryThreshold</span> {
-		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> = <span style="color:#ae81ff">0</span>
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
-	}
-	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-}
-</code></pre></div><p>And open circuit logic:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">isOpen</span>() <span style="color:#66d9ef">bool</span> {
-	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">shouldRetry</span>() {
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
-	} <span style="color:#66d9ef">else</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">FailThreshold</span>
-	}
-}
-</code></pre></div><p>An improved version of the circuit breaker main block:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>()) <span style="color:#66d9ef">error</span> {
-	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">isOpen</span>() {
-		<span style="color:#a6e22e">wait</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">error</span>, <span style="color:#ae81ff">1</span>)
-
-		<span style="color:#75715e">// run function with timeout
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">wait</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">call</span>() }()
-
-		<span style="color:#66d9ef">select</span> {
-		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">wait</span>:
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-				<span style="color:#66d9ef">break</span>
-			}
-			<span style="color:#a6e22e">c</span>.close()
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">TimeOut</span>):
-			<span style="color:#66d9ef">break</span>
-		}
-	}
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">incrementFailures</span>()
-	<span style="color:#a6e22e">fallback</span>()
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrorCircuitTripped</span>
-}
-</code></pre></div><p>And the helpers:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// close circuit
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) close() {
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span> = <span style="color:#ae81ff">0</span>
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> = <span style="color:#ae81ff">0</span>
-}
-
-<span style="color:#75715e">// increase failures counter circuit
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">incrementFailures</span>() {
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span><span style="color:#f92672">++</span>
-	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span><span style="color:#f92672">++</span>
-}
-</code></pre></div><p>Using the circuit breaker:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#a6e22e">location</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
-	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">10</span>)) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;sunny&#34;</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fallbackWeather</span>() <span style="color:#66d9ef">string</span> {
-	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;raining&#34;</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">fuse</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Circuit</span>{
-		<span style="color:#a6e22e">TimeOut</span>:        <span style="color:#ae81ff">3</span>,
-		<span style="color:#a6e22e">FailThreshold</span>:  <span style="color:#ae81ff">5</span>,
-		<span style="color:#a6e22e">RetryThreshold</span>: <span style="color:#ae81ff">5</span>,
-	}
-
-	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">localWeather</span> <span style="color:#66d9ef">string</span>
-
-	<span style="color:#66d9ef">for</span> {
-		<span style="color:#a6e22e">fuse</span>.<span style="color:#a6e22e">WithCircuit</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
-			<span style="color:#a6e22e">localWeather</span> = <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#e6db74">&#34;London&#34;</span>)
-			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-		},
-			<span style="color:#66d9ef">func</span>() {
-				<span style="color:#a6e22e">localWeather</span> = <span style="color:#a6e22e">fallbackWeather</span>()
-			})
-
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">localWeather</span>)
-	}
-}
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">shouldRetry</span>() <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">RetryThreshold</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And open circuit logic:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">isOpen</span>() <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">shouldRetry</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span> &gt; <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">FailThreshold</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>An improved version of the circuit breaker main block:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">WithCircuit</span>(<span style="color:#a6e22e">call</span> <span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span>, <span style="color:#a6e22e">fallback</span> <span style="color:#66d9ef">func</span>()) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">isOpen</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">wait</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">error</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// run function with timeout
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">wait</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">call</span>() }()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">wait</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">c</span>.close()
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">After</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">TimeOut</span>):
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">incrementFailures</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fallback</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ErrorCircuitTripped</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And the helpers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// close circuit
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) close() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span> = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span> = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// increase failures counter circuit
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Circuit</span>) <span style="color:#a6e22e">incrementFailures</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">failuresCounter</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">retriesCounter</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Using the circuit breaker:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#a6e22e">location</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">10</span>)) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;sunny&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fallbackWeather</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;raining&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fuse</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Circuit</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">TimeOut</span>:        <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">FailThreshold</span>:  <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">RetryThreshold</span>: <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">localWeather</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fuse</span>.<span style="color:#a6e22e">WithCircuit</span>(<span style="color:#66d9ef">func</span>() <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">localWeather</span> = <span style="color:#a6e22e">fetchWeather</span>(<span style="color:#e6db74">&#34;London&#34;</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">localWeather</span> = <span style="color:#a6e22e">fallbackWeather</span>()
+</span></span><span style="display:flex;"><span>			})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">localWeather</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
 <p>This example shows the concepts behind circuit breaker pattern. Although it’s<br>
 easy to understand, as it matches a real life example, a “*production ready”<br>
 *circuit breaker is way more complex and should include additional<br>
@@ -341,7 +341,7 @@ functionalities like:</p>
                 <footer class="footer">
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2021</span>
+            <span>&copy; 2022</span>
             
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             
@@ -368,7 +368,7 @@ functionalities like:</p>
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.e04b073c2032103c667b58ffc6b723d2286b938c2f3332b91dc55c0bb05c0fbf87ced198ad2c6b2270bb66fd6783d34c7a0909a176d25cfc5da95115c472ad53.js" integrity="sha512-4EsHPCAyEDxme1j/xrcj0ihrk4wvMzK5HcVcC7BcD7&#43;HztGYrSxrInC7Zv1ng9NMegkJoXbSXPxdqVEVxHKtUw=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.87b3f38a3db2ce75b475923acfbff5600a03aacd3156e48741ecf79702087c8447b1c14b2d42ac3d33ce3f45bb346feeee85c8751f1510cf5cf92a8a5a36801c.js" integrity="sha512-h7Pzij2yznW0dZI6z7/1YAoDqs0xVuSHQez3lwIIfIRHscFLLUKsPTPOP0W7NG/u7oXIdR8VEM9c&#43;SqKWjaAHA=="></script>
 
 
 

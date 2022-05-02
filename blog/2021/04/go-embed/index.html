@@ -24,7 +24,7 @@
 
 
 
-<link rel="stylesheet" href="https://www.jacoelho.com/main.10e68ed9a253283c2cdc3c7ddcdd9846cb5b79c29a6042175b49fa99b91c5fc1.css">
+<link rel="stylesheet" href="https://www.jacoelho.com/main.6730ffdfb90f5728762854c1de7bb953241b15b22d49786707a32a63e1acacc1.css">
 
 
 
@@ -43,7 +43,7 @@
 While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:
  go-bindata go-rice  Having an official package is always a welcome addition to the batteries-included standard library.
 Usage A possible way to embed react assets could be as simple as:
-package web import ( &#34;embed&#34; &#34;io/fs&#34; ) //go:embed build/* var content embed."><meta itemprop="datePublished" content="2021-04-27T10:00:00+00:00" />
+package web  import (  &#34;embed&#34;  &#34;io/fs&#34; )  //go:embed build/* var content embed."><meta itemprop="datePublished" content="2021-04-27T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-04-27T10:00:00+00:00" />
 <meta itemprop="wordCount" content="282"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
@@ -55,7 +55,7 @@ package web import ( &#34;embed&#34; &#34;io/fs&#34; ) //go:embed build/* var co
 While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:
  go-bindata go-rice  Having an official package is always a welcome addition to the batteries-included standard library.
 Usage A possible way to embed react assets could be as simple as:
-package web import ( &#34;embed&#34; &#34;io/fs&#34; ) //go:embed build/* var content embed."/>
+package web  import (  &#34;embed&#34;  &#34;io/fs&#34; )  //go:embed build/* var content embed."/>
 
 
 
@@ -64,7 +64,7 @@ package web import ( &#34;embed&#34; &#34;io/fs&#34; ) //go:embed build/* var co
 While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:
  go-bindata go-rice  Having an official package is always a welcome addition to the batteries-included standard library.
 Usage A possible way to embed react assets could be as simple as:
-package web import ( &#34;embed&#34; &#34;io/fs&#34; ) //go:embed build/* var content embed." />
+package web  import (  &#34;embed&#34;  &#34;io/fs&#34; )  //go:embed build/* var content embed." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2021/04/go-embed/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2021-04-27T10:00:00+00:00" />
@@ -165,41 +165,41 @@ package web import ( &#34;embed&#34; &#34;io/fs&#34; ) //go:embed build/* var co
 <p>Having an official package is always a welcome addition to the batteries-included standard library.</p>
 <h2 id="usage">Usage</h2>
 <p>A possible way to embed react assets could be as simple as:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">web</span>
-
-<span style="color:#f92672">import</span> (
-    <span style="color:#e6db74">&#34;embed&#34;</span>
-    <span style="color:#e6db74">&#34;io/fs&#34;</span>
-)
-
-<span style="color:#75715e">//go:embed build/*
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">content</span> <span style="color:#a6e22e">embed</span>.<span style="color:#a6e22e">FS</span>
-</code></pre></div><p>And serving assets using <code>http.FileServer</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/static/&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FileServer</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FS</span>(<span style="color:#a6e22e">content</span>)))
-</code></pre></div><p>However, following this structure, one may end up with some unexpected 404 responses.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">web</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;embed&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;io/fs&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//go:embed build/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">content</span> <span style="color:#a6e22e">embed</span>.<span style="color:#a6e22e">FS</span>
+</span></span></code></pre></div><p>And serving assets using <code>http.FileServer</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/static/&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FileServer</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FS</span>(<span style="color:#a6e22e">content</span>)))
+</span></span></code></pre></div><p>However, following this structure, one may end up with some unexpected 404 responses.</p>
 <h2 id="exploring-embed">Exploring Embed</h2>
 <p>Fortunately, <code>go list</code> gained some new fields we can use to understand how embed works.</p>
 <p><code>.EmbedPatterns</code> displays patterns being used:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go list -f <span style="color:#e6db74">&#39;{{ join .EmbedPatterns &#34;\n&#34; }}&#39;</span> ./...
-build/*
-</code></pre></div><p>It can even detect if a pattern is not matching any resources:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go list -f <span style="color:#e6db74">&#39;{{ join .EmbedPatterns &#34;\n&#34; }}&#39;</span> ./...
-client/client.go:10:20: pattern foobar/*: no matching files found
-</code></pre></div><p>Another addition to <code>go list</code> is allowing to list embed files:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">go list -f <span style="color:#e6db74">&#39;{{ join .EmbedFiles &#34;\n&#34; }}&#39;</span> ./...
-build/favicon.ico
-build/index.html
-build/logo512.png
-build/robots.txt
-build/static/css/main.6dea0f05.chunk.css
-build/static/js/2.6071c2c3.chunk.js
-</code></pre></div><p>In this case, we can observe using the directive <code>//go:embed build/*</code> will include the <code>build</code> directory and all files in the directory.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ go list -f <span style="color:#e6db74">&#39;{{ join .EmbedPatterns &#34;\n&#34; }}&#39;</span> ./...
+</span></span><span style="display:flex;"><span>build/*
+</span></span></code></pre></div><p>It can even detect if a pattern is not matching any resources:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ go list -f <span style="color:#e6db74">&#39;{{ join .EmbedPatterns &#34;\n&#34; }}&#39;</span> ./...
+</span></span><span style="display:flex;"><span>client/client.go:10:20: pattern foobar/*: no matching files found
+</span></span></code></pre></div><p>Another addition to <code>go list</code> is allowing to list embed files:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>go list -f <span style="color:#e6db74">&#39;{{ join .EmbedFiles &#34;\n&#34; }}&#39;</span> ./...
+</span></span><span style="display:flex;"><span>build/favicon.ico
+</span></span><span style="display:flex;"><span>build/index.html
+</span></span><span style="display:flex;"><span>build/logo512.png
+</span></span><span style="display:flex;"><span>build/robots.txt
+</span></span><span style="display:flex;"><span>build/static/css/main.6dea0f05.chunk.css
+</span></span><span style="display:flex;"><span>build/static/js/2.6071c2c3.chunk.js
+</span></span></code></pre></div><p>In this case, we can observe using the directive <code>//go:embed build/*</code> will include the <code>build</code> directory and all files in the directory.</p>
 <p>If the files being served are not expecting to be in <code>build</code> directory it is possible to change the subtree:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Contents helper function
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Contents</span>() (<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">FS</span>, <span style="color:#66d9ef">error</span>) {
-    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">content</span>, <span style="color:#e6db74">&#34;build&#34;</span>)
-}
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Contents helper function
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Contents</span>() (<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">FS</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">content</span>, <span style="color:#e6db74">&#34;build&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
 <p>Embed package seems an exciting addition to the Go standard library.</p>
 <p>I am curious to see which uses cases are possible. For now, I am expecting it to become the <em>de facto</em> solution to store database migration scripts and assets in low traffic apps.<br>
 <!-- raw HTML omitted --><!-- raw HTML omitted --><br>
@@ -222,7 +222,7 @@ Example code is available in <a href="https://github.com/jacoelho/sample-go-reac
                 <footer class="footer">
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2021</span>
+            <span>&copy; 2022</span>
             
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             
@@ -249,7 +249,7 @@ Example code is available in <a href="https://github.com/jacoelho/sample-go-reac
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.e04b073c2032103c667b58ffc6b723d2286b938c2f3332b91dc55c0bb05c0fbf87ced198ad2c6b2270bb66fd6783d34c7a0909a176d25cfc5da95115c472ad53.js" integrity="sha512-4EsHPCAyEDxme1j/xrcj0ihrk4wvMzK5HcVcC7BcD7&#43;HztGYrSxrInC7Zv1ng9NMegkJoXbSXPxdqVEVxHKtUw=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.87b3f38a3db2ce75b475923acfbff5600a03aacd3156e48741ecf79702087c8447b1c14b2d42ac3d33ce3f45bb346feeee85c8751f1510cf5cf92a8a5a36801c.js" integrity="sha512-h7Pzij2yznW0dZI6z7/1YAoDqs0xVuSHQez3lwIIfIRHscFLLUKsPTPOP0W7NG/u7oXIdR8VEM9c&#43;SqKWjaAHA=="></script>
 
 
 

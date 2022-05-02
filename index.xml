@@ -7,29 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Mon, 29 Nov 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 02 May 2022 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Go Generic Programming - Testing the waters</title>
-      <link>https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/</link>
-      <pubDate>Mon, 29 Nov 2021 10:00:00 +0000</pubDate>
+      <title>Opentelemetry - Log-Based Change Data Capture</title>
+      <link>https://www.jacoelho.com/blog/2022/05/opentelemetry-log-based-change-data-capture/</link>
+      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
       
-      <guid>https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/</guid>
-      <description>Go Type Parameters Proposal is expected to be implemented with Go 1.18 early 2022.
-The Very high level overview section contains a nice overview of what to expect.
-If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:
-type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints.</description>
-    </item>
-    
-    <item>
-      <title>Go - On logging and dependencies</title>
-      <link>https://www.jacoelho.com/blog/2021/06/go-on-logging-and-dependencies/</link>
-      <pubDate>Tue, 08 Jun 2021 10:00:00 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/blog/2021/06/go-on-logging-and-dependencies/</guid>
-      <description>Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
-While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
-A typical example would be something like the following snippet:
-func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&amp;#34;sending get request&amp;#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !</description>
+      <guid>https://www.jacoelho.com/blog/2022/05/opentelemetry-log-based-change-data-capture/</guid>
+      <description>Opentelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
+A Context is a propagation mechanism which carries execution-scoped values across API boundaries and between logically associated execution units. Cross-cutting concerns access their data in-process using the same shared Context object.
+Context propagation is required when the tracing needs to cross process or service boundaries. Common ways to propagate the context is using W3C Trace Context or Zipkin B3 headers, while to inject the context is, for example, http headers or metadata fields in event messages.</description>
     </item>
     
     <item>
@@ -41,7 +28,7 @@ func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&amp;#34;
       <description>In PostgreSQL one can represent UUID as UUID, TEXT or VARCHAR built-in types.
 Which type represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
 One trap with using TEXT is trying to compare different cases with equals:
-select &amp;#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&amp;#39; = &amp;#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&amp;#39; as equal; equal -------  f Checking the relevant RFC4122 section:
+select &amp;#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&amp;#39; = &amp;#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&amp;#39; as equal;  equal -------  f Checking the relevant RFC4122 section:
 Each field is treated as an integer and has its value printed as a zero-filled hexadecimal digit string with the most significant digit first.</description>
     </item>
     
@@ -55,7 +42,7 @@ Each field is treated as an integer and has its value printed as a zero-filled h
 While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:
  go-bindata go-rice  Having an official package is always a welcome addition to the batteries-included standard library.
 Usage A possible way to embed react assets could be as simple as:
-package web import ( &amp;#34;embed&amp;#34; &amp;#34;io/fs&amp;#34; ) //go:embed build/* var content embed.</description>
+package web  import (  &amp;#34;embed&amp;#34;  &amp;#34;io/fs&amp;#34; )  //go:embed build/* var content embed.</description>
     </item>
     
     <item>
@@ -103,7 +90,7 @@ response, etc.
 After some research (I recommend reading The complete guide to Go net/http
 timeouts)
 you may end up writing something similar to:
-c := &amp;amp;http.Client{ Transport: &amp;amp;http.Transport{ Dial: (&amp;amp;net.Dialer{ Timeout: 30 * time.Second, KeepAlive: 30 * time.</description>
+c := &amp;amp;http.Client{  Transport: &amp;amp;http.Transport{  Dial: (&amp;amp;net.Dialer{  Timeout: 30 * time.</description>
     </item>
     
     <item>
@@ -133,6 +120,24 @@ automatically) to resume normal operation.
  The software analogue as described in Release
 it! chapter 5.2 can prevent repeated
 calls to a failing service by detecting issues and providing a fallback, by</description>
+    </item>
+    
+    <item>
+      <title>Ansible vs PCI</title>
+      <link>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</link>
+      <pubDate>Tue, 16 Aug 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</guid>
+      <description>If you need to to comply with PCI
+requirements
+like:
+ Requirement 2: Maintain an inventory of system components in scope for PCI DSS
+to support effective scoping practices.
+ You will find that using public-key authentication is sometimes
+forbidden
+as it’s almost impossible to ensure employees are rotating the keys, keeping the
+private key safe and with a strong password.
+Using Ansible without ssh key based authentication is painful if you need to</description>
     </item>
     
   </channel>

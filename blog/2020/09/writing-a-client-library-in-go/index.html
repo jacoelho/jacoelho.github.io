@@ -24,7 +24,7 @@
 
 
 
-<link rel="stylesheet" href="https://www.jacoelho.com/main.10e68ed9a253283c2cdc3c7ddcdd9846cb5b79c29a6042175b49fa99b91c5fc1.css">
+<link rel="stylesheet" href="https://www.jacoelho.com/main.6730ffdfb90f5728762854c1de7bb953241b15b22d49786707a32a63e1acacc1.css">
 
 
 
@@ -159,51 +159,51 @@ Usage and Examples Like a book can be judged by its cover, a project can be judg
 <h2 id="configuration">Configuration</h2>
 <p>When evaluating a client, mainly API clients, another factor to take into consideration is how difficult it is to customize the client. Is it possible to set up different endpoints or for example http.Client. Can I use this library in tests easily if needed?</p>
 <p>Is there a client builder or functional options in place? As long as there aren&rsquo;t multiple overlapping ways of creating a client:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// builder style
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">NewClient</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>)
-</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// functional options style
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">WithHttpClient</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>))
-</code></pre></div><h2 id="avoid-being-opinionated">Avoid being opinionated</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// builder style
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">NewClient</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// functional options style
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">WithHttpClient</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>))
+</span></span></code></pre></div><h2 id="avoid-being-opinionated">Avoid being opinionated</h2>
 <p>Everyone has an opinion but when writing a library, avoid making decisions on behalf of your users. While you may have an idea of which http.Client works better, or which logger package gets it right, you don&rsquo;t know if your user has different views or constraints. Not having opinions applies to any package or configuration: http.Client, logging, telemetry, metrics, etc.</p>
 <p>Another benefit of not making decisions on behalf of the users is reducing the number of dependencies and potentially security or maintainability issues.</p>
 <h2 id="contextcontext">context.Context</h2>
 <p>In Go, <code>context.Context</code> is used for cancellation and storing values during the lifetime of a request. Ensuring functions accept a context makes them easier to assist in propagation if required:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Fetch</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#75715e">/* args */</span>) {}
-</code></pre></div><p>As stated in the <a href="https://golang.org/pkg/context/">context package</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Fetch</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#75715e">/* args */</span>) {}
+</span></span></code></pre></div><p>As stated in the <a href="https://golang.org/pkg/context/">context package</a>:</p>
 <blockquote>
 <p>Do not store Contexts inside a struct type; instead, pass a Context explicitly to each function that needs it</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Fetch</span>(<span style="color:#a6e22e">p</span> <span style="color:#a6e22e">Params</span>{
-	<span style="color:#a6e22e">ctx</span>: <span style="color:#a6e22e">ctx</span>,
-	 <span style="color:#75715e">/* other args */</span>
-}) {}
-</code></pre></div><h2 id="provide-useful-errors">Provide useful errors</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Fetch</span>(<span style="color:#a6e22e">p</span> <span style="color:#a6e22e">Params</span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ctx</span>: <span style="color:#a6e22e">ctx</span>,
+</span></span><span style="display:flex;"><span>	 <span style="color:#75715e">/* other args */</span>
+</span></span><span style="display:flex;"><span>}) {}
+</span></span></code></pre></div><h2 id="provide-useful-errors">Provide useful errors</h2>
 <p>When errors happen, ensure all the relevant information is available, clear and useful. That can be a status code, an error message or any other exposed data.</p>
 <p>Having a custom error with all the information readily accessible can unblock features such as circuit breakers, retries or just faster troubleshooting.</p>
 <p>For example <a href="https://github.com/google/go-github">go-github</a> defines the following error structure:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// https://github.com/google/go-github/blob/master/github/github.go#L653
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ErrorResponse</span> <span style="color:#66d9ef">struct</span> {
-		<span style="color:#a6e22e">Response</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span> <span style="color:#75715e">// HTTP response that caused this error
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;message&#34;`</span> <span style="color:#75715e">// error message
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">Errors</span> []<span style="color:#a6e22e">Error</span> <span style="color:#e6db74">`json:&#34;errors&#34;`</span> <span style="color:#75715e">// more detail on individual errors
-</span><span style="color:#75715e"></span>		<span style="color:#75715e">// Block is only populated on certain types of errors such as code 451.
-</span><span style="color:#75715e"></span>		<span style="color:#75715e">// See https://developer.github.com/changes/2016-03-17-the-451-status-code-is-now-supported/
-</span><span style="color:#75715e"></span>		<span style="color:#75715e">// for more information.
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">Block</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">struct</span> {
-				<span style="color:#a6e22e">Reason</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;reason,omitempty&#34;`</span>
-				<span style="color:#a6e22e">CreatedAt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Timestamp</span> <span style="color:#e6db74">`json:&#34;created_at,omitempty&#34;`</span>
-		} <span style="color:#e6db74">`json:&#34;block,omitempty&#34;`</span>
-		<span style="color:#75715e">// Most errors will also include a documentation_url field pointing
-</span><span style="color:#75715e"></span>		<span style="color:#75715e">// to some content that might help you resolve the error, see
-</span><span style="color:#75715e"></span>		<span style="color:#75715e">// https://docs.github.com/en/rest/reference/#client-errors
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">DocumentationURL</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;documentation_url,omitempty&#34;`</span>
-}
-</code></pre></div><p>Not exposing important information or forcing the use of string matching on errors should be avoided:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Please don&#39;t force users to do this
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Contains</span>(<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(), <span style="color:#e6db74">&#34;something bad&#34;</span>) {
-<span style="color:#f92672">...</span>
-}
-</code></pre></div><h2 id="license">License</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// https://github.com/google/go-github/blob/master/github/github.go#L653
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ErrorResponse</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Response</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span> <span style="color:#75715e">// HTTP response that caused this error
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;message&#34;`</span> <span style="color:#75715e">// error message
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">Errors</span> []<span style="color:#a6e22e">Error</span> <span style="color:#e6db74">`json:&#34;errors&#34;`</span> <span style="color:#75715e">// more detail on individual errors
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// Block is only populated on certain types of errors such as code 451.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// See https://developer.github.com/changes/2016-03-17-the-451-status-code-is-now-supported/
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// for more information.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">Block</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">Reason</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;reason,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">CreatedAt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Timestamp</span> <span style="color:#e6db74">`json:&#34;created_at,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>		} <span style="color:#e6db74">`json:&#34;block,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Most errors will also include a documentation_url field pointing
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// to some content that might help you resolve the error, see
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// https://docs.github.com/en/rest/reference/#client-errors
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">DocumentationURL</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;documentation_url,omitempty&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Not exposing important information or forcing the use of string matching on errors should be avoided:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Please don&#39;t force users to do this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Contains</span>(<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(), <span style="color:#e6db74">&#34;something bad&#34;</span>) {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="license">License</h2>
 <p>Be clear about the license in place. Some companies have limitations on which licenses are acceptable.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Taking into consideration the points above, while sometimes there are constraints when writing a library,<br>
@@ -231,7 +231,7 @@ attempting to follow the topics I mentioned is a good rule of thumb to writing a
                 <footer class="footer">
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2021</span>
+            <span>&copy; 2022</span>
             
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             
@@ -258,7 +258,7 @@ attempting to follow the topics I mentioned is a good rule of thumb to writing a
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.e04b073c2032103c667b58ffc6b723d2286b938c2f3332b91dc55c0bb05c0fbf87ced198ad2c6b2270bb66fd6783d34c7a0909a176d25cfc5da95115c472ad53.js" integrity="sha512-4EsHPCAyEDxme1j/xrcj0ihrk4wvMzK5HcVcC7BcD7&#43;HztGYrSxrInC7Zv1ng9NMegkJoXbSXPxdqVEVxHKtUw=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.87b3f38a3db2ce75b475923acfbff5600a03aacd3156e48741ecf79702087c8447b1c14b2d42ac3d33ce3f45bb346feeee85c8751f1510cf5cf92a8a5a36801c.js" integrity="sha512-h7Pzij2yznW0dZI6z7/1YAoDqs0xVuSHQez3lwIIfIRHscFLLUKsPTPOP0W7NG/u7oXIdR8VEM9c&#43;SqKWjaAHA=="></script>
 
 
 

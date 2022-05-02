@@ -24,7 +24,7 @@
 
 
 
-<link rel="stylesheet" href="https://www.jacoelho.com/main.10e68ed9a253283c2cdc3c7ddcdd9846cb5b79c29a6042175b49fa99b91c5fc1.css">
+<link rel="stylesheet" href="https://www.jacoelho.com/main.6730ffdfb90f5728762854c1de7bb953241b15b22d49786707a32a63e1acacc1.css">
 
 
 
@@ -183,19 +183,19 @@ plugin</a>.</p>
 <pre tabindex="0"><code>LoadPlugin exec
 
 &lt;Plugin exec&gt;
-  Exec &quot;myuser:mygroup&quot; &quot;/path/to/another/binary&quot; &quot;arg0&quot; &quot;arg1&quot;
+  Exec &#34;myuser:mygroup&#34; &#34;/path/to/another/binary&#34; &#34;arg0&#34; &#34;arg1&#34;
 &lt;/Plugin&gt;
 </code></pre><p>And a sample script “<em>/path/to/another/binary</em>” (extracted from the official<br>
 documentation):</p>
-<pre tabindex="0"><code>HOSTNAME=&quot;${COLLECTD_HOSTNAME:-localhost}&quot;
-INTERVAL=&quot;${COLLECTD_INTERVAL:-60}&quot;
+<pre tabindex="0"><code>HOSTNAME=&#34;${COLLECTD_HOSTNAME:-localhost}&#34;
+INTERVAL=&#34;${COLLECTD_INTERVAL:-60}&#34;
 
-while sleep &quot;$INTERVAL&quot;; do
+while sleep &#34;$INTERVAL&#34;; do
   VALUE=do_magic()
-  echo &quot;PUTVAL \&quot;$HOSTNAME/exec-magic/gauge-magic_level\&quot; interval=$INTERVAL N:$VALUE&quot;
+  echo &#34;PUTVAL \&#34;$HOSTNAME/exec-magic/gauge-magic_level\&#34; interval=$INTERVAL N:$VALUE&#34;
 done
 </code></pre><p>The most important bits are contained in the outputted message :</p>
-<pre tabindex="0"><code>PUTVAL &quot;$HOSTNAME/exec-magic/gauge-magic_level&quot; interval=$INTERVAL N:$VALUE
+<pre tabindex="0"><code>PUTVAL &#34;$HOSTNAME/exec-magic/gauge-magic_level&#34; interval=$INTERVAL N:$VALUE
 </code></pre><p>Where:</p>
 <ol>
 <li><em>exec-magic</em> is the plugin name.</li>
@@ -210,31 +210,31 @@ plugin</a>.</li>
 <p>Now, let’s create a simple <em>Collectd <em>plugin. In the example that follows I will<br>
 use <a href="https://golang.org/">Go</a></em>.</em></p>
 <p>The main loop will run the metric collection in a scheduled fashion:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-
-<span style="color:#f92672">import</span> (
-	<span style="color:#e6db74">&#34;flag&#34;</span>
-	<span style="color:#e6db74">&#34;time&#34;</span>
-)
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#66d9ef">var</span> (
-		<span style="color:#a6e22e">interval</span> = <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Int</span>(<span style="color:#e6db74">&#34;interval&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#34;time in seconds between collection&#34;</span>)
-	)
-
-	<span style="color:#a6e22e">ticker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">NewTicker</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">interval</span>) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-	<span style="color:#66d9ef">for</span> {
-		<span style="color:#66d9ef">select</span> {
-		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
-			<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">collectMetric</span>()
-		}
-	}
-}
-</code></pre></div><p>And the collectMetric code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;flag&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> (
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">interval</span> = <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Int</span>(<span style="color:#e6db74">&#34;interval&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#34;time in seconds between collection&#34;</span>)
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ticker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">NewTicker</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">interval</span>) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">collectMetric</span>()
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And the collectMetric code:</p>
 <pre tabindex="0"><code>hostname, _ := os.Hostname()
 value := someWork()
 
-fmt.Printf(&quot;PUTVAL %s/my-plugin/gauge-my_metric interval=%d N:%s\n&quot;, hostname, interval, value)
+fmt.Printf(&#34;PUTVAL %s/my-plugin/gauge-my_metric interval=%d N:%s\n&#34;, hostname, interval, value)
 </code></pre><p>Just compile it and use your favorite configuration management tool to upload<br>
 the plugin and configuration.</p>
 <p>The purpose of this example was to demonstrate how to create a plugin. For<br>
@@ -260,7 +260,7 @@ into <em>Collectd</em>.</p>
                 <footer class="footer">
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2021</span>
+            <span>&copy; 2022</span>
             
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             
@@ -287,7 +287,7 @@ into <em>Collectd</em>.</p>
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.e04b073c2032103c667b58ffc6b723d2286b938c2f3332b91dc55c0bb05c0fbf87ced198ad2c6b2270bb66fd6783d34c7a0909a176d25cfc5da95115c472ad53.js" integrity="sha512-4EsHPCAyEDxme1j/xrcj0ihrk4wvMzK5HcVcC7BcD7&#43;HztGYrSxrInC7Zv1ng9NMegkJoXbSXPxdqVEVxHKtUw=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.87b3f38a3db2ce75b475923acfbff5600a03aacd3156e48741ecf79702087c8447b1c14b2d42ac3d33ce3f45bb346feeee85c8751f1510cf5cf92a8a5a36801c.js" integrity="sha512-h7Pzij2yznW0dZI6z7/1YAoDqs0xVuSHQez3lwIIfIRHscFLLUKsPTPOP0W7NG/u7oXIdR8VEM9c&#43;SqKWjaAHA=="></script>
 
 
 

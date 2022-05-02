@@ -2,17 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/</loc>
-    <lastmod>2021-11-29T10:00:00+00:00</lastmod>
+    <loc>https://www.jacoelho.com/blog/2022/05/opentelemetry-log-based-change-data-capture/</loc>
+    <lastmod>2022-05-02T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/</loc>
-    <lastmod>2021-11-29T10:00:00+00:00</lastmod>
+    <lastmod>2022-05-02T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/blog/</loc>
-    <lastmod>2021-11-29T10:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jacoelho.com/blog/2021/06/go-on-logging-and-dependencies/</loc>
-    <lastmod>2021-06-08T10:00:00+00:00</lastmod>
+    <lastmod>2022-05-02T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/blog/2021/06/postgresql-uuid-vs-text/</loc>
     <lastmod>2021-06-05T10:00:00+00:00</lastmod>
