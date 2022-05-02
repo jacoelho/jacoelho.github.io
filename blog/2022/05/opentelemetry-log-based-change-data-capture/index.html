@@ -153,7 +153,7 @@ Context propagation is required when the tracing needs to cross process or servi
             <p><a href="https://opentelemetry.io/">Opentelemetry</a> provides vendor neutral standards and implementations to generate, collect, and export tracing data.</p>
 <p>A Context is a propagation mechanism which carries execution-scoped values across API boundaries and between logically associated execution units. Cross-cutting concerns access their data in-process using the same shared Context object.</p>
 <p>Context propagation is required when the tracing needs to cross process or service boundaries. Common ways to propagate the context is using <a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a> or <a href="https://github.com/openzipkin/b3-propagation">Zipkin B3 headers</a>, while to inject the context is, for example, http headers or metadata fields in event messages.</p>
-<p>Sometimes there is no clear way to propagate the context, for example, when using Log-Based Change Data Capture:</p>
+<p>Sometimes there is no clear way to propagate the context, for example, when using Log-Based <a href="https://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a>:</p>
 <p><img src="https://www.jacoelho.com/images/cdc.png" alt="url"></p>
 <p>There is no simple mechanism to propagate &ldquo;Application A&rdquo; context to &ldquo;Application B&rdquo; without, for example, polluting records with ephemeral data or using additional datastore.</p>
 <p>There are some solutions like <a href="https://google.github.io/sqlcommenter">sqlcommenter</a> that rely on log analysis, but don&rsquo;t address the propagation.</p>
