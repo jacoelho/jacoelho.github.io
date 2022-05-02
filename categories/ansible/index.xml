@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ansible on Posts</title>
+    <link>https://www.jacoelho.com/categories/ansible/</link>
+    <description>Recent content in ansible on Posts</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Tue, 16 Aug 2016 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ansible vs PCI</title>
+      <link>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</link>
+      <pubDate>Tue, 16 Aug 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/</guid>
+      <description>If you need to comply with PCI
+requirements
+like:
+ Requirement 2: Maintain an inventory of system components in scope for PCI DSS
+to support effective scoping practices.
+ You will find that using public-key authentication is sometimes
+forbidden
+as it’s almost impossible to ensure employees are rotating the keys, keeping the
+private key safe and with a strong password.
+Using Ansible without ssh key based authentication is painful if you need to</description>
+    </item>
+    
+    <item>
+      <title>Ansible in AWS Lambda</title>
+      <link>https://www.jacoelho.com/blog/2016/02/ansible-in-aws-lambda/</link>
+      <pubDate>Thu, 18 Feb 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2016/02/ansible-in-aws-lambda/</guid>
+      <description>Originally published at https://medium.com/@jacoelho/ansible-in-aws-lambda-980bb8b5791b</description>
+    </item>
+    
+  </channel>
+</rss>

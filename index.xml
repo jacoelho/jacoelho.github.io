@@ -118,7 +118,7 @@ c := &amp;amp;http.Client{  Transport: &amp;amp;http.Transport{  Dial: (&amp;amp
     </item>
     
     <item>
-      <title>Kafka — Accelerating!</title>
+      <title>Kafka — Accelerating!</title>
       <link>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</link>
       <pubDate>Tue, 22 Nov 2016 10:24:46 +0000</pubDate>
       

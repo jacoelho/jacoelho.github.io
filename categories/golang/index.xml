@@ -19,5 +19,110 @@ A Context is a propagation mechanism which carries execution-scoped values acros
 Context propagation is required when the tracing needs to cross process or service boundaries. Common ways to propagate the context is using W3C Trace Context or Zipkin B3 headers, while to inject the context is, for example, http headers or metadata fields in event messages.</description>
     </item>
     
+    <item>
+      <title>Go Generic Programming - Testing the waters</title>
+      <link>https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/</link>
+      <pubDate>Mon, 29 Nov 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2021/11/go-generic-programming-testing-the-waters/</guid>
+      <description>Go Type Parameters Proposal is expected to be implemented with Go 1.18 early 2022.
+The Very high level overview section contains a nice overview of what to expect.
+If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:
+type SignedIntegers interface { 	int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints.</description>
+    </item>
+    
+    <item>
+      <title>Go - On logging and dependencies</title>
+      <link>https://www.jacoelho.com/blog/2021/06/go-on-logging-and-dependencies/</link>
+      <pubDate>Tue, 08 Jun 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2021/06/go-on-logging-and-dependencies/</guid>
+      <description>Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
+While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
+A typical example would be something like the following snippet:
+func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&amp;#34;sending get request&amp;#34;)  req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil)  if err != nil {  return err  }   resp, err := c.</description>
+    </item>
+    
+    <item>
+      <title>PostgreSQL - UUID vs TEXT</title>
+      <link>https://www.jacoelho.com/blog/2021/06/postgresql-uuid-vs-text/</link>
+      <pubDate>Sat, 05 Jun 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2021/06/postgresql-uuid-vs-text/</guid>
+      <description>In PostgreSQL one can represent UUID as UUID, TEXT or VARCHAR built-in types.
+Which type represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
+One trap with using TEXT is trying to compare different cases with equals:
+select &amp;#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&amp;#39; = &amp;#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&amp;#39; as equal;  equal -------  f Checking the relevant RFC4122 section:
+Each field is treated as an integer and has its value printed as a zero-filled hexadecimal digit string with the most significant digit first.</description>
+    </item>
+    
+    <item>
+      <title>Go - Embed</title>
+      <link>https://www.jacoelho.com/blog/2021/04/go-embed/</link>
+      <pubDate>Tue, 27 Apr 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2021/04/go-embed/</guid>
+      <description>Go 1.16 added a new embed package.
+While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:
+ go-bindata go-rice  Having an official package is always a welcome addition to the batteries-included standard library.
+Usage A possible way to embed react assets could be as simple as:
+package web  import (  &amp;#34;embed&amp;#34;  &amp;#34;io/fs&amp;#34; )  //go:embed build/* var content embed.</description>
+    </item>
+    
+    <item>
+      <title>Go - On building URL strings</title>
+      <link>https://www.jacoelho.com/blog/2021/04/go-on-building-url-strings/</link>
+      <pubDate>Sat, 17 Apr 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2021/04/go-on-building-url-strings/</guid>
+      <description>Building URL strings in Go may be accomplished in a couple different ways:
+ url.Parse string concatenation (using +) fmt.Sprintf bytes.Buffer strings.Builder  You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.
+URL.Parse Before we start, a quick refresh on the URL structure:
+One important fact to be aware is that when building URLs manually, it is easy to forget the percentage-encoding.</description>
+    </item>
+    
+    <item>
+      <title>Writing a client library in Go</title>
+      <link>https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/</link>
+      <pubDate>Fri, 25 Sep 2020 12:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/</guid>
+      <description>There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
+Without any specific order of importance, these are my thoughts on the subject.
+Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse).</description>
+    </item>
+    
+    <item>
+      <title>A story about Go http.Client</title>
+      <link>https://www.jacoelho.com/blog/2017/08/a-story-about-go-http.client/</link>
+      <pubDate>Sat, 19 Aug 2017 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2017/08/a-story-about-go-http.client/</guid>
+      <description>Or how I have learned to embrace http.RoundTripper
+Using a http client in Go usually starts like this:
+resp, err := http.Get(&amp;#34;http://example.com/&amp;#34;) Everything works, until it doesn’t: a network blip, a connection reset, a slow
+response, etc.
+After some research (I recommend reading The complete guide to Go net/http
+timeouts)
+you may end up writing something similar to:
+c := &amp;amp;http.Client{  Transport: &amp;amp;http.Transport{  Dial: (&amp;amp;net.Dialer{  Timeout: 30 * time.</description>
+    </item>
+    
+    <item>
+      <title>Stability Patterns — Circuit Breaker</title>
+      <link>https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/</link>
+      <pubDate>Sat, 20 Aug 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/</guid>
+      <description>A circuit breaker is an automatically operated electrical switch designed to
+protect an electrical circuit from damage caused by over-current or overload or
+short circuit. Its basic function is to interrupt current flow after protective
+relays detect a fault. A circuit breaker can be reset (either manually or
+automatically) to resume normal operation.
+ The software analogue as described in Release
+it! chapter 5.2 can prevent repeated
+calls to a failing service by detecting issues and providing a fallback, by</description>
+    </item>
+    
   </channel>
 </rss>

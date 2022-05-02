@@ -62,5 +62,41 @@
       <description></description>
     </item>
     
+    <item>
+      <title>postgresql</title>
+      <link>https://www.jacoelho.com/categories/postgresql/</link>
+      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/postgresql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>generics</title>
+      <link>https://www.jacoelho.com/categories/generics/</link>
+      <pubDate>Mon, 29 Nov 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/generics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>roundtripper</title>
+      <link>https://www.jacoelho.com/categories/roundtripper/</link>
+      <pubDate>Tue, 08 Jun 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/roundtripper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>embed</title>
+      <link>https://www.jacoelho.com/categories/embed/</link>
+      <pubDate>Tue, 27 Apr 2021 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/embed/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

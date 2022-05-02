@@ -109,7 +109,7 @@ c := &amp;amp;http.Client{  Transport: &amp;amp;http.Transport{  Dial: (&amp;amp
     </item>
     
     <item>
-      <title>Kafka — Accelerating!</title>
+      <title>Kafka — Accelerating!</title>
       <link>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</link>
       <pubDate>Tue, 22 Nov 2016 10:24:46 +0000</pubDate>
       
@@ -122,7 +122,7 @@ usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirt
     </item>
     
     <item>
-      <title>Stability Patterns — Circuit Breaker</title>
+      <title>Stability Patterns — Circuit Breaker</title>
       <link>https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/</link>
       <pubDate>Sat, 20 Aug 2016 10:24:46 +0000</pubDate>
       

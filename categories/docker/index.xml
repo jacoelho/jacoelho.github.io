@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>docker on Posts</title>
+    <link>https://www.jacoelho.com/categories/docker/</link>
+    <description>Recent content in docker on Posts</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Sun, 14 Aug 2016 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/docker/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker: Configuration files</title>
+      <link>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</link>
+      <pubDate>Sun, 14 Aug 2016 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</guid>
+      <description>Things no one tells you about. One of Docker’s killer features is the environment
+parity, yet it feels like one little detail was left untold: how to handle
+configuration files.
+Unless you are using the same configuration between development, quality,
+production, etc. you will end up with different endpoints, API keys, secret
+tokens and feature switches for each environment.
+Available Options There are a couple of different ways to handle configuration in Docker.</description>
+    </item>
+    
+    <item>
+      <title>Docker Images</title>
+      <link>https://www.jacoelho.com/blog/2015/06/docker-images/</link>
+      <pubDate>Mon, 01 Jun 2015 10:24:46 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/blog/2015/06/docker-images/</guid>
+      <description>Originally published at https://medium.com/@jacoelho/docker-images-f3c5a39baa65</description>
+    </item>
+    
+  </channel>
+</rss>
