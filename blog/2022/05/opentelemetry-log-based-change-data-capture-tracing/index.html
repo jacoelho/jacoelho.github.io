@@ -39,7 +39,7 @@
 
 
 <meta itemprop="name" content="OpenTelemetry - Log-Based Change Data Capture tracing">
-<meta itemprop="description" content="Opentelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
+<meta itemprop="description" content="OpenTelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
 A Context is a propagation mechanism which carries execution-scoped values across API boundaries and between logically associated execution units. Cross-cutting concerns access their data in-process using the same shared Context object.
 Context propagation is required when the tracing needs to cross process or service boundaries. Common ways to propagate the context is using W3C Trace Context or Zipkin B3 headers, while to inject the context is, for example, http headers or metadata fields in event messages."><meta itemprop="datePublished" content="2022-05-02T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2022-05-02T10:00:00+00:00" />
@@ -49,14 +49,14 @@ Context propagation is required when the tracing needs to cross process or servi
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
 
 <meta name="twitter:title" content="OpenTelemetry - Log-Based Change Data Capture tracing"/>
-<meta name="twitter:description" content="Opentelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
+<meta name="twitter:description" content="OpenTelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
 A Context is a propagation mechanism which carries execution-scoped values across API boundaries and between logically associated execution units. Cross-cutting concerns access their data in-process using the same shared Context object.
 Context propagation is required when the tracing needs to cross process or service boundaries. Common ways to propagate the context is using W3C Trace Context or Zipkin B3 headers, while to inject the context is, for example, http headers or metadata fields in event messages."/>
 
 
 
 <meta property="og:title" content="OpenTelemetry - Log-Based Change Data Capture tracing" />
-<meta property="og:description" content="Opentelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
+<meta property="og:description" content="OpenTelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
 A Context is a propagation mechanism which carries execution-scoped values across API boundaries and between logically associated execution units. Cross-cutting concerns access their data in-process using the same shared Context object.
 Context propagation is required when the tracing needs to cross process or service boundaries. Common ways to propagate the context is using W3C Trace Context or Zipkin B3 headers, while to inject the context is, for example, http headers or metadata fields in event messages." />
 <meta property="og:type" content="article" />
@@ -164,7 +164,7 @@ Context propagation is required when the tracing needs to cross process or servi
         
 
         <div class="post-content">
-            <p><a href="https://opentelemetry.io/">Opentelemetry</a> provides vendor neutral standards and implementations to generate, collect, and export tracing data.</p>
+            <p><a href="https://opentelemetry.io/">OpenTelemetry</a> provides vendor neutral standards and implementations to generate, collect, and export tracing data.</p>
 <p>A Context is a propagation mechanism which carries execution-scoped values across API boundaries and between logically associated execution units. Cross-cutting concerns access their data in-process using the same shared Context object.</p>
 <p>Context propagation is required when the tracing needs to cross process or service boundaries. Common ways to propagate the context is using <a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a> or <a href="https://github.com/openzipkin/b3-propagation">Zipkin B3 headers</a>, while to inject the context is, for example, http headers or metadata fields in event messages.</p>
 <p>Sometimes there is no clear way to propagate the context, for example, when using Log-Based <a href="https://en.wikipedia.org/wiki/Change_data_capture">Change Data Capture</a>:</p>
@@ -224,7 +224,7 @@ Context propagation is required when the tracing needs to cross process or servi
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>With this information, the cdc library can pick the context and propagate accordingly.</p>
 <h4 id="conclusion">Conclusion</h4>
-<p>Using <code>pg_logical_emit_message</code> with conjunction with transactions allows to propagate opentelemetry tracing information across the database layer without requiring extra machinery at the expense of extra transactions and bytes across the wire.</p>
+<p>Using <code>pg_logical_emit_message</code> with conjunction with transactions allows to propagate OpenTelemetry tracing information across the database layer without requiring extra machinery at the expense of extra transactions and bytes across the wire.</p>
 
         </div>
     </article>
