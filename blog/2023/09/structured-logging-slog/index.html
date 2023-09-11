@@ -44,7 +44,7 @@ A log entry is a timestamp record about the application&rsquo;s activity, it can
 Logs may have different formats:
 unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, for example: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, between others."><meta itemprop="datePublished" content="2023-09-11T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-09-11T10:00:00+00:00" />
-<meta itemprop="wordCount" content="1138"><meta itemprop="image" content="https://www.jacoelho.com/"/>
+<meta itemprop="wordCount" content="1147"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
@@ -318,11 +318,11 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 <p>Given the multiple structured logging libraries available, it is a common practice to create an agnostic abstraction to avoid being tied to implementation specifics.</p>
 <p>A starting point could be something like:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Logger</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Info</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">keysAndValues</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">any</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">keysAndValues</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">any</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Info</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">msg</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">keysAndValues</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">any</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Error</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">msg</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">keysAndValues</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">any</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Another option could be using <a href="https://github.com/go-logr/logr">logr</a> which provides an API without being tied to a specific implementation.</p>
+</span></span></code></pre></div><p>Another option could be using <a href="https://github.com/go-logr/logr">logr</a>, which provides an API without being tied to a specific implementation.</p>
 <p>The API is not an interface, but a concrete type for performance reasons:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Logger</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sink</span>  <span style="color:#a6e22e">LogSink</span>
@@ -342,7 +342,7 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// Logger.WithValues for more details.
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">WithValues</span>(<span style="color:#a6e22e">keysAndValues</span> <span style="color:#f92672">...</span><span style="color:#a6e22e">any</span>) <span style="color:#a6e22e">LogSink</span>
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>In practice, it looks like:</p>
+</span></span></code></pre></div><p>In practice, using <a href="https://github.com/rs/zerolog">zerolog</a> as the <code>LogSink</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
@@ -444,7 +444,7 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#a6e22e">Token</span>) <span style="color:#a6e22e">LogValue</span>() <span style="color:#a6e22e">slog</span>.<span style="color:#a6e22e">Value</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">slog</span>.<span style="color:#a6e22e">StringValue</span>(<span style="color:#e6db74">&#34;REDACTED&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>The <code>Handler</code> handles log records produced by a <code>Logger</code> (comments omitted for brevity):</p>
+</span></span></code></pre></div><p>At <code>slog</code> core, the <code>Handler</code> interface log records produced by a <code>Logger</code> (comments omitted for brevity):</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Handler</span> <span style="color:#66d9ef">interface</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Enabled</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">Level</span>) <span style="color:#66d9ef">bool</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Handle</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">Record</span>) <span style="color:#66d9ef">error</span>
