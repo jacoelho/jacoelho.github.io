@@ -5,7 +5,7 @@
     <link>https://www.jacoelho.com/categories/kafka/</link>
     <description>Recent content in kafka on Posts</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Tue, 22 Nov 2016 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/kafka/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -16,9 +16,9 @@
       <guid>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</guid>
       <description>Quick tips and insights on how to make Apache Kafka
 work faster!
-Hardware  CPU doesn&amp;rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
-metal.  Linux  Configure to maximize memory
-usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka.</description>
+Hardware CPU doesn&amp;rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+metal. Linux Configure to maximize memory
+usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka.</description>
     </item>
     
   </channel>

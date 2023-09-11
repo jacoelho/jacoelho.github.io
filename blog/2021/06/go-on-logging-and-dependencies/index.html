@@ -42,7 +42,7 @@
 <meta itemprop="description" content="Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
 While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
 A typical example would be something like the following snippet:
-func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sending get request&#34;)  req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil)  if err != nil {  return err  }   resp, err := c."><meta itemprop="datePublished" content="2021-06-08T10:00:00+00:00" />
+func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;sending get request&#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !"><meta itemprop="datePublished" content="2021-06-08T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-06-08T10:00:00+00:00" />
 <meta itemprop="wordCount" content="346"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
@@ -53,7 +53,7 @@ func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sen
 <meta name="twitter:description" content="Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
 While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
 A typical example would be something like the following snippet:
-func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sending get request&#34;)  req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil)  if err != nil {  return err  }   resp, err := c."/>
+func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;sending get request&#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !"/>
 
 
 
@@ -61,12 +61,11 @@ func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sen
 <meta property="og:description" content="Doing code reviews, I have sometimes noticed libraries forcing dependencies on the users.
 While it is perfectly acceptable if well justified and documented, it sometimes feels like adding unnecessary baggage.
 A typical example would be something like the following snippet:
-func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sending get request&#34;)  req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil)  if err != nil {  return err  }   resp, err := c." />
+func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;sending get request&#34;) req, err := http.NewRequestWithContext(ctx, http.MethodGet, c.url, nil) if err != nil { return err } resp, err := c.client.Do(req) if err !" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2021/06/go-on-logging-and-dependencies/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2021-06-08T10:00:00+00:00" />
 <meta property="article:modified_time" content="2021-06-08T10:00:00+00:00" />
-
 
 
 
@@ -104,7 +103,6 @@ func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sen
         <a href="https://www.jacoelho.com/" style="text-decoration: none;">
     <div class="logo">
         
-            <span class="logo__mark">></span>
             <span class="logo__text">Jose Coelho</span>
             <span class="logo__cursor" style=
                   "visibility:hidden;
@@ -255,26 +253,18 @@ func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sen
 
             
                 <footer class="footer">
+    
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2022</span>
-            
+            <span>&copy; 2023</span>
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
-            
-            
             <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span><a href="https://www.jacoelho.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
             
-            <span> <a
-                    href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-rss">
-                        <path d="M4 11a9 9 0 0 1 9 9"></path>
-                        <path d="M4 4a16 16 0 0 1 16 16"></path>
-                        <circle cx="5" cy="19" r="1"></circle>
-                    </svg></a></span>
         </div>
     </div>
+    
+    
 </footer>
             
         </div>
@@ -284,7 +274,7 @@ func (c *Client) HealthCheck(ctx context.Context) error {  logrus.Debug(&#34;sen
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.7ba9714f6ea238a83d8aebf00f3ffd56fb8444e92ff7a3bfa2bda5f863f23dce4b1ce1d400379c4464c93b4cf8841d65bd3c799529efa06df38f21696e83e628.js" integrity="sha512-e6lxT26iOKg9iuvwDz/9VvuEROkv96O/or2l&#43;GPyPc5LHOHUADecRGTJO0z4hB1lvTx5lSnvoG3zjyFpboPmKA=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.2bdc7826123cf3e116f82317e6ef4943d1156ca2992f34ba14a767bccfbe0c292b45516c67bb496015cfb18646a340c3cf720af4f88910de2965662492aaec25.js" integrity="sha512-K9x4JhI88&#43;EW&#43;CMX5u9JQ9EVbKKZLzS6FKdnvM&#43;&#43;DCkrRVFsZ7tJYBXPsYZGo0DDz3IK9PiJEN4pZWYkkqrsJQ=="></script>
 
 
 

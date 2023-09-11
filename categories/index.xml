@@ -5,9 +5,45 @@
     <link>https://www.jacoelho.com/categories/</link>
     <description>Recent content in Categories on Posts</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Mon, 02 May 2022 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Sep 2023 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go</title>
+      <link>https://www.jacoelho.com/categories/go/</link>
+      <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>golang</title>
+      <link>https://www.jacoelho.com/categories/golang/</link>
+      <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/golang/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>logging</title>
+      <link>https://www.jacoelho.com/categories/logging/</link>
+      <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/logging/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>slog</title>
+      <link>https://www.jacoelho.com/categories/slog/</link>
+      <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
+      
+      <guid>https://www.jacoelho.com/categories/slog/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>cdc</title>
       <link>https://www.jacoelho.com/categories/cdc/</link>
@@ -23,24 +59,6 @@
       <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
       
       <guid>https://www.jacoelho.com/categories/change-data-capture/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>https://www.jacoelho.com/categories/go/</link>
-      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/categories/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>golang</title>
-      <link>https://www.jacoelho.com/categories/golang/</link>
-      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/categories/golang/</guid>
       <description></description>
     </item>
     
@@ -77,24 +95,6 @@
       <pubDate>Mon, 29 Nov 2021 10:00:00 +0000</pubDate>
       
       <guid>https://www.jacoelho.com/categories/generics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>roundtripper</title>
-      <link>https://www.jacoelho.com/categories/roundtripper/</link>
-      <pubDate>Tue, 08 Jun 2021 10:00:00 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/categories/roundtripper/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>embed</title>
-      <link>https://www.jacoelho.com/categories/embed/</link>
-      <pubDate>Tue, 27 Apr 2021 10:00:00 +0000</pubDate>
-      
-      <guid>https://www.jacoelho.com/categories/embed/</guid>
       <description></description>
     </item>
     

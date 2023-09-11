@@ -5,7 +5,7 @@
     <link>https://www.jacoelho.com/categories/collectd/</link>
     <description>Recent content in collectd on Posts</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Tue, 09 Aug 2016 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/collectd/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -18,11 +18,12 @@
 data of computers and network equipment. The acquired data is meant to help
 system administrators maintain an overview over available resources to detect
 existing or looming bottlenecks.
- Collectd provides a long list of
+Collectd provides a long list of
 plugins available
 out-of-box. However, if you need to collect additional metrics, one of the
 easiest ways to do so is using the exec
-plugin.</description>
+plugin.
+In order to use the exec plugin, create an Collectd configuration file:</description>
     </item>
     
   </channel>

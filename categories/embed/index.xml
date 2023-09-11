@@ -5,7 +5,7 @@
     <link>https://www.jacoelho.com/categories/embed/</link>
     <description>Recent content in embed on Posts</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Tue, 27 Apr 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/embed/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -16,9 +16,9 @@
       <guid>https://www.jacoelho.com/blog/2021/04/go-embed/</guid>
       <description>Go 1.16 added a new embed package.
 While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:
- go-bindata go-rice  Having an official package is always a welcome addition to the batteries-included standard library.
+go-bindata go-rice Having an official package is always a welcome addition to the batteries-included standard library.
 Usage A possible way to embed react assets could be as simple as:
-package web  import (  &amp;#34;embed&amp;#34;  &amp;#34;io/fs&amp;#34; )  //go:embed build/* var content embed.</description>
+package web import ( &amp;#34;embed&amp;#34; &amp;#34;io/fs&amp;#34; ) //go:embed build/* var content embed.FS And serving assets using http.</description>
     </item>
     
   </channel>

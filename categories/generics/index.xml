@@ -5,7 +5,7 @@
     <link>https://www.jacoelho.com/categories/generics/</link>
     <description>Recent content in generics on Posts</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Mon, 29 Nov 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/generics/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -17,7 +17,7 @@
       <description>Go Type Parameters Proposal is expected to be implemented with Go 1.18 early 2022.
 The Very high level overview section contains a nice overview of what to expect.
 If you have seen generics in other languages perhaps the most curious differences (other than using square brackets), are union types:
-type SignedIntegers interface { 	int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints.</description>
+type SignedIntegers interface { int | int8 | int16 | int32 | int64 } Similar in syntax to scala3/dotty union types, although in Go is only allowed in constraints.</description>
     </item>
     
   </channel>

@@ -5,16 +5,16 @@
     <link>https://www.jacoelho.com/categories/postgresql/</link>
     <description>Recent content in postgresql on Posts</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Mon, 02 May 2022 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/postgresql/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>OpenTelemetry - Log-Based Change Data Capture tracing</title>
+      <title>Opentelemetry - Log-Based Change Data Capture tracing</title>
       <link>https://www.jacoelho.com/blog/2022/05/opentelemetry-log-based-change-data-capture-tracing/</link>
       <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
       
       <guid>https://www.jacoelho.com/blog/2022/05/opentelemetry-log-based-change-data-capture-tracing/</guid>
-      <description>OpenTelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
+      <description>Opentelemetry provides vendor neutral standards and implementations to generate, collect, and export tracing data.
 A Context is a propagation mechanism which carries execution-scoped values across API boundaries and between logically associated execution units. Cross-cutting concerns access their data in-process using the same shared Context object.
 Context propagation is required when the tracing needs to cross process or service boundaries. Common ways to propagate the context is using W3C Trace Context or Zipkin B3 headers, while to inject the context is, for example, http headers or metadata fields in event messages.</description>
     </item>
@@ -28,7 +28,7 @@ Context propagation is required when the tracing needs to cross process or servi
       <description>In PostgreSQL one can represent UUID as UUID, TEXT or VARCHAR built-in types.
 Which type represents a UUID more efficiently? Mainly in the JSONB context? My gut feeling says built-in type UUID is way better.
 One trap with using TEXT is trying to compare different cases with equals:
-select &amp;#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&amp;#39; = &amp;#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&amp;#39; as equal;  equal -------  f Checking the relevant RFC4122 section:
+select &amp;#39;ef9f94da-98ef-49fa-8224-32f3e1f592b3&amp;#39; = &amp;#39;EF9F94DA-98EF-49FA-8224-32F3E1F592B3&amp;#39; as equal; equal ------- f Checking the relevant RFC4122 section:
 Each field is treated as an integer and has its value printed as a zero-filled hexadecimal digit string with the most significant digit first.</description>
     </item>
     

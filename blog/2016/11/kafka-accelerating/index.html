@@ -41,9 +41,9 @@
 <meta itemprop="name" content="Kafka — Accelerating!">
 <meta itemprop="description" content="Quick tips and insights on how to make Apache Kafka
 work faster!
-Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
-metal.  Linux  Configure to maximize memory
-usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka."><meta itemprop="datePublished" content="2016-11-22T10:24:46+00:00" />
+Hardware CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+metal. Linux Configure to maximize memory
+usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka."><meta itemprop="datePublished" content="2016-11-22T10:24:46+00:00" />
 <meta itemprop="dateModified" content="2016-11-22T10:24:46+00:00" />
 <meta itemprop="wordCount" content="303"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
@@ -53,23 +53,22 @@ usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirt
 <meta name="twitter:title" content="Kafka — Accelerating!"/>
 <meta name="twitter:description" content="Quick tips and insights on how to make Apache Kafka
 work faster!
-Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
-metal.  Linux  Configure to maximize memory
-usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka."/>
+Hardware CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+metal. Linux Configure to maximize memory
+usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka."/>
 
 
 
 <meta property="og:title" content="Kafka — Accelerating!" />
 <meta property="og:description" content="Quick tips and insights on how to make Apache Kafka
 work faster!
-Hardware  CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
-metal.  Linux  Configure to maximize memory
-usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1  Assuming you are using ext4, don’t waste space with reserved blocks:  tune2fs -m 0 -i 0 -c -1 /dev/device  Mount with noatime:  /dev/device /mountpoint ext4 defaults,noatime  Keep an eye on the number of free inodes:  tune2fs -l /dev/device | grep -i inode  Increase limits, for example, using systemd:  $ cat /etc/systemd/system/kafka." />
+Hardware CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+metal. Linux Configure to maximize memory
+usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://www.jacoelho.com/blog/2016/11/kafka-accelerating/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
 <meta property="article:published_time" content="2016-11-22T10:24:46+00:00" />
 <meta property="article:modified_time" content="2016-11-22T10:24:46+00:00" />
-
 
 
 
@@ -103,7 +102,6 @@ usage (tweak until you feel comfortable):  vm.dirty_background_ratio = 5 vm.dirt
         <a href="https://www.jacoelho.com/" style="text-decoration: none;">
     <div class="logo">
         
-            <span class="logo__mark">></span>
             <span class="logo__text">Jose Coelho</span>
             <span class="logo__cursor" style=
                   "visibility:hidden;
@@ -264,26 +262,18 @@ system is caching:</li>
 
             
                 <footer class="footer">
+    
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2022</span>
-            
+            <span>&copy; 2023</span>
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
-            
-            
             <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span><a href="https://www.jacoelho.com/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
             
-            <span> <a
-                    href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg
-                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="feather feather-rss">
-                        <path d="M4 11a9 9 0 0 1 9 9"></path>
-                        <path d="M4 4a16 16 0 0 1 16 16"></path>
-                        <circle cx="5" cy="19" r="1"></circle>
-                    </svg></a></span>
         </div>
     </div>
+    
+    
 </footer>
             
         </div>
@@ -293,7 +283,7 @@ system is caching:</li>
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.7ba9714f6ea238a83d8aebf00f3ffd56fb8444e92ff7a3bfa2bda5f863f23dce4b1ce1d400379c4464c93b4cf8841d65bd3c799529efa06df38f21696e83e628.js" integrity="sha512-e6lxT26iOKg9iuvwDz/9VvuEROkv96O/or2l&#43;GPyPc5LHOHUADecRGTJO0z4hB1lvTx5lSnvoG3zjyFpboPmKA=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.2bdc7826123cf3e116f82317e6ef4943d1156ca2992f34ba14a767bccfbe0c292b45516c67bb496015cfb18646a340c3cf720af4f88910de2965662492aaec25.js" integrity="sha512-K9x4JhI88&#43;EW&#43;CMX5u9JQ9EVbKKZLzS6FKdnvM&#43;&#43;DCkrRVFsZ7tJYBXPsYZGo0DDz3IK9PiJEN4pZWYkkqrsJQ=="></script>
 
 
 
