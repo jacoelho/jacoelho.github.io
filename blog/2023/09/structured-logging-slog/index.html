@@ -44,7 +44,7 @@ A log entry is a timestamp record about the application&rsquo;s activity, it can
 Logs may have different formats:
 unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, for example: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, between others."><meta itemprop="datePublished" content="2023-09-11T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-09-11T10:00:00+00:00" />
-<meta itemprop="wordCount" content="1147"><meta itemprop="image" content="https://www.jacoelho.com/"/>
+<meta itemprop="wordCount" content="1161"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
@@ -203,7 +203,8 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">Lmsgprefix</span>                    <span style="color:#75715e">// move the &#34;prefix&#34; from the beginning of the line to before the message
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">LstdFlags</span>     = <span style="color:#a6e22e">Ldate</span> |  <span style="color:#a6e22e">Ltime</span> <span style="color:#75715e">// initial values for the standard logger
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>)
-</span></span></code></pre></div><h2 id="structured-logging">Structured logging</h2>
+</span></span></code></pre></div><p>Although there are some structured flags available, most logging still happens in free-form format.</p>
+<h2 id="structured-logging">Structured logging</h2>
 <p>One of the most used structured logging libraries available in Go is <a href="https://github.com/sirupsen/logrus">logrus</a></p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>  
 </span></span><span style="display:flex;"><span>  
