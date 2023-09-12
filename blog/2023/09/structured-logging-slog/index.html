@@ -44,7 +44,7 @@ A log entry is a timestamp record about the application&rsquo;s activity, it can
 Logs may have different formats:
 unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, for example: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, between others."><meta itemprop="datePublished" content="2023-09-11T10:00:00+00:00" />
 <meta itemprop="dateModified" content="2023-09-11T10:00:00+00:00" />
-<meta itemprop="wordCount" content="1127"><meta itemprop="image" content="https://www.jacoelho.com/"/>
+<meta itemprop="wordCount" content="1140"><meta itemprop="image" content="https://www.jacoelho.com/"/>
 <meta itemprop="keywords" content="" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://www.jacoelho.com/"/>
@@ -167,6 +167,7 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 <li>semi-structured: some values have a structure and the remaining data free-form</li>
 <li>structured: there is a well-defined and consistent format, for example: <a href="https://www.w3.org/TR/WD-logfile.html">W3C Log Format</a>, <a href="https://en.wikipedia.org/wiki/Common_Log_Format">NCSA Log Format</a>, Key/Value Pair, CSV or JSON, between others. Structured logs can be easily machine parsed, which simplifies analytics, filtering and aggregation.</li>
 </ul>
+<p>This article is non-exhaustive walkthrough of logging in Go.</p>
 <h2 id="unstructured-logging">Unstructured logging</h2>
 <p>The <code>log</code> package allows the unstructured log writing:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
@@ -180,7 +181,7 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Stderr</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">LstdFlags</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hello world!&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>The available semi-structured flags are:</p>
+</span></span></code></pre></div><p><code>LstdFlags</code> is a subset of the semi-structured flags available:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// log/log.go:42
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> (
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Ldate</span>         = <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">iota</span>     <span style="color:#75715e">// the date in the local time zone: 2009/01/23
