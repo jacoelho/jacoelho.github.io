@@ -233,7 +233,7 @@ func (c *Client) HealthCheck(ctx context.Context) error { logrus.Debug(&#34;send
 </span></span></code></pre></div><p>Similar logic could be implemented to add tracing, for example, the way <a href="https://opentelemetry.io/">opentelemetry</a> implements <a href="https://pkg.go.dev/go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp">otelhttp.Transport</a></p>
 <p>When developing libraries (or anything to be fair), one should think: Is this dependency needed? Can I implement a feature while not committing to any concrete implementation?</p>
 <p>Your users will appreciate it.</p>
-<!-- raw HTML omitted -->
+<br />
 <p>Code examples available in <a href="https://github.com/jacoelho/code-playground/tree/main/roundtripper">github</a></p>
 
         </div>
