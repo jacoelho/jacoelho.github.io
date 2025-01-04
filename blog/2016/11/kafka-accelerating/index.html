@@ -38,37 +38,74 @@
     <meta name="theme-color" content="#252627">
 
 
-<meta itemprop="name" content="Kafka — Accelerating!">
-<meta itemprop="description" content="Quick tips and insights on how to make Apache Kafka
+
+  <meta itemprop="name" content="Kafka — Accelerating!">
+  <meta itemprop="description" content="Quick tips and insights on how to make Apache Kafka
 work faster!
-Hardware CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+Hardware CPU doesn’t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
 metal. Linux Configure to maximize memory
-usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka."><meta itemprop="datePublished" content="2016-11-22T10:24:46+00:00" />
-<meta itemprop="dateModified" content="2016-11-22T10:24:46+00:00" />
-<meta itemprop="wordCount" content="303"><meta itemprop="image" content="https://www.jacoelho.com/"/>
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://www.jacoelho.com/"/>
+usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka.service.d/limits.conf [Service] LimitNOFILE=10000 Tweak your network settings, for example: net.core.somaxconn = 1024 net.core.rmem_max = 67108864 net.core.wmem_max = 67108864 net.ipv4.tcp_rmem = 4096 87380 33554432 net.ipv4.tcp_wmem = 4096 65536 33554432 net.ipv4.tcp_max_syn_backlog = 4096 net.ipv4.tcp_syncookies = 1 Kafka log.dirs accepts a comma separated list of disks and will distribute
+partitions across them, however: Doesn’t rebalance, some disks could be full and others empty. Doesn’t tolerate any disk failure, more info in
+KIP-18. Raid 10 is probably the best middle ground between performance and
+reliability. *num.io.threads, *number of I/O threads that the server uses for executing
+requests. You should have at least as many threads as you have disks. num.network.threads, number of network threads that the server uses for
+handling network requests. Increase based on number of producers/consumers and
+replication factor. Use Java 1.8 and G1 Garbage
+collector: -XX:MetaspaceSize=96m -XX:&#43;UseG1GC # use G1 -XX:MaxGCPauseMillis=20 # gc deadline -XX:InitiatingHeapOccupancyPercent=35 -XX:G1HeapRegionSize=16M -XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80 KAFKA_HEAP_OPTS, 5–8Gb heap should be enough for most deployments, file system
+cache is way more important. Linkedin runs 5Gb heap in 32Gb RAM
+servers. pcstat can help understand how well the
+system is caching: ./pcstat /kafka/data/* Any comments or suggestions are welcome!">
+  <meta itemprop="datePublished" content="2016-11-22T10:24:46+00:00">
+  <meta itemprop="dateModified" content="2016-11-22T10:24:46+00:00">
+  <meta itemprop="wordCount" content="303">
+  <meta itemprop="image" content="https://www.jacoelho.com/">
+  <meta itemprop="keywords" content="Kafka">
 
-<meta name="twitter:title" content="Kafka — Accelerating!"/>
-<meta name="twitter:description" content="Quick tips and insights on how to make Apache Kafka
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jacoelho.com/">
+  <meta name="twitter:title" content="Kafka — Accelerating!">
+  <meta name="twitter:description" content="Quick tips and insights on how to make Apache Kafka
 work faster!
-Hardware CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+Hardware CPU doesn’t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
 metal. Linux Configure to maximize memory
-usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka."/>
+usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka.service.d/limits.conf [Service] LimitNOFILE=10000 Tweak your network settings, for example: net.core.somaxconn = 1024 net.core.rmem_max = 67108864 net.core.wmem_max = 67108864 net.ipv4.tcp_rmem = 4096 87380 33554432 net.ipv4.tcp_wmem = 4096 65536 33554432 net.ipv4.tcp_max_syn_backlog = 4096 net.ipv4.tcp_syncookies = 1 Kafka log.dirs accepts a comma separated list of disks and will distribute
+partitions across them, however: Doesn’t rebalance, some disks could be full and others empty. Doesn’t tolerate any disk failure, more info in
+KIP-18. Raid 10 is probably the best middle ground between performance and
+reliability. *num.io.threads, *number of I/O threads that the server uses for executing
+requests. You should have at least as many threads as you have disks. num.network.threads, number of network threads that the server uses for
+handling network requests. Increase based on number of producers/consumers and
+replication factor. Use Java 1.8 and G1 Garbage
+collector: -XX:MetaspaceSize=96m -XX:&#43;UseG1GC # use G1 -XX:MaxGCPauseMillis=20 # gc deadline -XX:InitiatingHeapOccupancyPercent=35 -XX:G1HeapRegionSize=16M -XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80 KAFKA_HEAP_OPTS, 5–8Gb heap should be enough for most deployments, file system
+cache is way more important. Linkedin runs 5Gb heap in 32Gb RAM
+servers. pcstat can help understand how well the
+system is caching: ./pcstat /kafka/data/* Any comments or suggestions are welcome!">
 
 
 
-<meta property="og:title" content="Kafka — Accelerating!" />
-<meta property="og:description" content="Quick tips and insights on how to make Apache Kafka
+<meta property="og:url" content="https://www.jacoelho.com/blog/2016/11/kafka-accelerating/">
+  <meta property="og:site_name" content="Posts">
+  <meta property="og:title" content="Kafka — Accelerating!">
+  <meta property="og:description" content="Quick tips and insights on how to make Apache Kafka
 work faster!
-Hardware CPU doesn&rsquo;t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
+Hardware CPU doesn’t matter that much. Memory helps a lot (a lot) in performance. SSDs are not required, since most operations are sequential read and writes. If possible run in bare
 metal. Linux Configure to maximize memory
-usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.jacoelho.com/blog/2016/11/kafka-accelerating/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2016-11-22T10:24:46+00:00" />
-<meta property="article:modified_time" content="2016-11-22T10:24:46+00:00" />
+usage (tweak until you feel comfortable): vm.dirty_background_ratio = 5 vm.dirty_ratio = 80 vm.swappiness = 1 Assuming you are using ext4, don’t waste space with reserved blocks: tune2fs -m 0 -i 0 -c -1 /dev/device Mount with noatime: /dev/device /mountpoint ext4 defaults,noatime Keep an eye on the number of free inodes: tune2fs -l /dev/device | grep -i inode Increase limits, for example, using systemd: $ cat /etc/systemd/system/kafka.service.d/limits.conf [Service] LimitNOFILE=10000 Tweak your network settings, for example: net.core.somaxconn = 1024 net.core.rmem_max = 67108864 net.core.wmem_max = 67108864 net.ipv4.tcp_rmem = 4096 87380 33554432 net.ipv4.tcp_wmem = 4096 65536 33554432 net.ipv4.tcp_max_syn_backlog = 4096 net.ipv4.tcp_syncookies = 1 Kafka log.dirs accepts a comma separated list of disks and will distribute
+partitions across them, however: Doesn’t rebalance, some disks could be full and others empty. Doesn’t tolerate any disk failure, more info in
+KIP-18. Raid 10 is probably the best middle ground between performance and
+reliability. *num.io.threads, *number of I/O threads that the server uses for executing
+requests. You should have at least as many threads as you have disks. num.network.threads, number of network threads that the server uses for
+handling network requests. Increase based on number of producers/consumers and
+replication factor. Use Java 1.8 and G1 Garbage
+collector: -XX:MetaspaceSize=96m -XX:&#43;UseG1GC # use G1 -XX:MaxGCPauseMillis=20 # gc deadline -XX:InitiatingHeapOccupancyPercent=35 -XX:G1HeapRegionSize=16M -XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80 KAFKA_HEAP_OPTS, 5–8Gb heap should be enough for most deployments, file system
+cache is way more important. Linkedin runs 5Gb heap in 32Gb RAM
+servers. pcstat can help understand how well the
+system is caching: ./pcstat /kafka/data/* Any comments or suggestions are welcome!">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2016-11-22T10:24:46+00:00">
+    <meta property="article:modified_time" content="2016-11-22T10:24:46+00:00">
+    <meta property="og:image" content="https://www.jacoelho.com/">
 
 
 
@@ -265,7 +302,7 @@ system is caching:</li>
     
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2024</span>
+            <span>&copy; 2025</span>
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
             <span><a href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
@@ -283,7 +320,7 @@ system is caching:</li>
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.1b9e9e6a472aac21fc8b84b1563d43d3d13b1ce77ebc8a68655d149bfaaab4764e9768398766fb70a522ecf2fcc92d4fa421f0d409e52cd6e5885a6ae8032220.js" integrity="sha512-G56eakcqrCH8i4SxVj1D09E7HOd&#43;vIpoZV0Um/qqtHZOl2g5h2b7cKUi7PL8yS1PpCHw1AnlLNbliFpq6AMiIA=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.908900dc2e07f8e32ffd6d1405df0d337b6aecaff233e8551b43a679393ed2b033974b6d1151b2d97ca25722a7c880f508bb953081bd4606f742ff4c7de5029e.js" integrity="sha512-kIkA3C4H&#43;OMv/W0UBd8NM3tq7K/yM&#43;hVG0OmeTk&#43;0rAzl0ttEVGy2XyiVyKnyID1CLuVMIG9Rgb3Qv9MfeUCng=="></script>
 
 
 

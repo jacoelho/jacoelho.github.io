@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>url on Posts</title>
+    <title>Url on Posts</title>
     <link>https://www.jacoelho.com/categories/url/</link>
-    <description>Recent content in url on Posts</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Url on Posts</description>
+    <generator>Hugo</generator>
     <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sat, 17 Apr 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/url/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 17 Apr 2021 10:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.jacoelho.com/categories/url/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go - On building URL strings</title>
       <link>https://www.jacoelho.com/blog/2021/04/go-on-building-url-strings/</link>
       <pubDate>Sat, 17 Apr 2021 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/blog/2021/04/go-on-building-url-strings/</guid>
-      <description>Building URL strings in Go may be accomplished in a couple different ways:
-url.Parse string concatenation (using +) fmt.Sprintf bytes.Buffer strings.Builder You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.
-URL.Parse Before we start, a quick refresh on the URL structure:
-One important fact to be aware is that when building URLs manually, it is easy to forget the percentage-encoding.</description>
+      <description>&lt;p&gt;Building URL strings in Go may be accomplished in a couple different ways:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;code&gt;url.Parse&lt;/code&gt;&lt;/li&gt;&#xA;&lt;li&gt;string concatenation (using &lt;code&gt;+&lt;/code&gt;)&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;fmt.Sprintf&lt;/code&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;bytes.Buffer&lt;/code&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;code&gt;strings.Builder&lt;/code&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;You may be asking yourself: which one should I use, then? As always, the answer depends. Let us explore why.&lt;/p&gt;&#xA;&lt;h2 id=&#34;urlparse&#34;&gt;&lt;code&gt;URL.Parse&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;p&gt;Before we start, a quick refresh on the URL structure:&lt;/p&gt;&#xA;&lt;p&gt;&lt;img alt=&#34;url&#34; src=&#34;https://www.jacoelho.com/images/url.png&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;One important fact to be aware is that when building URLs manually, it is easy to forget the &lt;a href=&#34;https://en.wikipedia.org/wiki/Percent-encoding&#34;&gt;percentage-encoding&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

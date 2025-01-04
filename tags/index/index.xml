@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>index on Posts</title>
+    <title>Index on Posts</title>
     <link>https://www.jacoelho.com/tags/index/</link>
-    <description>Recent content in index on Posts</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Index on Posts</description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright><atom:link href="https://www.jacoelho.com/tags/index/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 11 Sep 2023 10:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.jacoelho.com/tags/index/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Posts</title>
       <link>https://www.jacoelho.com/blog/</link>
       <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/blog/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

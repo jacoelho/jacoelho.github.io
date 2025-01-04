@@ -38,8 +38,9 @@
     <meta name="theme-color" content="#252627">
 
 
-<meta itemprop="name" content="Chef Custom Resources">
-<meta itemprop="description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
+
+  <meta itemprop="name" content="Chef Custom Resources">
+  <meta itemprop="description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
 is custom resources:
 https://docs.chef.io/custom_resources.html
 Let’s see an example on how to create a Kafka topic
@@ -47,15 +48,18 @@ using Chef and how to make it
 idempotent.
 Before writing any Chef code it is important to understand how to manage a
 topic (grouping of messages of a similar type).
-From the Kafka install directory, first check if the topic already exists:"><meta itemprop="datePublished" content="2016-07-13T10:24:46+00:00" />
-<meta itemprop="dateModified" content="2016-07-13T10:24:46+00:00" />
-<meta itemprop="wordCount" content="700"><meta itemprop="image" content="https://www.jacoelho.com/"/>
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://www.jacoelho.com/"/>
+From the Kafka install directory, first check if the topic already exists:
+bin/kafka-topics.sh --zookeeper localhost:2181 \ --describe \ --topic &lt;name&gt; If it doesn’t exist, create it:">
+  <meta itemprop="datePublished" content="2016-07-13T10:24:46+00:00">
+  <meta itemprop="dateModified" content="2016-07-13T10:24:46+00:00">
+  <meta itemprop="wordCount" content="700">
+  <meta itemprop="image" content="https://www.jacoelho.com/">
+  <meta itemprop="keywords" content="Chef">
 
-<meta name="twitter:title" content="Chef Custom Resources"/>
-<meta name="twitter:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jacoelho.com/">
+  <meta name="twitter:title" content="Chef Custom Resources">
+  <meta name="twitter:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
 is custom resources:
 https://docs.chef.io/custom_resources.html
 Let’s see an example on how to create a Kafka topic
@@ -63,12 +67,15 @@ using Chef and how to make it
 idempotent.
 Before writing any Chef code it is important to understand how to manage a
 topic (grouping of messages of a similar type).
-From the Kafka install directory, first check if the topic already exists:"/>
+From the Kafka install directory, first check if the topic already exists:
+bin/kafka-topics.sh --zookeeper localhost:2181 \ --describe \ --topic &lt;name&gt; If it doesn’t exist, create it:">
 
 
 
-<meta property="og:title" content="Chef Custom Resources" />
-<meta property="og:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
+<meta property="og:url" content="https://www.jacoelho.com/blog/2016/07/chef-custom-resources/">
+  <meta property="og:site_name" content="Posts">
+  <meta property="og:title" content="Chef Custom Resources">
+  <meta property="og:description" content="Lately I’ve been writing some Chef code. One of the best things about Chef
 is custom resources:
 https://docs.chef.io/custom_resources.html
 Let’s see an example on how to create a Kafka topic
@@ -76,11 +83,14 @@ using Chef and how to make it
 idempotent.
 Before writing any Chef code it is important to understand how to manage a
 topic (grouping of messages of a similar type).
-From the Kafka install directory, first check if the topic already exists:" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.jacoelho.com/blog/2016/07/chef-custom-resources/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2016-07-13T10:24:46+00:00" />
-<meta property="article:modified_time" content="2016-07-13T10:24:46+00:00" />
+From the Kafka install directory, first check if the topic already exists:
+bin/kafka-topics.sh --zookeeper localhost:2181 \ --describe \ --topic &lt;name&gt; If it doesn’t exist, create it:">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2016-07-13T10:24:46+00:00">
+    <meta property="article:modified_time" content="2016-07-13T10:24:46+00:00">
+    <meta property="og:image" content="https://www.jacoelho.com/">
 
 
 
@@ -311,7 +321,7 @@ every time <em>Chef</em> runs. Now it’s time to find ways to improve it!</p>
     --describe \
     --topic &lt;name&gt;
 </code></pre><p>The output will be something like:</p>
-<p><img src="https://cdn-images-1.medium.com/max/1600/1*ilfBGZvftKO0a8ljO2nx8g.png" alt=""><br>
+<p><img src="https://cdn-images-1.medium.com/max/1600/1*ilfBGZvftKO0a8ljO2nx8g.png"><br>
 <!-- raw HTML omitted -->kafka describe topic<!-- raw HTML omitted --></p>
 <p>Example code to parse this output:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-ruby" data-lang="ruby"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">list</span>(directory, zookeeper, topic)
@@ -410,7 +420,7 @@ helps in the creation of idempotent resources.</p>
     
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2024</span>
+            <span>&copy; 2025</span>
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
             <span><a href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
@@ -428,7 +438,7 @@ helps in the creation of idempotent resources.</p>
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.1b9e9e6a472aac21fc8b84b1563d43d3d13b1ce77ebc8a68655d149bfaaab4764e9768398766fb70a522ecf2fcc92d4fa421f0d409e52cd6e5885a6ae8032220.js" integrity="sha512-G56eakcqrCH8i4SxVj1D09E7HOd&#43;vIpoZV0Um/qqtHZOl2g5h2b7cKUi7PL8yS1PpCHw1AnlLNbliFpq6AMiIA=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.908900dc2e07f8e32ffd6d1405df0d337b6aecaff233e8551b43a679393ed2b033974b6d1151b2d97ca25722a7c880f508bb953081bd4606f742ff4c7de5029e.js" integrity="sha512-kIkA3C4H&#43;OMv/W0UBd8NM3tq7K/yM&#43;hVG0OmeTk&#43;0rAzl0ttEVGy2XyiVyKnyID1CLuVMIG9Rgb3Qv9MfeUCng=="></script>
 
 
 

@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>embed on Posts</title>
+    <title>Embed on Posts</title>
     <link>https://www.jacoelho.com/categories/embed/</link>
-    <description>Recent content in embed on Posts</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Embed on Posts</description>
+    <generator>Hugo</generator>
     <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Tue, 27 Apr 2021 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/embed/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 27 Apr 2021 10:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.jacoelho.com/categories/embed/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go - Embed</title>
       <link>https://www.jacoelho.com/blog/2021/04/go-embed/</link>
       <pubDate>Tue, 27 Apr 2021 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/blog/2021/04/go-embed/</guid>
-      <description>Go 1.16 added a new embed package.
-While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:
-go-bindata go-rice Having an official package is always a welcome addition to the batteries-included standard library.
-Usage A possible way to embed react assets could be as simple as:
-package web import ( &amp;#34;embed&amp;#34; &amp;#34;io/fs&amp;#34; ) //go:embed build/* var content embed.FS And serving assets using http.</description>
+      <description>&lt;p&gt;Go 1.16 added a new &lt;a href=&#34;https://golang.org/pkg/embed/&#34;&gt;embed&lt;/a&gt; package.&lt;/p&gt;&#xA;&lt;p&gt;While the idea is not a novelty, there were already some packages with slightly different APIs fulfilling similar roles, for example:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/kevinburke/go-bindata&#34;&gt;go-bindata&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/GeertJohan/go.rice&#34;&gt;go-rice&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Having an official package is always a welcome addition to the batteries-included standard library.&lt;/p&gt;&#xA;&lt;h2 id=&#34;usage&#34;&gt;Usage&lt;/h2&gt;&#xA;&lt;p&gt;A possible way to embed react assets could be as simple as:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-go&#34; data-lang=&#34;go&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;package&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;web&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; (&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;embed&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;io/fs&amp;#34;&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;)&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;//go:embed build/*&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;var&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;content&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;embed&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;FS&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;And serving assets using &lt;code&gt;http.FileServer&lt;/code&gt;:&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

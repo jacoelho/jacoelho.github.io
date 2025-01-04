@@ -4,99 +4,80 @@
     <title>Categories on Posts</title>
     <link>https://www.jacoelho.com/categories/</link>
     <description>Recent content in Categories on Posts</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Mon, 11 Sep 2023 10:00:00 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Sep 2023 10:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.jacoelho.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>go</title>
+      <title>Go</title>
       <link>https://www.jacoelho.com/categories/go/</link>
       <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/go/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>golang</title>
+      <title>Golang</title>
       <link>https://www.jacoelho.com/categories/golang/</link>
       <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/golang/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>logging</title>
+      <title>Logging</title>
       <link>https://www.jacoelho.com/categories/logging/</link>
       <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/logging/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>slog</title>
+      <title>Slog</title>
       <link>https://www.jacoelho.com/categories/slog/</link>
       <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/slog/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>cdc</title>
+      <title>Cdc</title>
       <link>https://www.jacoelho.com/categories/cdc/</link>
       <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/cdc/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>change data capture</title>
+      <title>Change Data Capture</title>
       <link>https://www.jacoelho.com/categories/change-data-capture/</link>
       <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/change-data-capture/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>opentelemetry</title>
+      <title>Opentelemetry</title>
       <link>https://www.jacoelho.com/categories/opentelemetry/</link>
       <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/opentelemetry/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>otel</title>
+      <title>Otel</title>
       <link>https://www.jacoelho.com/categories/otel/</link>
       <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/otel/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>postgresql</title>
+      <title>Postgresql</title>
       <link>https://www.jacoelho.com/categories/postgresql/</link>
       <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/postgresql/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>generics</title>
+      <title>Generics</title>
       <link>https://www.jacoelho.com/categories/generics/</link>
       <pubDate>Mon, 29 Nov 2021 10:00:00 +0000</pubDate>
-      
       <guid>https://www.jacoelho.com/categories/generics/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

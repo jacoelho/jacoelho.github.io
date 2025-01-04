@@ -38,34 +38,41 @@
     <meta name="theme-color" content="#252627">
 
 
-<meta itemprop="name" content="structured logging: slog">
-<meta itemprop="description" content="Event logging is one of the three pillars of observability (traces and metrics being the other two).
-A log entry is a timestamped record about the application&rsquo;s activity, which can be used for troubleshooting, monitoring or auditing purposes.
+
+  <meta itemprop="name" content="structured logging: slog">
+  <meta itemprop="description" content="Event logging is one of the three pillars of observability (traces and metrics being the other two).
+A log entry is a timestamped record about the application’s activity, which can be used for troubleshooting, monitoring or auditing purposes.
 Logs may have different formats:
-unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, such as: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, among others."><meta itemprop="datePublished" content="2023-09-11T10:00:00+00:00" />
-<meta itemprop="dateModified" content="2023-09-11T10:00:00+00:00" />
-<meta itemprop="wordCount" content="1145"><meta itemprop="image" content="https://www.jacoelho.com/"/>
-<meta itemprop="keywords" content="" />
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:image" content="https://www.jacoelho.com/"/>
+unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, such as: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, among others. Structured logs can be easily machine parsed, which simplifies analytics, filtering and aggregation. This article is a non-exhaustive walkthrough of logging in Go.">
+  <meta itemprop="datePublished" content="2023-09-11T10:00:00+00:00">
+  <meta itemprop="dateModified" content="2023-09-11T10:00:00+00:00">
+  <meta itemprop="wordCount" content="1145">
+  <meta itemprop="image" content="https://www.jacoelho.com/">
+  <meta itemprop="keywords" content="Go,Golang,Logging,Slog">
 
-<meta name="twitter:title" content="structured logging: slog"/>
-<meta name="twitter:description" content="Event logging is one of the three pillars of observability (traces and metrics being the other two).
-A log entry is a timestamped record about the application&rsquo;s activity, which can be used for troubleshooting, monitoring or auditing purposes.
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://www.jacoelho.com/">
+  <meta name="twitter:title" content="structured logging: slog">
+  <meta name="twitter:description" content="Event logging is one of the three pillars of observability (traces and metrics being the other two).
+A log entry is a timestamped record about the application’s activity, which can be used for troubleshooting, monitoring or auditing purposes.
 Logs may have different formats:
-unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, such as: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, among others."/>
+unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, such as: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, among others. Structured logs can be easily machine parsed, which simplifies analytics, filtering and aggregation. This article is a non-exhaustive walkthrough of logging in Go.">
 
 
 
-<meta property="og:title" content="structured logging: slog" />
-<meta property="og:description" content="Event logging is one of the three pillars of observability (traces and metrics being the other two).
-A log entry is a timestamped record about the application&rsquo;s activity, which can be used for troubleshooting, monitoring or auditing purposes.
+<meta property="og:url" content="https://www.jacoelho.com/blog/2023/09/structured-logging-slog/">
+  <meta property="og:site_name" content="Posts">
+  <meta property="og:title" content="structured logging: slog">
+  <meta property="og:description" content="Event logging is one of the three pillars of observability (traces and metrics being the other two).
+A log entry is a timestamped record about the application’s activity, which can be used for troubleshooting, monitoring or auditing purposes.
 Logs may have different formats:
-unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, such as: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, among others." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.jacoelho.com/blog/2023/09/structured-logging-slog/" /><meta property="og:image" content="https://www.jacoelho.com/"/><meta property="article:section" content="blog" />
-<meta property="article:published_time" content="2023-09-11T10:00:00+00:00" />
-<meta property="article:modified_time" content="2023-09-11T10:00:00+00:00" />
+unstructured or plain text: similar to print statements, free-form text semi-structured: some values have a structure and the remaining data free-form structured: there is a well-defined and consistent format, such as: W3C Log Format, NCSA Log Format, Key/Value Pair, CSV or JSON, among others. Structured logs can be easily machine parsed, which simplifies analytics, filtering and aggregation. This article is a non-exhaustive walkthrough of logging in Go.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="blog">
+    <meta property="article:published_time" content="2023-09-11T10:00:00+00:00">
+    <meta property="article:modified_time" content="2023-09-11T10:00:00+00:00">
+    <meta property="og:image" content="https://www.jacoelho.com/">
 
 
 
@@ -215,64 +222,64 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 <p>There are two libraries in the ecosystem with performance as a main feature: <a href="https://github.com/uber-go/zap">zap</a> and <a href="https://github.com/rs/zerolog">zerolog</a>.</p>
 <p>According to the benchmarks provided by the zap project:</p>
 <table>
-<thead>
-<tr>
-<th style="text-align:left">Package</th>
-<th style="text-align:center">Time</th>
-<th style="text-align:center">Time % to zap</th>
-<th style="text-align:center">Objects Allocated</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">⚡ zap</td>
-<td style="text-align:center">1744 ns/op</td>
-<td style="text-align:center">+0%</td>
-<td style="text-align:center">5 allocs/op</td>
-</tr>
-<tr>
-<td style="text-align:left">⚡ zap (sugared)</td>
-<td style="text-align:center">2483 ns/op</td>
-<td style="text-align:center">+42%</td>
-<td style="text-align:center">10 allocs/op</td>
-</tr>
-<tr>
-<td style="text-align:left">zerolog</td>
-<td style="text-align:center">918 ns/op</td>
-<td style="text-align:center">-47%</td>
-<td style="text-align:center">1 allocs/op</td>
-</tr>
-<tr>
-<td style="text-align:left">go-kit</td>
-<td style="text-align:center">5590 ns/op</td>
-<td style="text-align:center">+221%</td>
-<td style="text-align:center">57 allocs/op</td>
-</tr>
-<tr>
-<td style="text-align:left">slog</td>
-<td style="text-align:center">5640 ns/op</td>
-<td style="text-align:center">+223%</td>
-<td style="text-align:center">40 allocs/op</td>
-</tr>
-<tr>
-<td style="text-align:left">apex/log</td>
-<td style="text-align:center">21184 ns/op</td>
-<td style="text-align:center">+1115%</td>
-<td style="text-align:center">63 allocs/op</td>
-</tr>
-<tr>
-<td style="text-align:left">logrus</td>
-<td style="text-align:center">24338 ns/op</td>
-<td style="text-align:center">+1296%</td>
-<td style="text-align:center">79 allocs/op</td>
-</tr>
-<tr>
-<td style="text-align:left">log15</td>
-<td style="text-align:center">26054 ns/op</td>
-<td style="text-align:center">+1394%</td>
-<td style="text-align:center">74 allocs/op</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th style="text-align: left">Package</th>
+          <th style="text-align: center">Time</th>
+          <th style="text-align: center">Time % to zap</th>
+          <th style="text-align: center">Objects Allocated</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">&#x26a1; zap</td>
+          <td style="text-align: center">1744 ns/op</td>
+          <td style="text-align: center">+0%</td>
+          <td style="text-align: center">5 allocs/op</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">&#x26a1; zap (sugared)</td>
+          <td style="text-align: center">2483 ns/op</td>
+          <td style="text-align: center">+42%</td>
+          <td style="text-align: center">10 allocs/op</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">zerolog</td>
+          <td style="text-align: center">918 ns/op</td>
+          <td style="text-align: center">-47%</td>
+          <td style="text-align: center">1 allocs/op</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">go-kit</td>
+          <td style="text-align: center">5590 ns/op</td>
+          <td style="text-align: center">+221%</td>
+          <td style="text-align: center">57 allocs/op</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">slog</td>
+          <td style="text-align: center">5640 ns/op</td>
+          <td style="text-align: center">+223%</td>
+          <td style="text-align: center">40 allocs/op</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">apex/log</td>
+          <td style="text-align: center">21184 ns/op</td>
+          <td style="text-align: center">+1115%</td>
+          <td style="text-align: center">63 allocs/op</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">logrus</td>
+          <td style="text-align: center">24338 ns/op</td>
+          <td style="text-align: center">+1296%</td>
+          <td style="text-align: center">79 allocs/op</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">log15</td>
+          <td style="text-align: center">26054 ns/op</td>
+          <td style="text-align: center">+1394%</td>
+          <td style="text-align: center">74 allocs/op</td>
+      </tr>
+  </tbody>
 </table>
 <p>Looking at the benchmark it is evident that logging can impact heavily both latency and memory/<a href="https://tip.golang.org/doc/gc-guide">gc</a> by several order of magnitude.</p>
 <p>Using <code>zerolog</code> as an example, the API is still user-friendly:</p>
@@ -512,7 +519,7 @@ unstructured or plain text: similar to print statements, free-form text semi-str
     
     <div class="footer__inner">
         <div class="footer__content">
-            <span>&copy; 2024</span>
+            <span>&copy; 2025</span>
             <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
             <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
             <span><a href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
@@ -530,7 +537,7 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 
 
 
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.1b9e9e6a472aac21fc8b84b1563d43d3d13b1ce77ebc8a68655d149bfaaab4764e9768398766fb70a522ecf2fcc92d4fa421f0d409e52cd6e5885a6ae8032220.js" integrity="sha512-G56eakcqrCH8i4SxVj1D09E7HOd&#43;vIpoZV0Um/qqtHZOl2g5h2b7cKUi7PL8yS1PpCHw1AnlLNbliFpq6AMiIA=="></script>
+<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.908900dc2e07f8e32ffd6d1405df0d337b6aecaff233e8551b43a679393ed2b033974b6d1151b2d97ca25722a7c880f508bb953081bd4606f742ff4c7de5029e.js" integrity="sha512-kIkA3C4H&#43;OMv/W0UBd8NM3tq7K/yM&#43;hVG0OmeTk&#43;0rAzl0ttEVGy2XyiVyKnyID1CLuVMIG9Rgb3Qv9MfeUCng=="></script>
 
 
 
