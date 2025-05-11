@@ -42,18 +42,18 @@
 
 
   <meta itemprop="name" content="Dependency Lifecycle Management in Go">
-  <meta itemprop="description" content="Dependency Lifecycle Management in Go Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
+  <meta itemprop="description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
 Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.">
   <meta itemprop="datePublished" content="2025-05-11T10:00:00+00:00">
   <meta itemprop="dateModified" content="2025-05-11T10:00:00+00:00">
-  <meta itemprop="wordCount" content="1594">
+  <meta itemprop="wordCount" content="1589">
   <meta itemprop="image" content="https://www.jacoelho.com/">
   <meta itemprop="keywords" content="Go,Golang,Dependency Injection,Dependency Lifecycle,Di">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://www.jacoelho.com/">
   <meta name="twitter:title" content="Dependency Lifecycle Management in Go">
-  <meta name="twitter:description" content="Dependency Lifecycle Management in Go Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
+  <meta name="twitter:description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
 Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.">
 
 
@@ -61,7 +61,7 @@ Go developers typically wire dependencies manually, instead of relying on heavy 
 <meta property="og:url" content="https://www.jacoelho.com/blog/2025/05/dependency-lifecycle-management-in-go/">
   <meta property="og:site_name" content="Posts">
   <meta property="og:title" content="Dependency Lifecycle Management in Go">
-  <meta property="og:description" content="Dependency Lifecycle Management in Go Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
+  <meta property="og:description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
 Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
@@ -164,8 +164,7 @@ Go developers typically wire dependencies manually, instead of relying on heavy 
         
 
         <div class="post-content">
-            <h1 id="dependency-lifecycle-management-in-go">Dependency Lifecycle Management in Go</h1>
-<h2 id="introduction">Introduction</h2>
+            <h2 id="introduction">Introduction</h2>
 <p>Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.</p>
 <p>Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.</p>
 <p>As applications scale, the lack of built-in orchestration increases the risk of subtle bugs and inconsistent shutdown behavior.</p>
