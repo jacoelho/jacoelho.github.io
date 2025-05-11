@@ -7,19 +7,40 @@
     <generator>Hugo</generator>
     <language>en</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Mon, 11 Sep 2023 10:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 11 May 2025 10:00:00 +0000</lastBuildDate>
     <atom:link href="https://www.jacoelho.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dependency Injection</title>
+      <link>https://www.jacoelho.com/categories/dependency-injection/</link>
+      <pubDate>Sun, 11 May 2025 10:00:00 +0000</pubDate>
+      <guid>https://www.jacoelho.com/categories/dependency-injection/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dependency Lifecycle</title>
+      <link>https://www.jacoelho.com/categories/dependency-lifecycle/</link>
+      <pubDate>Sun, 11 May 2025 10:00:00 +0000</pubDate>
+      <guid>https://www.jacoelho.com/categories/dependency-lifecycle/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Di</title>
+      <link>https://www.jacoelho.com/categories/di/</link>
+      <pubDate>Sun, 11 May 2025 10:00:00 +0000</pubDate>
+      <guid>https://www.jacoelho.com/categories/di/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Go</title>
       <link>https://www.jacoelho.com/categories/go/</link>
-      <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 May 2025 10:00:00 +0000</pubDate>
       <guid>https://www.jacoelho.com/categories/go/</guid>
       <description></description>
     </item>
     <item>
       <title>Golang</title>
       <link>https://www.jacoelho.com/categories/golang/</link>
-      <pubDate>Mon, 11 Sep 2023 10:00:00 +0000</pubDate>
+      <pubDate>Sun, 11 May 2025 10:00:00 +0000</pubDate>
       <guid>https://www.jacoelho.com/categories/golang/</guid>
       <description></description>
     </item>
@@ -56,27 +77,6 @@
       <link>https://www.jacoelho.com/categories/opentelemetry/</link>
       <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
       <guid>https://www.jacoelho.com/categories/opentelemetry/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Otel</title>
-      <link>https://www.jacoelho.com/categories/otel/</link>
-      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      <guid>https://www.jacoelho.com/categories/otel/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Postgresql</title>
-      <link>https://www.jacoelho.com/categories/postgresql/</link>
-      <pubDate>Mon, 02 May 2022 10:00:00 +0000</pubDate>
-      <guid>https://www.jacoelho.com/categories/postgresql/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Generics</title>
-      <link>https://www.jacoelho.com/categories/generics/</link>
-      <pubDate>Mon, 29 Nov 2021 10:00:00 +0000</pubDate>
-      <guid>https://www.jacoelho.com/categories/generics/</guid>
       <description></description>
     </item>
   </channel>

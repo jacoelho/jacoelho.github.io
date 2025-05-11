@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Di on Posts</title>
+    <link>https://www.jacoelho.com/categories/di/</link>
+    <description>Recent content in Di on Posts</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Sun, 11 May 2025 10:00:00 +0000</lastBuildDate>
+    <atom:link href="https://www.jacoelho.com/categories/di/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Dependency Lifecycle Management in Go</title>
+      <link>https://www.jacoelho.com/blog/2025/05/dependency-lifecycle-management-in-go/</link>
+      <pubDate>Sun, 11 May 2025 10:00:00 +0000</pubDate>
+      <guid>https://www.jacoelho.com/blog/2025/05/dependency-lifecycle-management-in-go/</guid>
+      <description>&lt;h1 id=&#34;dependency-lifecycle-management-in-go&#34;&gt;Dependency Lifecycle Management in Go&lt;/h1&gt;&#xA;&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.&lt;/p&gt;&#xA;&lt;p&gt;Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

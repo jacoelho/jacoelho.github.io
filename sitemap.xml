@@ -3,33 +3,45 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.jacoelho.com/categories/</loc>
-    <lastmod>2023-09-11T10:00:00+00:00</lastmod>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jacoelho.com/categories/dependency-injection/</loc>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jacoelho.com/categories/dependency-lifecycle/</loc>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jacoelho.com/blog/2025/05/dependency-lifecycle-management-in-go/</loc>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jacoelho.com/categories/di/</loc>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/categories/go/</loc>
-    <lastmod>2023-09-11T10:00:00+00:00</lastmod>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/categories/golang/</loc>
-    <lastmod>2023-09-11T10:00:00+00:00</lastmod>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/tags/index/</loc>
-    <lastmod>2023-09-11T10:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jacoelho.com/categories/logging/</loc>
-    <lastmod>2023-09-11T10:00:00+00:00</lastmod>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/</loc>
-    <lastmod>2023-09-11T10:00:00+00:00</lastmod>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/blog/</loc>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jacoelho.com/tags/</loc>
+    <lastmod>2025-05-11T10:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://www.jacoelho.com/categories/logging/</loc>
     <lastmod>2023-09-11T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/categories/slog/</loc>
     <lastmod>2023-09-11T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/blog/2023/09/structured-logging-slog/</loc>
-    <lastmod>2023-09-11T10:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jacoelho.com/tags/</loc>
     <lastmod>2023-09-11T10:00:00+00:00</lastmod>
   </url><url>
     <loc>https://www.jacoelho.com/categories/cdc/</loc>
@@ -133,8 +145,6 @@
   </url><url>
     <loc>https://www.jacoelho.com/blog/2015/05/locally-developing-microservices/</loc>
     <lastmod>2015-05-25T10:24:46+00:00</lastmod>
-  </url><url>
-    <loc>https://www.jacoelho.com/blog/1/01/</loc>
   </url><url>
     <loc>https://www.jacoelho.com/series/</loc>
   </url>
