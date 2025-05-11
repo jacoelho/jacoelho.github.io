@@ -185,8 +185,8 @@ package web import ( &#34;embed&#34; &#34;io/fs&#34; ) //go:embed build/* var co
 </span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;io/fs&#34;</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//go:embed build/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">content</span> <span style="color:#a6e22e">embed</span>.<span style="color:#a6e22e">FS</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//go:embed build/*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">content</span> <span style="color:#a6e22e">embed</span>.<span style="color:#a6e22e">FS</span>
 </span></span></code></pre></div><p>And serving assets using <code>http.FileServer</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Handle</span>(<span style="color:#e6db74">&#34;/static/&#34;</span>, <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FileServer</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">FS</span>(<span style="color:#a6e22e">content</span>)))
 </span></span></code></pre></div><p>However, following this structure, one may end up with some unexpected 404 responses.</p>
@@ -208,8 +208,8 @@ package web import ( &#34;embed&#34; &#34;io/fs&#34; ) //go:embed build/* var co
 </span></span><span style="display:flex;"><span>build/static/js/2.6071c2c3.chunk.js
 </span></span></code></pre></div><p>In this case, we can observe using the directive <code>//go:embed build/*</code> will include the <code>build</code> directory and all files in the directory.</p>
 <p>If the files being served are not expecting to be in <code>build</code> directory it is possible to change the subtree:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Contents helper function
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Contents</span>() (<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">FS</span>, <span style="color:#66d9ef">error</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Contents helper function</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Contents</span>() (<span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">FS</span>, <span style="color:#66d9ef">error</span>) {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">content</span>, <span style="color:#e6db74">&#34;build&#34;</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><hr>

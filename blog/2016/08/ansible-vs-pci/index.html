@@ -191,8 +191,7 @@ requirements</a><br>
 like:</p>
 <blockquote>
 <p><em>Requirement 2: Maintain an inventory of system components in scope for PCI DSS<br>
-to support effective scoping practices.</em></p>
-</blockquote>
+to support effective scoping practices.</em></p></blockquote>
 <p>You will find that using public-key authentication is sometimes<br>
 <a href="https://security.stackexchange.com/questions/47213/pci-dss-2-0-and-ssh-keys">forbidden</a><br>
 as it’s almost impossible to ensure employees are rotating the keys, keeping the<br>
@@ -203,8 +202,7 @@ password <em>ad nauseam</em>.</p>
 <h3 id="ansible-vault-to-the-rescue">Ansible Vault To The Rescue</h3>
 <blockquote>
 <p>“Vault” is a feature of ansible that allows keeping sensitive data such as<br>
-passwords or keys in encrypted files.</p>
-</blockquote>
+passwords or keys in encrypted files.</p></blockquote>
 <p>We can leverage <em>Ansible Vault</em> to keep the user password stored in a safe way:</p>
 <pre tabindex="0"><code>mkdir group_vars
 ansible-vault create group_vars/all.yml
