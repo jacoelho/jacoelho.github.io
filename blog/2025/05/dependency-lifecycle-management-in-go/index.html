@@ -42,27 +42,30 @@
 
 
   <meta itemprop="name" content="Dependency Lifecycle Management in Go">
-  <meta itemprop="description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
-Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.">
+  <meta itemprop="description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped.
+Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.
+As applications scale, the lack of built-in orchestration increases the risk of subtle bugs and inconsistent shutdown behavior.">
   <meta itemprop="datePublished" content="2025-05-11T10:00:00+00:00">
   <meta itemprop="dateModified" content="2025-05-11T10:00:00+00:00">
-  <meta itemprop="wordCount" content="1589">
+  <meta itemprop="wordCount" content="1538">
   <meta itemprop="image" content="https://www.jacoelho.com/">
   <meta itemprop="keywords" content="Go,Golang,Dependency Injection,Dependency Lifecycle,Di">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://www.jacoelho.com/">
   <meta name="twitter:title" content="Dependency Lifecycle Management in Go">
-  <meta name="twitter:description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
-Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.">
+  <meta name="twitter:description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped.
+Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.
+As applications scale, the lack of built-in orchestration increases the risk of subtle bugs and inconsistent shutdown behavior.">
 
 
 
 <meta property="og:url" content="https://www.jacoelho.com/blog/2025/05/dependency-lifecycle-management-in-go/">
   <meta property="og:site_name" content="Posts">
   <meta property="og:title" content="Dependency Lifecycle Management in Go">
-  <meta property="og:description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.
-Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.">
+  <meta property="og:description" content="Introduction Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped.
+Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.
+As applications scale, the lack of built-in orchestration increases the risk of subtle bugs and inconsistent shutdown behavior.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="blog">
@@ -165,7 +168,7 @@ Go developers typically wire dependencies manually, instead of relying on heavy 
 
         <div class="post-content">
             <h2 id="introduction">Introduction</h2>
-<p>Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped. This is particularly critical in long-running applications where improper shutdowns can result in resource leaks, data loss, or inconsistent states.</p>
+<p>Lifecycle management ensures that application components like servers, databases, and background workers are correctly initialized, started in the right order, and gracefully stopped.</p>
 <p>Go developers typically wire dependencies manually, instead of relying on heavy frameworks or reflection based dependency injection. This approach improves readability and reduces hidden behavior, but it also shifts the burden of managing component interactions and lifecycle sequencing onto the developer.</p>
 <p>As applications scale, the lack of built-in orchestration increases the risk of subtle bugs and inconsistent shutdown behavior.</p>
 <p>This post compares two approaches:</p>
@@ -173,7 +176,6 @@ Go developers typically wire dependencies manually, instead of relying on heavy 
 <li><strong>Manual lifecycle management</strong> using idiomatic Go</li>
 <li><strong>Structured lifecycle management</strong> using the <a href="https://github.com/jacoelho/component"><code>component</code></a> library</li>
 </ul>
-<p>We will examine how each approach handles initialization, startup, and teardown, and compare their trade-offs in terms of clarity, maintainability, and observability.</p>
 <h2 id="understanding-dependency-lifecycle-in-go">Understanding Dependency Lifecycle in Go</h2>
 <p>In Go applications, services such as HTTP servers, database connections, and background workers often have dependencies that must be managed explicitly. While Go provides primitives like <code>context.Context</code> and <code>sync.WaitGroup</code>, it is the developer’s responsibility to ensure that resources are constructed, started, and shut down in the correct order.</p>
 <p>This coordination becomes more challenging as dependencies grow in number and interdependence. Without a structured lifecycle model, it’s easy to overlook teardown responsibilities, introduce race conditions, or mishandle cancellation flows.</p>
@@ -236,7 +238,7 @@ Go developers typically wire dependencies manually, instead of relying on heavy 
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;shutdown complete&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>This example demonstrates how to manage the startup and shutdown of multiple services—specifically an HTTP server and a background worker—using idiomatic Go patterns:</p>
+</span></span></code></pre></div><p>This example demonstrates how to manage the startup and shutdown of multiple services, specifically an HTTP server and a background worker using idiomatic Go patterns:</p>
 <ul>
 <li>
 <p><strong>Signal Handling</strong><br>
@@ -288,7 +290,7 @@ Upon receiving a signal:</p>
 <p>Despite Go&rsquo;s concurrency primitives, lifecycle correctness remains the developer&rsquo;s responsibility and a source of subtle bugs if not handled carefully.</p>
 <h2 id="using-the-component-library">Using the <code>component</code> Library</h2>
 <p>The <a href="https://github.com/jacoelho/component"><code>component</code></a> library offers a minimal framework for structuring and orchestrating stateful services in Go. It builds on Go&rsquo;s type system and concurrency primitives to manage component initialization and shutdown in a clear, predictable order.</p>
-<p>Components are registered with explicit dependencies and organized into levels in a directed acyclic graph (DAG). The library starts and stops components in dependency-respecting order, in parallel where safe. If startup fails, it automatically rolls back by stopping already-started components.</p>
+<p>Components are registered with explicit dependencies and organized into levels in a directed acyclic graph (DAG). The library starts and stops components in dependency respecting order, in parallel where safe. If startup fails, it automatically rolls back by stopping already started components.</p>
 <p>A component implements <code>Lifecycle</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Lifecycle</span> <span style="color:#66d9ef">interface</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Start</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) <span style="color:#66d9ef">error</span>
@@ -370,7 +372,7 @@ Upon receiving a signal:</p>
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;System shut down.&#34;</span>)
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>This example demonstrates how to define and manage application components using the <a href="https://github.com/jacoelho/component"><code>component</code></a> library. It shows how to explicitly declare dependencies between services and let the library orchestrate their lifecycle.</p>
+</span></span></code></pre></div><p>This example shows how to explicitly declare dependencies between services and let the library orchestrate their lifecycle.</p>
 <h4 id="key-concepts">Key Concepts</h4>
 <ul>
 <li>
@@ -410,15 +412,15 @@ Components are registered using <code>component.Provide</code>, which takes:</p>
 The system is started and stopped with <code>context.WithTimeout</code>, giving each operation up to 5 seconds to complete cleanly.</p>
 </li>
 </ul>
-<p>This pattern eliminates manual wiring of start/stop logic and enforces correct ordering via explicit dependency declarations. It’s scalable, testable, and safe—especially as the number of components grows.</p>
+<p>This pattern eliminates manual wiring of start/stop logic and enforces correct ordering via explicit dependency declarations. It’s scalable, testable, and safe, especially as the number of components grows.</p>
 <p>While the example is minimal, it mirrors patterns used in production systems to manage databases, queues, servers, and background jobs with consistent lifecycle semantics.</p>
 <h3 id="pros-1">Pros</h3>
 <ul>
 <li><strong>Explicit Dependency Declaration</strong>: Each component clearly defines what it needs, reducing hidden coupling.</li>
-<li><strong>Automatic Lifecycle Ordering</strong>: Components start and stop in dependency-respecting order, reducing shutdown bugs.</li>
+<li><strong>Automatic Lifecycle Ordering</strong>: Components start and stop respecting dependency order, reducing shutdown bugs.</li>
 <li><strong>Centralized Lifecycle Management</strong>: The <code>System</code> handles orchestration, improving maintainability and testability.</li>
 <li><strong>Parallel Execution</strong>: Components at the same dependency level start concurrently, improving efficiency.</li>
-<li><strong>Validation at Registration</strong>: The system catches missing or cyclic dependencies early.</li>
+<li><strong>Validation at Registration</strong>: The system catches cyclic dependencies early.</li>
 </ul>
 <h3 id="cons-1">Cons</h3>
 <ul>
@@ -428,7 +430,7 @@ The system is started and stopped with <code>context.WithTimeout</code>, giving 
 </ul>
 <h2 id="conclusion">Conclusion</h2>
 <p>Manual lifecycle management in Go works well for smaller applications with simple dependencies. It keeps the control flow clear and aligns with Go&rsquo;s preference for direct, explicit code. But as more components are added, each with their own startup and shutdown requirements, manual wiring becomes more difficult to maintain and more likely to break.</p>
-<p>The component library helps manage this complexity by introducing a structure for declaring and orchestrating components. It handles dependency resolution, startup sequencing, and shutdown ordering automatically. This reduces boilerplate and improves the reliability of long-running systems without hiding too much logic or requiring major changes to Go&rsquo;s usual patterns.</p>
+<p>The component library helps manage this complexity by introducing a structure for declaring and orchestrating components. It handles dependency resolution, startup sequencing, and shutdown ordering automatically. This reduces boilerplate and improves the reliability of long running systems without hiding too much logic or requiring major changes to Go&rsquo;s usual patterns.</p>
 <p>For teams working on modular or service-heavy systems, component provides a practical way to scale lifecycle management while preserving the clarity and maintainability expected in Go projects.</p>
 
         </div>
