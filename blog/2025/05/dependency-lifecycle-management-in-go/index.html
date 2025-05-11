@@ -47,7 +47,7 @@ Go developers typically wire dependencies manually, instead of relying on heavy 
 As applications scale, the lack of built-in orchestration increases the risk of subtle bugs and inconsistent shutdown behavior.">
   <meta itemprop="datePublished" content="2025-05-11T10:00:00+00:00">
   <meta itemprop="dateModified" content="2025-05-11T10:00:00+00:00">
-  <meta itemprop="wordCount" content="1538">
+  <meta itemprop="wordCount" content="1518">
   <meta itemprop="image" content="https://www.jacoelho.com/">
   <meta itemprop="keywords" content="Go,Golang,Dependency Injection,Dependency Lifecycle,Di">
 
@@ -406,10 +406,6 @@ Components are registered using <code>component.Provide</code>, which takes:</p>
 <li><code>MainService</code> starts second (after <code>Logger</code> is ready).</li>
 </ol>
 <p><code>sys.Stop(ctx)</code> shuts down components in reverse order.</p>
-</li>
-<li>
-<p><strong>Timeout Contexts</strong><br>
-The system is started and stopped with <code>context.WithTimeout</code>, giving each operation up to 5 seconds to complete cleanly.</p>
 </li>
 </ul>
 <p>This pattern eliminates manual wiring of start/stop logic and enforces correct ordering via explicit dependency declarations. It’s scalable, testable, and safe, especially as the number of components grows.</p>
