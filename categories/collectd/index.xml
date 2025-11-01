@@ -1,20 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Collectd on Posts</title>
-    <link>https://www.jacoelho.com/categories/collectd/</link>
-    <description>Recent content in Collectd on Posts</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Tue, 09 Aug 2016 10:24:46 +0000</lastBuildDate>
-    <atom:link href="https://www.jacoelho.com/categories/collectd/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Collectd plugins made easy</title>
-      <link>https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/</link>
-      <pubDate>Tue, 09 Aug 2016 10:24:46 +0000</pubDate>
-      <guid>https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/</guid>
-      <description>&lt;blockquote&gt;&#xA;&lt;p&gt;&lt;strong&gt;Collectd&lt;/strong&gt; is a Unix daemon that collects, transfers and stores performance&lt;br&gt;&#xA;data of computers and network equipment. The acquired data is meant to help&lt;br&gt;&#xA;system administrators maintain an overview over available resources to detect&lt;br&gt;&#xA;existing or looming bottlenecks.&lt;/p&gt;&lt;/blockquote&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://collectd.org/&#34;&gt;Collectd&lt;/a&gt; provides a &lt;a href=&#34;https://collectd.org/wiki/index.php/Table_of_Plugins&#34;&gt;long list of&lt;br&gt;&#xA;plugins&lt;/a&gt; available&lt;br&gt;&#xA;out-of-box. However, if you need to collect additional metrics, one of the&lt;br&gt;&#xA;easiest ways to do so is using the &lt;a href=&#34;https://collectd.org/wiki/index.php/Plugin:Exec&#34;&gt;exec&lt;br&gt;&#xA;plugin&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;In order to use the exec plugin, create an &lt;em&gt;Collectd&lt;/em&gt; configuration file:&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Collectd on Posts</title><link>https://www.jacoelho.com/categories/collectd/</link><description>Recent content in Collectd on Posts</description><generator>Hugo</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener"&gt;CC BY-NC 4.0&lt;/a&gt;</copyright><lastBuildDate>Tue, 09 Aug 2016 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/collectd/index.xml" rel="self" type="application/rss+xml"/><item><title>Collectd plugins made easy</title><link>https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/</link><pubDate>Tue, 09 Aug 2016 10:24:46 +0000</pubDate><guid>https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/</guid><description>&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Collectd&lt;/strong&gt; is a Unix daemon that collects, transfers and stores performance&lt;br&gt;
+data of computers and network equipment. The acquired data is meant to help&lt;br&gt;
+system administrators maintain an overview over available resources to detect&lt;br&gt;
+existing or looming bottlenecks.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="https://collectd.org/"&gt;Collectd&lt;/a&gt; provides a &lt;a href="https://collectd.org/wiki/index.php/Table_of_Plugins"&gt;long list of&lt;br&gt;
+plugins&lt;/a&gt; available&lt;br&gt;
+out-of-box. However, if you need to collect additional metrics, one of the&lt;br&gt;
+easiest ways to do so is using the &lt;a href="https://collectd.org/wiki/index.php/Plugin:Exec"&gt;exec&lt;br&gt;
+plugin&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In order to use the exec plugin, create an &lt;em&gt;Collectd&lt;/em&gt; configuration file:&lt;/p&gt;</description></item></channel></rss>

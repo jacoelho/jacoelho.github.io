@@ -1,48 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author"
-    content="">
-<meta name="keywords"
-    content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
-<meta name="robots" content="noodp" />
-<meta name="theme-color" content="#252627" />
-<meta name="description" content="Notes on building software">
-<link rel="canonical" href="https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/" />
-
-
-<title>
-    
-    Collectd plugins made easy :: Posts 
-    
-</title>
-
-
-
-
-
-<link rel="stylesheet" href="https://www.jacoelho.com/main.min.83e433d285f1a569e54dc9705b02c8c0c8fd81be6c274aa542a3321903fa24b5.css" integrity="sha256-g&#43;Qz0oXxpWnlTclwWwLIwMj9gb5sJ0qlQqMyGQP6JLU=" crossorigin="anonymous">
-
-
-
-
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/favicon-16x16.png">
-    <link rel="mask-icon" href="https://www.jacoelho.com/safari-pinned-tab.svg" color="#252627">
-    <link rel="shortcut icon" href="https://www.jacoelho.com/favicon.ico">
-    <meta name="msapplication-TileColor" content="#252627">
-    <meta name="theme-color" content="#252627">
-
-
-
-  <meta itemprop="name" content="Collectd plugins made easy">
-  <meta itemprop="description" content="Collectd is a Unix daemon that collects, transfers and stores performance
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="map[name:Jose Coelho]"><meta name=description content="Ramblings about software engineering"><meta name=keywords content="go,golang,kubernetes,ansible,chef,kafka,docker,containers"><link rel=canonical href=https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/><title>Collectd plugins made easy :: Posts</title><link rel=stylesheet href=https://www.jacoelho.com/css/main.min.119ac2c18046a4ef9e7705b9cd71e1fc8cbe5a5139a1234cfdae109d1baedb3c.css integrity="sha256-EZrCwYBGpO+edwW5zXHh/Iy+WlE5oSNM/a4QnRuu2zw=" crossorigin=anonymous><meta itemprop=name content="Collectd plugins made easy"><meta itemprop=description content="Collectd is a Unix daemon that collects, transfers and stores performance
 data of computers and network equipment. The acquired data is meant to help
 system administrators maintain an overview over available resources to detect
 existing or looming bottlenecks.
@@ -51,17 +7,7 @@ plugins available
 out-of-box. However, if you need to collect additional metrics, one of the
 easiest ways to do so is using the exec
 plugin.
-In order to use the exec plugin, create an Collectd configuration file:">
-  <meta itemprop="datePublished" content="2016-08-09T10:24:46+00:00">
-  <meta itemprop="dateModified" content="2016-08-09T10:24:46+00:00">
-  <meta itemprop="wordCount" content="302">
-  <meta itemprop="image" content="https://www.jacoelho.com/">
-  <meta itemprop="keywords" content="Collectd">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://www.jacoelho.com/">
-  <meta name="twitter:title" content="Collectd plugins made easy">
-  <meta name="twitter:description" content="Collectd is a Unix daemon that collects, transfers and stores performance
+In order to use the exec plugin, create an Collectd configuration file:"><meta itemprop=datePublished content="2016-08-09T10:24:46+00:00"><meta itemprop=dateModified content="2016-08-09T10:24:46+00:00"><meta itemprop=wordCount content="302"><meta itemprop=keywords content="Collectd"><meta property="og:url" content="https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/"><meta property="og:site_name" content="Posts"><meta property="og:title" content="Collectd plugins made easy"><meta property="og:description" content="Collectd is a Unix daemon that collects, transfers and stores performance
 data of computers and network equipment. The acquired data is meant to help
 system administrators maintain an overview over available resources to detect
 existing or looming bottlenecks.
@@ -70,14 +16,7 @@ plugins available
 out-of-box. However, if you need to collect additional metrics, one of the
 easiest ways to do so is using the exec
 plugin.
-In order to use the exec plugin, create an Collectd configuration file:">
-
-
-
-<meta property="og:url" content="https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/">
-  <meta property="og:site_name" content="Posts">
-  <meta property="og:title" content="Collectd plugins made easy">
-  <meta property="og:description" content="Collectd is a Unix daemon that collects, transfers and stores performance
+In order to use the exec plugin, create an Collectd configuration file:"><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="blog"><meta property="article:published_time" content="2016-08-09T10:24:46+00:00"><meta property="article:modified_time" content="2016-08-09T10:24:46+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Collectd plugins made easy"><meta name=twitter:description content="Collectd is a Unix daemon that collects, transfers and stores performance
 data of computers and network equipment. The acquired data is meant to help
 system administrators maintain an overview over available resources to detect
 existing or looming bottlenecks.
@@ -86,220 +25,48 @@ plugins available
 out-of-box. However, if you need to collect additional metrics, one of the
 easiest ways to do so is using the exec
 plugin.
-In order to use the exec plugin, create an Collectd configuration file:">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="blog">
-    <meta property="article:published_time" content="2016-08-09T10:24:46+00:00">
-    <meta property="article:modified_time" content="2016-08-09T10:24:46+00:00">
-    <meta property="og:image" content="https://www.jacoelho.com/">
-
-
-
-
-<meta property="article:section" content="collectd" />
-
-
-
-<meta property="article:published_time" content="2016-08-09 10:24:46 &#43;0000 UTC" />
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-    (function (c, l, a, r, i, t, y) {
-        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script", "3wjiv20hsj");
-</script>
-    </head>
-
-    <body class="dark-theme">
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__text">Jose Coelho</span>
-            <span class="logo__cursor" style=
-                  "visibility:hidden;
-                   
-                   ">
-            </span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-            
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-            
-
-            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
-  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
-  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
-</svg>
-</span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-<main class="post">
-
-    <div class="post-info">
-        
-        </p>
-    </div>
-
-    <article>
-        <h2 class="post-title"><a href="https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/">Collectd plugins made easy</a></h2>
-
-        
-
-        
-
-        <div class="post-content">
-            <blockquote>
-<p><strong>Collectd</strong> is a Unix daemon that collects, transfers and stores performance<br>
-data of computers and network equipment. The acquired data is meant to help<br>
-system administrators maintain an overview over available resources to detect<br>
-existing or looming bottlenecks.</p></blockquote>
-<p><a href="https://collectd.org/">Collectd</a> provides a <a href="https://collectd.org/wiki/index.php/Table_of_Plugins">long list of<br>
-plugins</a> available<br>
-out-of-box. However, if you need to collect additional metrics, one of the<br>
-easiest ways to do so is using the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec<br>
-plugin</a>.</p>
-<p>In order to use the exec plugin, create an <em>Collectd</em> configuration file:</p>
-<pre tabindex="0"><code>LoadPlugin exec
+In order to use the exec plugin, create an Collectd configuration file:"><meta property="article:published_time" content="2016-08-09 10:24:46 +0000 UTC"><meta property="article:section" content="collectd"></head><body><header class=header><div class=container><div class=header-inner><a href=https://www.jacoelho.com/ class=logo>Jose Coelho</a><nav class=nav><ul class=menu><li class=menu-item><a href=https://www.jacoelho.com/about/>About</a></li></ul><button class=menu-trigger aria-label="Toggle menu" aria-expanded=false>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<button class=theme-toggle aria-label="Toggle theme">
+<svg class="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+<svg class="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+</button>
+<a href=https://www.jacoelho.com/index.xml class=rss-link target=_blank rel=noopener aria-label=RSS><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></nav></div></div></header><div class=container><div class=content><main class=post><article><header class=post-header><h1 class=post-title>Collectd plugins made easy</h1><div class=post-meta><span class=post-meta-item><time datetime=2016-08-09>August 9, 2016</time></span></div></header><div class=post-content><blockquote><p><strong>Collectd</strong> is a Unix daemon that collects, transfers and stores performance<br>data of computers and network equipment. The acquired data is meant to help<br>system administrators maintain an overview over available resources to detect<br>existing or looming bottlenecks.</p></blockquote><p><a href=https://collectd.org/>Collectd</a> provides a <a href=https://collectd.org/wiki/index.php/Table_of_Plugins>long list of<br>plugins</a> available<br>out-of-box. However, if you need to collect additional metrics, one of the<br>easiest ways to do so is using the <a href=https://collectd.org/wiki/index.php/Plugin:Exec>exec<br>plugin</a>.</p><p>In order to use the exec plugin, create an <em>Collectd</em> configuration file:</p><pre tabindex=0><code>LoadPlugin exec
 
 &lt;Plugin exec&gt;
   Exec &#34;myuser:mygroup&#34; &#34;/path/to/another/binary&#34; &#34;arg0&#34; &#34;arg1&#34;
 &lt;/Plugin&gt;
-</code></pre><p>And a sample script “<em>/path/to/another/binary</em>” (extracted from the official<br>
-documentation):</p>
-<pre tabindex="0"><code>HOSTNAME=&#34;${COLLECTD_HOSTNAME:-localhost}&#34;
+</code></pre><p>And a sample script “<em>/path/to/another/binary</em>” (extracted from the official<br>documentation):</p><pre tabindex=0><code>HOSTNAME=&#34;${COLLECTD_HOSTNAME:-localhost}&#34;
 INTERVAL=&#34;${COLLECTD_INTERVAL:-60}&#34;
 
 while sleep &#34;$INTERVAL&#34;; do
   VALUE=do_magic()
   echo &#34;PUTVAL \&#34;$HOSTNAME/exec-magic/gauge-magic_level\&#34; interval=$INTERVAL N:$VALUE&#34;
 done
-</code></pre><p>The most important bits are contained in the outputted message :</p>
-<pre tabindex="0"><code>PUTVAL &#34;$HOSTNAME/exec-magic/gauge-magic_level&#34; interval=$INTERVAL N:$VALUE
-</code></pre><p>Where:</p>
-<ol>
-<li><em>exec-magic</em> is the plugin name.</li>
-<li><em>magic_level</em> is the metric name.</li>
-<li><em>gauge</em> is the data source type, according to <a href="https://collectd.org/wiki/index.php/Data_source">collectd<br>
-types</a>.</li>
-<li><em>N:</em> is the abbreviation for “now” as defined in the <a href="https://collectd.org/wiki/index.php/Plugin:Exec">exec<br>
-plugin</a>.</li>
-</ol>
-<hr>
-<h3 id="sample-plugin">Sample plugin</h3>
-<p>Now, let’s create a simple <em>Collectd <em>plugin. In the example that follows I will<br>
-use <a href="https://golang.org/">Go</a></em>.</em></p>
-<p>The main loop will run the metric collection in a scheduled fashion:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;flag&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> (
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">interval</span> = <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Int</span>(<span style="color:#e6db74">&#34;interval&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#34;time in seconds between collection&#34;</span>)
-</span></span><span style="display:flex;"><span>	)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ticker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">NewTicker</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Duration</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">interval</span>) <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ticker</span>.<span style="color:#a6e22e">C</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">collectMetric</span>()
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>And the collectMetric code:</p>
-<pre tabindex="0"><code>hostname, _ := os.Hostname()
+</code></pre><p>The most important bits are contained in the outputted message :</p><pre tabindex=0><code>PUTVAL &#34;$HOSTNAME/exec-magic/gauge-magic_level&#34; interval=$INTERVAL N:$VALUE
+</code></pre><p>Where:</p><ol><li><em>exec-magic</em> is the plugin name.</li><li><em>magic_level</em> is the metric name.</li><li><em>gauge</em> is the data source type, according to <a href=https://collectd.org/wiki/index.php/Data_source>collectd<br>types</a>.</li><li><em>N:</em> is the abbreviation for “now” as defined in the <a href=https://collectd.org/wiki/index.php/Plugin:Exec>exec<br>plugin</a>.</li></ol><hr><h3 id=sample-plugin>Sample plugin</h3><p>Now, let’s create a simple <em>Collectd <em>plugin. In the example that follows I will<br>use <a href=https://golang.org/>Go</a></em>.</em></p><p>The main loop will run the metric collection in a scheduled fashion:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span><span class=w> </span><span class=nx>main</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kn>import</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=s>&#34;flag&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=s>&#34;time&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>func</span><span class=w> </span><span class=nf>main</span><span class=p>()</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=kd>var</span><span class=w> </span><span class=p>(</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nx>interval</span><span class=w> </span><span class=p>=</span><span class=w> </span><span class=nx>flag</span><span class=p>.</span><span class=nf>Int</span><span class=p>(</span><span class=s>&#34;interval&#34;</span><span class=p>,</span><span class=w> </span><span class=mi>5</span><span class=p>,</span><span class=w> </span><span class=s>&#34;time in seconds between collection&#34;</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nx>ticker</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>time</span><span class=p>.</span><span class=nf>NewTicker</span><span class=p>(</span><span class=nx>time</span><span class=p>.</span><span class=nf>Duration</span><span class=p>(</span><span class=o>*</span><span class=nx>interval</span><span class=p>)</span><span class=w> </span><span class=o>*</span><span class=w> </span><span class=nx>time</span><span class=p>.</span><span class=nx>Second</span><span class=p>)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=k>for</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=k>select</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=k>case</span><span class=w> </span><span class=o>&lt;-</span><span class=nx>ticker</span><span class=p>.</span><span class=nx>C</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>			</span><span class=k>go</span><span class=w> </span><span class=nf>collectMetric</span><span class=p>()</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=p>}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></div><p>And the collectMetric code:</p><pre tabindex=0><code>hostname, _ := os.Hostname()
 value := someWork()
 
 fmt.Printf(&#34;PUTVAL %s/my-plugin/gauge-my_metric interval=%d N:%s\n&#34;, hostname, interval, value)
-</code></pre><p>Just compile it and use your favorite configuration management tool to upload<br>
-the plugin and configuration.</p>
-<p>The purpose of this example was to demonstrate how to create a plugin. For<br>
-“<em>production-ready</em>” plugins I recommend using the official *Go<br>
-*<a href="https://github.com/collectd/go-collectd">library</a>.</p>
-<p>Exec plugin is the simplest and fastest way to plug a custom metric collector<br>
-into <em>Collectd</em>.</p>
-
-        </div>
-    </article>
-
-    <hr />
-
-    <div class="post-info">
-        
-        
-    <p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-
-        <span class="tag"><a href="https://www.jacoelho.com/categories/collectd/">collectd</a></span>
-        
-    </p>
-
-    </div>
-</main>
-
-            </div>
-
-            
-                <footer class="footer">
-    
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>&copy; 2025</span>
-            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
-            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
-            <span><a href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
-            
-        </div>
-    </div>
-    
-    
-</footer>
-            
-        </div>
-
-        
-
-
-
-
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.908900dc2e07f8e32ffd6d1405df0d337b6aecaff233e8551b43a679393ed2b033974b6d1151b2d97ca25722a7c880f508bb953081bd4606f742ff4c7de5029e.js" integrity="sha512-kIkA3C4H&#43;OMv/W0UBd8NM3tq7K/yM&#43;hVG0OmeTk&#43;0rAzl0ttEVGy2XyiVyKnyID1CLuVMIG9Rgb3Qv9MfeUCng=="></script>
-
-
-
-    </body>
-</html>
+</code></pre><p>Just compile it and use your favorite configuration management tool to upload<br>the plugin and configuration.</p><p>The purpose of this example was to demonstrate how to create a plugin. For<br>“<em>production-ready</em>” plugins I recommend using the official *Go<br>*<a href=https://github.com/collectd/go-collectd>library</a>.</p><p>Exec plugin is the simplest and fastest way to plug a custom metric collector<br>into <em>Collectd</em>.</p></div><div class=post-categories><a href=https://www.jacoelho.com/categories/collectd class=category>collectd</a></div></article></main></div></div><footer class=footer><div class=container><div class=footer-content><span>&copy; 2025 Jose Coelho</span></div></div></footer><script src=https://www.jacoelho.com/js/bundle.min.2868f841c78e77d7b473d034a52bb46f21b12eef84caba5767ed9a65576ecb3c.js integrity="sha256-KGj4QceOd9e0c9A0pSu0byGxLu+EyrpXZ+2aZVduyzw=" crossorigin=anonymous></script></body></html>

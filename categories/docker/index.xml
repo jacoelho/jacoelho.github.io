@@ -1,27 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Docker on Posts</title>
-    <link>https://www.jacoelho.com/categories/docker/</link>
-    <description>Recent content in Docker on Posts</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 14 Aug 2016 10:24:46 +0000</lastBuildDate>
-    <atom:link href="https://www.jacoelho.com/categories/docker/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Docker: Configuration files</title>
-      <link>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</link>
-      <pubDate>Sun, 14 Aug 2016 10:24:46 +0000</pubDate>
-      <guid>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</guid>
-      <description>&lt;h2 id=&#34;things-no-one-tells-you-about&#34;&gt;Things no one tells you about.&lt;/h2&gt;&#xA;&lt;p&gt;One of &lt;a href=&#34;https://www.docker.com/&#34;&gt;Docker&lt;/a&gt;’s killer features is the environment&lt;br&gt;&#xA;parity, yet it feels like one little detail was left untold: &lt;strong&gt;how to handle&lt;br&gt;&#xA;configuration files&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Unless you are using the same configuration between &lt;em&gt;development&lt;/em&gt;, &lt;em&gt;quality&lt;/em&gt;,&lt;br&gt;&#xA;&lt;em&gt;production&lt;/em&gt;, &lt;em&gt;etc&lt;/em&gt;. you will end up with different endpoints, API keys, secret&lt;br&gt;&#xA;tokens and feature switches for each environment.&lt;/p&gt;&#xA;&lt;h3 id=&#34;available-options&#34;&gt;Available Options&lt;/h3&gt;&#xA;&lt;p&gt;There are a couple of different ways to handle configuration in &lt;em&gt;Docker.&lt;/em&gt; Below,&lt;br&gt;&#xA;you will find a non-exhaustive list.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Docker Images</title>
-      <link>https://www.jacoelho.com/blog/2015/06/docker-images/</link>
-      <pubDate>Mon, 01 Jun 2015 10:24:46 +0000</pubDate>
-      <guid>https://www.jacoelho.com/blog/2015/06/docker-images/</guid>
-      <description>&lt;p&gt;Originally published at &lt;a href=&#34;https://medium.com/@jacoelho/docker-images-f3c5a39baa65&#34;&gt;https://medium.com/@jacoelho/docker-images-f3c5a39baa65&lt;/a&gt;&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Posts</title><link>https://www.jacoelho.com/categories/docker/</link><description>Recent content in Docker on Posts</description><generator>Hugo</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener"&gt;CC BY-NC 4.0&lt;/a&gt;</copyright><lastBuildDate>Sun, 14 Aug 2016 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker: Configuration files</title><link>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</link><pubDate>Sun, 14 Aug 2016 10:24:46 +0000</pubDate><guid>https://www.jacoelho.com/blog/2016/08/docker-configuration-files/</guid><description>&lt;h2 id="things-no-one-tells-you-about"&gt;Things no one tells you about.&lt;/h2&gt;
+&lt;p&gt;One of &lt;a href="https://www.docker.com/"&gt;Docker&lt;/a&gt;’s killer features is the environment&lt;br&gt;
+parity, yet it feels like one little detail was left untold: &lt;strong&gt;how to handle&lt;br&gt;
+configuration files&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Unless you are using the same configuration between &lt;em&gt;development&lt;/em&gt;, &lt;em&gt;quality&lt;/em&gt;,&lt;br&gt;
+&lt;em&gt;production&lt;/em&gt;, &lt;em&gt;etc&lt;/em&gt;. you will end up with different endpoints, API keys, secret&lt;br&gt;
+tokens and feature switches for each environment.&lt;/p&gt;
+&lt;h3 id="available-options"&gt;Available Options&lt;/h3&gt;
+&lt;p&gt;There are a couple of different ways to handle configuration in &lt;em&gt;Docker.&lt;/em&gt; Below,&lt;br&gt;
+you will find a non-exhaustive list.&lt;/p&gt;</description></item><item><title>Docker Images</title><link>https://www.jacoelho.com/blog/2015/06/docker-images/</link><pubDate>Mon, 01 Jun 2015 10:24:46 +0000</pubDate><guid>https://www.jacoelho.com/blog/2015/06/docker-images/</guid><description>&lt;p&gt;Originally published at &lt;a href="https://medium.com/@jacoelho/docker-images-f3c5a39baa65"&gt;https://medium.com/@jacoelho/docker-images-f3c5a39baa65&lt;/a&gt;&lt;/p&gt;</description></item></channel></rss>

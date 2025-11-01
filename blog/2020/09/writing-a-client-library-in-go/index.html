@@ -1,276 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author"
-    content="">
-<meta name="keywords"
-    content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
-<meta name="robots" content="noodp" />
-<meta name="theme-color" content="#252627" />
-<meta name="description" content="Notes on building software">
-<link rel="canonical" href="https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/" />
-
-
-<title>
-    
-    Writing a client library in Go :: Posts 
-    
-</title>
-
-
-
-
-
-<link rel="stylesheet" href="https://www.jacoelho.com/main.min.83e433d285f1a569e54dc9705b02c8c0c8fd81be6c274aa542a3321903fa24b5.css" integrity="sha256-g&#43;Qz0oXxpWnlTclwWwLIwMj9gb5sJ0qlQqMyGQP6JLU=" crossorigin="anonymous">
-
-
-
-
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/favicon-16x16.png">
-    <link rel="mask-icon" href="https://www.jacoelho.com/safari-pinned-tab.svg" color="#252627">
-    <link rel="shortcut icon" href="https://www.jacoelho.com/favicon.ico">
-    <meta name="msapplication-TileColor" content="#252627">
-    <meta name="theme-color" content="#252627">
-
-
-
-  <meta itemprop="name" content="Writing a client library in Go">
-  <meta itemprop="description" content="There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="map[name:Jose Coelho]"><meta name=description content="Ramblings about software engineering"><meta name=keywords content="go,golang,kubernetes,ansible,chef,kafka,docker,containers"><link rel=canonical href=https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/><title>Writing a client library in Go :: Posts</title><link rel=stylesheet href=https://www.jacoelho.com/css/main.min.119ac2c18046a4ef9e7705b9cd71e1fc8cbe5a5139a1234cfdae109d1baedb3c.css integrity="sha256-EZrCwYBGpO+edwW5zXHh/Iy+WlE5oSNM/a4QnRuu2zw=" crossorigin=anonymous><meta itemprop=name content="Writing a client library in Go"><meta itemprop=description content="There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
 Without any specific order of importance, these are my thoughts on the subject.
-Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse).">
-  <meta itemprop="datePublished" content="2020-09-25T12:00:00+00:00">
-  <meta itemprop="dateModified" content="2020-09-25T12:00:00+00:00">
-  <meta itemprop="wordCount" content="616">
-  <meta itemprop="image" content="https://www.jacoelho.com/">
-  <meta itemprop="keywords" content="Go,Golang">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://www.jacoelho.com/">
-  <meta name="twitter:title" content="Writing a client library in Go">
-  <meta name="twitter:description" content="There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
+Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse)."><meta itemprop=datePublished content="2020-09-25T12:00:00+00:00"><meta itemprop=dateModified content="2020-09-25T12:00:00+00:00"><meta itemprop=wordCount content="616"><meta itemprop=keywords content="Go,Golang"><meta property="og:url" content="https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/"><meta property="og:site_name" content="Posts"><meta property="og:title" content="Writing a client library in Go"><meta property="og:description" content="There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
 Without any specific order of importance, these are my thoughts on the subject.
-Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse).">
-
-
-
-<meta property="og:url" content="https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/">
-  <meta property="og:site_name" content="Posts">
-  <meta property="og:title" content="Writing a client library in Go">
-  <meta property="og:description" content="There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
+Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse)."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="blog"><meta property="article:published_time" content="2020-09-25T12:00:00+00:00"><meta property="article:modified_time" content="2020-09-25T12:00:00+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Writing a client library in Go"><meta name=twitter:description content="There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.
 Without any specific order of importance, these are my thoughts on the subject.
-Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse).">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="blog">
-    <meta property="article:published_time" content="2020-09-25T12:00:00+00:00">
-    <meta property="article:modified_time" content="2020-09-25T12:00:00+00:00">
-    <meta property="og:image" content="https://www.jacoelho.com/">
-
-
-
-
-<meta property="article:section" content="go" />
-
-<meta property="article:section" content="golang" />
-
-
-
-<meta property="article:published_time" content="2020-09-25 12:00:00 &#43;0000 UTC" />
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-    (function (c, l, a, r, i, t, y) {
-        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script", "3wjiv20hsj");
-</script>
-    </head>
-
-    <body class="dark-theme">
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__text">Jose Coelho</span>
-            <span class="logo__cursor" style=
-                  "visibility:hidden;
-                   
-                   ">
-            </span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-            
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-            
-
-            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
-  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
-  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
-</svg>
-</span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-<main class="post">
-
-    <div class="post-info">
-        
-        </p>
-    </div>
-
-    <article>
-        <h2 class="post-title"><a href="https://www.jacoelho.com/blog/2020/09/writing-a-client-library-in-go/">Writing a client library in Go</a></h2>
-
-        
-
-        
-
-        <div class="post-content">
-            <p>There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.</p>
-<p>Without any specific order of importance, these are my thoughts on the subject.</p>
-<h2 id="usage-and-examples">Usage and Examples</h2>
-<p>Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse).</p>
-<p>Specific to Go, reviewing <a href="https://godoc.org/golang.org/x/tools/cmd/godoc">godoc</a> and <a href="https://blog.golang.org/examples">runnable examples</a>, if applicable.</p>
-<p>Should the library have limitations or missing features, the README is the perfect place to leave that information.</p>
-<h2 id="configuration">Configuration</h2>
-<p>When evaluating a client, mainly API clients, another factor to take into consideration is how difficult it is to customize the client. Is it possible to set up different endpoints or for example http.Client. Can I use this library in tests easily if needed?</p>
-<p>Is there a client builder or functional options in place? As long as there aren&rsquo;t multiple overlapping ways of creating a client:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// builder style</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">NewClient</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// functional options style</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">client</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">unicorn</span>.<span style="color:#a6e22e">WithHttpClient</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">DefaultClient</span>))
-</span></span></code></pre></div><h2 id="avoid-being-opinionated">Avoid being opinionated</h2>
-<p>Everyone has an opinion but when writing a library, avoid making decisions on behalf of your users. While you may have an idea of which http.Client works better, or which logger package gets it right, you don&rsquo;t know if your user has different views or constraints. Not having opinions applies to any package or configuration: http.Client, logging, telemetry, metrics, etc.</p>
-<p>Another benefit of not making decisions on behalf of the users is reducing the number of dependencies and potentially security or maintainability issues.</p>
-<h2 id="contextcontext">context.Context</h2>
-<p>In Go, <code>context.Context</code> is used for cancellation and storing values during the lifetime of a request. Ensuring functions accept a context makes them easier to assist in propagation if required:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Fetch</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#75715e">/* args */</span>) {}
-</span></span></code></pre></div><p>As stated in the <a href="https://golang.org/pkg/context/">context package</a>:</p>
-<blockquote>
-<p>Do not store Contexts inside a struct type; instead, pass a Context explicitly to each function that needs it</p></blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Fetch</span>(<span style="color:#a6e22e">p</span> <span style="color:#a6e22e">Params</span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ctx</span>: <span style="color:#a6e22e">ctx</span>,
-</span></span><span style="display:flex;"><span>	 <span style="color:#75715e">/* other args */</span>
-</span></span><span style="display:flex;"><span>}) {}
-</span></span></code></pre></div><h2 id="provide-useful-errors">Provide useful errors</h2>
-<p>When errors happen, ensure all the relevant information is available, clear and useful. That can be a status code, an error message or any other exposed data.</p>
-<p>Having a custom error with all the information readily accessible can unblock features such as circuit breakers, retries or just faster troubleshooting.</p>
-<p>For example <a href="https://github.com/google/go-github">go-github</a> defines the following error structure:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// https://github.com/google/go-github/blob/master/github/github.go#L653</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ErrorResponse</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Response</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Response</span> <span style="color:#75715e">// HTTP response that caused this error</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;message&#34;`</span> <span style="color:#75715e">// error message</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Errors</span> []<span style="color:#a6e22e">Error</span> <span style="color:#e6db74">`json:&#34;errors&#34;`</span> <span style="color:#75715e">// more detail on individual errors</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Block is only populated on certain types of errors such as code 451.</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// See https://developer.github.com/changes/2016-03-17-the-451-status-code-is-now-supported/</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// for more information.</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Block</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">Reason</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;reason,omitempty&#34;`</span>
-</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">CreatedAt</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Timestamp</span> <span style="color:#e6db74">`json:&#34;created_at,omitempty&#34;`</span>
-</span></span><span style="display:flex;"><span>		} <span style="color:#e6db74">`json:&#34;block,omitempty&#34;`</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Most errors will also include a documentation_url field pointing</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// to some content that might help you resolve the error, see</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// https://docs.github.com/en/rest/reference/#client-errors</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">DocumentationURL</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;documentation_url,omitempty&#34;`</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Not exposing important information or forcing the use of string matching on errors should be avoided:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Please don&#39;t force users to do this</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Contains</span>(<span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>(), <span style="color:#e6db74">&#34;something bad&#34;</span>) {
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="license">License</h2>
-<p>Be clear about the license in place. Some companies have limitations on which licenses are acceptable.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>Taking into consideration the points above, while sometimes there are constraints when writing a library,<br>
-attempting to follow the topics I mentioned is a good rule of thumb to writing an idiomatic library.</p>
-<p>Examples that tick most boxes are:</p>
-<ul>
-<li><a href="https://github.com/digitalocean/godo">https://github.com/digitalocean/godo</a></li>
-<li><a href="https://github.com/google/go-github">https://github.com/google/go-github</a></li>
-</ul>
-
-        </div>
-    </article>
-
-    <hr />
-
-    <div class="post-info">
-        
-        
-    <p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-
-        <span class="tag"><a href="https://www.jacoelho.com/categories/go/">go</a></span>
-        <span class="tag"><a href="https://www.jacoelho.com/categories/golang/">golang</a></span>
-        
-    </p>
-
-    </div>
-</main>
-
-            </div>
-
-            
-                <footer class="footer">
-    
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>&copy; 2025</span>
-            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
-            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
-            <span><a href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
-            
-        </div>
-    </div>
-    
-    
-</footer>
-            
-        </div>
-
-        
-
-
-
-
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.908900dc2e07f8e32ffd6d1405df0d337b6aecaff233e8551b43a679393ed2b033974b6d1151b2d97ca25722a7c880f508bb953081bd4606f742ff4c7de5029e.js" integrity="sha512-kIkA3C4H&#43;OMv/W0UBd8NM3tq7K/yM&#43;hVG0OmeTk&#43;0rAzl0ttEVGy2XyiVyKnyID1CLuVMIG9Rgb3Qv9MfeUCng=="></script>
-
-
-
-    </body>
-</html>
+Usage and Examples Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse)."><meta property="article:published_time" content="2020-09-25 12:00:00 +0000 UTC"><meta property="article:section" content="go"><meta property="article:section" content="golang"></head><body><header class=header><div class=container><div class=header-inner><a href=https://www.jacoelho.com/ class=logo>Jose Coelho</a><nav class=nav><ul class=menu><li class=menu-item><a href=https://www.jacoelho.com/about/>About</a></li></ul><button class=menu-trigger aria-label="Toggle menu" aria-expanded=false>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<button class=theme-toggle aria-label="Toggle theme">
+<svg class="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+<svg class="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+</button>
+<a href=https://www.jacoelho.com/index.xml class=rss-link target=_blank rel=noopener aria-label=RSS><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></nav></div></div></header><div class=container><div class=content><main class=post><article><header class=post-header><h1 class=post-title>Writing a client library in Go</h1><div class=post-meta><span class=post-meta-item><time datetime=2020-09-25>September 25, 2020</time></span></div></header><div class=post-content><p>There are multiple ways of writing client libraries in Go. In this post, I will explore what I look for in a library depending if I am developing or checking if it is suitable for a project.</p><p>Without any specific order of importance, these are my thoughts on the subject.</p><h2 id=usage-and-examples>Usage and Examples</h2><p>Like a book can be judged by its cover, a project can be judged by its README. Therefore providing examples helps getting an idea of how the library works: if it will fit a project or how good the developer usability is (this includes function naming, usage difficulty or how easy it is to misuse).</p><p>Specific to Go, reviewing <a href=https://godoc.org/golang.org/x/tools/cmd/godoc>godoc</a> and <a href=https://blog.golang.org/examples>runnable examples</a>, if applicable.</p><p>Should the library have limitations or missing features, the README is the perfect place to leave that information.</p><h2 id=configuration>Configuration</h2><p>When evaluating a client, mainly API clients, another factor to take into consideration is how difficult it is to customize the client. Is it possible to set up different endpoints or for example http.Client. Can I use this library in tests easily if needed?</p><p>Is there a client builder or functional options in place? As long as there aren&rsquo;t multiple overlapping ways of creating a client:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// builder style</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nx>client</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>unicorn</span><span class=p>.</span><span class=nf>NewClient</span><span class=p>(</span><span class=nx>http</span><span class=p>.</span><span class=nx>DefaultClient</span><span class=p>)</span><span class=w>
+</span></span></span></code></pre></div><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// functional options style</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nx>client</span><span class=w> </span><span class=o>:=</span><span class=w> </span><span class=nx>unicorn</span><span class=p>.</span><span class=nf>New</span><span class=p>(</span><span class=nx>unicorn</span><span class=p>.</span><span class=nf>WithHttpClient</span><span class=p>(</span><span class=nx>http</span><span class=p>.</span><span class=nx>DefaultClient</span><span class=p>))</span><span class=w>
+</span></span></span></code></pre></div><h2 id=avoid-being-opinionated>Avoid being opinionated</h2><p>Everyone has an opinion but when writing a library, avoid making decisions on behalf of your users. While you may have an idea of which http.Client works better, or which logger package gets it right, you don&rsquo;t know if your user has different views or constraints. Not having opinions applies to any package or configuration: http.Client, logging, telemetry, metrics, etc.</p><p>Another benefit of not making decisions on behalf of the users is reducing the number of dependencies and potentially security or maintainability issues.</p><h2 id=contextcontext>context.Context</h2><p>In Go, <code>context.Context</code> is used for cancellation and storing values during the lifetime of a request. Ensuring functions accept a context makes them easier to assist in propagation if required:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span><span class=w> </span><span class=nf>Fetch</span><span class=p>(</span><span class=nx>ctx</span><span class=w> </span><span class=nx>context</span><span class=p>.</span><span class=nx>Context</span><span class=p>,</span><span class=w> </span><span class=cm>/* args */</span><span class=p>)</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span></span></span></code></pre></div><p>As stated in the <a href=https://golang.org/pkg/context/>context package</a>:</p><blockquote><p>Do not store Contexts inside a struct type; instead, pass a Context explicitly to each function that needs it</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kd>func</span><span class=w> </span><span class=nf>Fetch</span><span class=p>(</span><span class=nx>p</span><span class=w> </span><span class=nx>Params</span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	</span><span class=nx>ctx</span><span class=p>:</span><span class=w> </span><span class=nx>ctx</span><span class=p>,</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>	 </span><span class=cm>/* other args */</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>})</span><span class=w> </span><span class=p>{}</span><span class=w>
+</span></span></span></code></pre></div><h2 id=provide-useful-errors>Provide useful errors</h2><p>When errors happen, ensure all the relevant information is available, clear and useful. That can be a status code, an error message or any other exposed data.</p><p>Having a custom error with all the information readily accessible can unblock features such as circuit breakers, retries or just faster troubleshooting.</p><p>For example <a href=https://github.com/google/go-github>go-github</a> defines the following error structure:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// https://github.com/google/go-github/blob/master/github/github.go#L653</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=kd>type</span><span class=w> </span><span class=nx>ErrorResponse</span><span class=w> </span><span class=kd>struct</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nx>Response</span><span class=w> </span><span class=o>*</span><span class=nx>http</span><span class=p>.</span><span class=nx>Response</span><span class=w> </span><span class=c1>// HTTP response that caused this error</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nx>Message</span><span class=w> </span><span class=kt>string</span><span class=w> </span><span class=s>`json:&#34;message&#34;`</span><span class=w> </span><span class=c1>// error message</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nx>Errors</span><span class=w> </span><span class=p>[]</span><span class=nx>Error</span><span class=w> </span><span class=s>`json:&#34;errors&#34;`</span><span class=w> </span><span class=c1>// more detail on individual errors</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=c1>// Block is only populated on certain types of errors such as code 451.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=c1>// See https://developer.github.com/changes/2016-03-17-the-451-status-code-is-now-supported/</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=c1>// for more information.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nx>Block</span><span class=w> </span><span class=o>*</span><span class=kd>struct</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>				</span><span class=nx>Reason</span><span class=w> </span><span class=kt>string</span><span class=w> </span><span class=s>`json:&#34;reason,omitempty&#34;`</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>				</span><span class=nx>CreatedAt</span><span class=w> </span><span class=o>*</span><span class=nx>Timestamp</span><span class=w> </span><span class=s>`json:&#34;created_at,omitempty&#34;`</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=p>}</span><span class=w> </span><span class=s>`json:&#34;block,omitempty&#34;`</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=c1>// Most errors will also include a documentation_url field pointing</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=c1>// to some content that might help you resolve the error, see</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=c1>// https://docs.github.com/en/rest/reference/#client-errors</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>		</span><span class=nx>DocumentationURL</span><span class=w> </span><span class=kt>string</span><span class=w> </span><span class=s>`json:&#34;documentation_url,omitempty&#34;`</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></div><p>Not exposing important information or forcing the use of string matching on errors should be avoided:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// Please don&#39;t force users to do this</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=k>if</span><span class=w> </span><span class=nx>strings</span><span class=p>.</span><span class=nf>Contains</span><span class=p>(</span><span class=nx>err</span><span class=p>.</span><span class=nf>Error</span><span class=p>(),</span><span class=w> </span><span class=s>&#34;something bad&#34;</span><span class=p>)</span><span class=w> </span><span class=p>{</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=o>...</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=p>}</span><span class=w>
+</span></span></span></code></pre></div><h2 id=license>License</h2><p>Be clear about the license in place. Some companies have limitations on which licenses are acceptable.</p><h2 id=conclusion>Conclusion</h2><p>Taking into consideration the points above, while sometimes there are constraints when writing a library,<br>attempting to follow the topics I mentioned is a good rule of thumb to writing an idiomatic library.</p><p>Examples that tick most boxes are:</p><ul><li><a href=https://github.com/digitalocean/godo>https://github.com/digitalocean/godo</a></li><li><a href=https://github.com/google/go-github>https://github.com/google/go-github</a></li></ul></div><div class=post-categories><a href=https://www.jacoelho.com/categories/go class=category>go</a>
+<a href=https://www.jacoelho.com/categories/golang class=category>golang</a></div></article></main></div></div><footer class=footer><div class=container><div class=footer-content><span>&copy; 2025 Jose Coelho</span></div></div></footer><script src=https://www.jacoelho.com/js/bundle.min.2868f841c78e77d7b473d034a52bb46f21b12eef84caba5767ed9a65576ecb3c.js integrity="sha256-KGj4QceOd9e0c9A0pSu0byGxLu+EyrpXZ+2aZVduyzw=" crossorigin=anonymous></script></body></html>

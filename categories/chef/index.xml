@@ -1,20 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Chef on Posts</title>
-    <link>https://www.jacoelho.com/categories/chef/</link>
-    <description>Recent content in Chef on Posts</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Wed, 13 Jul 2016 10:24:46 +0000</lastBuildDate>
-    <atom:link href="https://www.jacoelho.com/categories/chef/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Chef Custom Resources</title>
-      <link>https://www.jacoelho.com/blog/2016/07/chef-custom-resources/</link>
-      <pubDate>Wed, 13 Jul 2016 10:24:46 +0000</pubDate>
-      <guid>https://www.jacoelho.com/blog/2016/07/chef-custom-resources/</guid>
-      <description>&lt;p&gt;Lately I’ve been writing some &lt;em&gt;Chef&lt;/em&gt; code. One of the best things about &lt;em&gt;Chef&lt;/em&gt;&lt;br&gt;&#xA;is custom resources:&lt;br&gt;&#xA;&lt;a href=&#34;https://docs.chef.io/custom_resources.html&#34;&gt;https://docs.chef.io/custom_resources.html&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Let’s see an example on how to create a &lt;a href=&#34;https://kafka.apache.org/&#34;&gt;Kafka&lt;/a&gt; topic&lt;br&gt;&#xA;using &lt;em&gt;Chef&lt;/em&gt; and how to make it&lt;br&gt;&#xA;&lt;a href=&#34;https://en.wikipedia.org/wiki/Idempotence&#34;&gt;idempotent&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;Before writing any &lt;em&gt;Chef&lt;/em&gt; code it is important to understand how to manage a&lt;br&gt;&#xA;&lt;em&gt;topic&lt;/em&gt; (grouping of messages of a similar type).&lt;/p&gt;&#xA;&lt;p&gt;From the &lt;em&gt;Kafka&lt;/em&gt; install directory, first check if the &lt;em&gt;topic&lt;/em&gt; already exists:&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;bin/kafka-topics.sh&#xA;    --zookeeper localhost:2181 \&#xA;    --describe \&#xA;    --topic &amp;lt;name&amp;gt;&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If it doesn&amp;rsquo;t exist, create it:&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chef on Posts</title><link>https://www.jacoelho.com/categories/chef/</link><description>Recent content in Chef on Posts</description><generator>Hugo</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener"&gt;CC BY-NC 4.0&lt;/a&gt;</copyright><lastBuildDate>Wed, 13 Jul 2016 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/chef/index.xml" rel="self" type="application/rss+xml"/><item><title>Chef Custom Resources</title><link>https://www.jacoelho.com/blog/2016/07/chef-custom-resources/</link><pubDate>Wed, 13 Jul 2016 10:24:46 +0000</pubDate><guid>https://www.jacoelho.com/blog/2016/07/chef-custom-resources/</guid><description>&lt;p&gt;Lately I’ve been writing some &lt;em&gt;Chef&lt;/em&gt; code. One of the best things about &lt;em&gt;Chef&lt;/em&gt;&lt;br&gt;
+is custom resources:&lt;br&gt;
+&lt;a href="https://docs.chef.io/custom_resources.html"&gt;https://docs.chef.io/custom_resources.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Let’s see an example on how to create a &lt;a href="https://kafka.apache.org/"&gt;Kafka&lt;/a&gt; topic&lt;br&gt;
+using &lt;em&gt;Chef&lt;/em&gt; and how to make it&lt;br&gt;
+&lt;a href="https://en.wikipedia.org/wiki/Idempotence"&gt;idempotent&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Before writing any &lt;em&gt;Chef&lt;/em&gt; code it is important to understand how to manage a&lt;br&gt;
+&lt;em&gt;topic&lt;/em&gt; (grouping of messages of a similar type).&lt;/p&gt;
+&lt;p&gt;From the &lt;em&gt;Kafka&lt;/em&gt; install directory, first check if the &lt;em&gt;topic&lt;/em&gt; already exists:&lt;/p&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;bin/kafka-topics.sh
+ --zookeeper localhost:2181 \
+ --describe \
+ --topic &amp;lt;name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;If it doesn&amp;rsquo;t exist, create it:&lt;/p&gt;</description></item></channel></rss>

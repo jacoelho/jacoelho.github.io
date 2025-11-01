@@ -1,302 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author"
-    content="">
-<meta name="keywords"
-    content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
-<meta name="robots" content="noodp" />
-<meta name="theme-color" content="#252627" />
-<meta name="description" content="Notes on building software">
-<link rel="canonical" href="https://www.jacoelho.com/blog/2016/08/docker-configuration-files/" />
-
-
-<title>
-    
-    Docker: Configuration files :: Posts 
-    
-</title>
-
-
-
-
-
-<link rel="stylesheet" href="https://www.jacoelho.com/main.min.83e433d285f1a569e54dc9705b02c8c0c8fd81be6c274aa542a3321903fa24b5.css" integrity="sha256-g&#43;Qz0oXxpWnlTclwWwLIwMj9gb5sJ0qlQqMyGQP6JLU=" crossorigin="anonymous">
-
-
-
-
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/favicon-16x16.png">
-    <link rel="mask-icon" href="https://www.jacoelho.com/safari-pinned-tab.svg" color="#252627">
-    <link rel="shortcut icon" href="https://www.jacoelho.com/favicon.ico">
-    <meta name="msapplication-TileColor" content="#252627">
-    <meta name="theme-color" content="#252627">
-
-
-
-  <meta itemprop="name" content="Docker: Configuration files">
-  <meta itemprop="description" content="Things no one tells you about. One of Docker’s killer features is the environment
+<!doctype html><html lang=en><head><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="map[name:Jose Coelho]"><meta name=description content="Ramblings about software engineering"><meta name=keywords content="go,golang,kubernetes,ansible,chef,kafka,docker,containers"><link rel=canonical href=https://www.jacoelho.com/blog/2016/08/docker-configuration-files/><title>Docker: Configuration files :: Posts</title><link rel=stylesheet href=https://www.jacoelho.com/css/main.min.119ac2c18046a4ef9e7705b9cd71e1fc8cbe5a5139a1234cfdae109d1baedb3c.css integrity="sha256-EZrCwYBGpO+edwW5zXHh/Iy+WlE5oSNM/a4QnRuu2zw=" crossorigin=anonymous><meta itemprop=name content="Docker: Configuration files"><meta itemprop=description content="Things no one tells you about. One of Docker’s killer features is the environment
 parity, yet it feels like one little detail was left untold: how to handle
 configuration files.
 Unless you are using the same configuration between development, quality,
 production, etc. you will end up with different endpoints, API keys, secret
 tokens and feature switches for each environment.
 Available Options There are a couple of different ways to handle configuration in Docker. Below,
-you will find a non-exhaustive list.">
-  <meta itemprop="datePublished" content="2016-08-14T10:24:46+00:00">
-  <meta itemprop="dateModified" content="2016-08-14T10:24:46+00:00">
-  <meta itemprop="wordCount" content="484">
-  <meta itemprop="image" content="https://www.jacoelho.com/">
-  <meta itemprop="keywords" content="Docker">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://www.jacoelho.com/">
-  <meta name="twitter:title" content="Docker: Configuration files">
-  <meta name="twitter:description" content="Things no one tells you about. One of Docker’s killer features is the environment
+you will find a non-exhaustive list."><meta itemprop=datePublished content="2016-08-14T10:24:46+00:00"><meta itemprop=dateModified content="2016-08-14T10:24:46+00:00"><meta itemprop=wordCount content="484"><meta itemprop=keywords content="Docker"><meta property="og:url" content="https://www.jacoelho.com/blog/2016/08/docker-configuration-files/"><meta property="og:site_name" content="Posts"><meta property="og:title" content="Docker: Configuration files"><meta property="og:description" content="Things no one tells you about. One of Docker’s killer features is the environment
 parity, yet it feels like one little detail was left untold: how to handle
 configuration files.
 Unless you are using the same configuration between development, quality,
 production, etc. you will end up with different endpoints, API keys, secret
 tokens and feature switches for each environment.
 Available Options There are a couple of different ways to handle configuration in Docker. Below,
-you will find a non-exhaustive list.">
-
-
-
-<meta property="og:url" content="https://www.jacoelho.com/blog/2016/08/docker-configuration-files/">
-  <meta property="og:site_name" content="Posts">
-  <meta property="og:title" content="Docker: Configuration files">
-  <meta property="og:description" content="Things no one tells you about. One of Docker’s killer features is the environment
+you will find a non-exhaustive list."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="blog"><meta property="article:published_time" content="2016-08-14T10:24:46+00:00"><meta property="article:modified_time" content="2016-08-14T10:24:46+00:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="Docker: Configuration files"><meta name=twitter:description content="Things no one tells you about. One of Docker’s killer features is the environment
 parity, yet it feels like one little detail was left untold: how to handle
 configuration files.
 Unless you are using the same configuration between development, quality,
 production, etc. you will end up with different endpoints, API keys, secret
 tokens and feature switches for each environment.
 Available Options There are a couple of different ways to handle configuration in Docker. Below,
-you will find a non-exhaustive list.">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="blog">
-    <meta property="article:published_time" content="2016-08-14T10:24:46+00:00">
-    <meta property="article:modified_time" content="2016-08-14T10:24:46+00:00">
-    <meta property="og:image" content="https://www.jacoelho.com/">
-
-
-
-
-<meta property="article:section" content="docker" />
-
-
-
-<meta property="article:published_time" content="2016-08-14 10:24:46 &#43;0000 UTC" />
-
-
-
-
-
-
-
-
-<script type="text/javascript">
-    (function (c, l, a, r, i, t, y) {
-        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script", "3wjiv20hsj");
-</script>
-    </head>
-
-    <body class="dark-theme">
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__text">Jose Coelho</span>
-            <span class="logo__cursor" style=
-                  "visibility:hidden;
-                   
-                   ">
-            </span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-            
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-            
-
-            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
-  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
-  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
-</svg>
-</span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-<main class="post">
-
-    <div class="post-info">
-        
-        </p>
-    </div>
-
-    <article>
-        <h2 class="post-title"><a href="https://www.jacoelho.com/blog/2016/08/docker-configuration-files/">Docker: Configuration files</a></h2>
-
-        
-
-        
-
-        <div class="post-content">
-            <h2 id="things-no-one-tells-you-about">Things no one tells you about.</h2>
-<p>One of <a href="https://www.docker.com/">Docker</a>’s killer features is the environment<br>
-parity, yet it feels like one little detail was left untold: <strong>how to handle<br>
-configuration files</strong>.</p>
-<p>Unless you are using the same configuration between <em>development</em>, <em>quality</em>,<br>
-<em>production</em>, <em>etc</em>. you will end up with different endpoints, API keys, secret<br>
-tokens and feature switches for each environment.</p>
-<h3 id="available-options">Available Options</h3>
-<p>There are a couple of different ways to handle configuration in <em>Docker.</em> Below,<br>
-you will find a non-exhaustive list.</p>
-<h4 id="bake-into-the-image">Bake into the image</h4>
-<p>The simplest way is to ignore all the complexity and bake the configuration<br>
-files inside the container, by adding explicitly in the<br>
-<a href="https://docs.docker.com/engine/reference/builder/">Dockerfile</a>:</p>
-<pre tabindex="0"><code>COPY secrets.yml /var/www/config/secrets.yml
-</code></pre><p>This approach could be compared to committing secrets to a <a href="https://avicoder.me/2016/07/22/Twitter-Vine-Source-code-dump/">public<br>
-repository.</a></p>
-<h4 id="environment-variables">Environment Variables</h4>
-<p>Following <a href="http://12factor.net/">twelve-factor methodology</a>, <a href="http://12factor.net/config">point<br>
-3</a>, configs should be set using environment<br>
-variables:</p>
-<pre tabindex="0"><code>$ docker run --env secret=foo --env othersecret=bar myapp
-</code></pre><p>This approach lacks expressiveness and it’s quite easy to leak into logs. If you<br>
-commit the running container, it’s the same as scenario 1. Several articles<br>
-(<a href="http://movingfast.io/articles/environment-variables-considered-harmful/">article<br>
-1</a>,<br>
-<a href="https://support.cloud.engineyard.com/hc/en-us/articles/205407508-Environment-Variables-and-Why-You-Shouldn-t-Use-Them">article<br>
-2</a>)<br>
-have been written on why this is a bad idea for storing secrets.</p>
-<h4 id="bind-mount">Bind mount</h4>
-<p>Mounting a host directory/file directly in the container:</p>
-<pre tabindex="0"><code>$ docker run -v /config/config.yml:/var/www/config.yml:ro myapp
-</code></pre><p>The configuration files are mounted from the host server, probably copied using<br>
-a configuration management tool like <a href="https://www.chef.io/chef/">Chef</a>* *or<br>
-<a href="https://puppetlabs.com/">Puppet</a>.</p>
-<p>This approach is the most similar to <em>pre-docker</em> days, issues like rollback<br>
-configuration and keeping the configuration updated still persist.</p>
-<p>With this approach the docker deployment process (besides running the<br>
-containers) should ensure that the right configuration is available and updated.</p>
-<p><a href="http://kubernetes.io/">Kubernetes </a>uses a similar<br>
-<a href="http://kubernetes.io/docs/user-guide/secrets/">solution</a>.</p>
-<p>One possible variation is using tools like<br>
-<a href="https://github.com/Shopify/ejson">ejson</a> or<br>
-<a href="https://github.com/StackExchange/blackbox">blackbox</a>. Using this type of tools,<br>
-configuration files are added along with the code. During container boot, by<br>
-using a bind mounted secret key, configuration files are decrypted.</p>
-<h4 id="data-volumes">Data Volumes</h4>
-<p>Instead of mounting a host file directly, another solution is loading the<br>
-configuration from another container:</p>
-<pre tabindex="0"><code>$ docker run --volumes-from app-conf myapp
-</code></pre><p>This approach is usually applicable with a entry-point script that copies the<br>
-configurations into the right location before starting the application. This<br>
-solution is the simplest in a rollback situation, although it is basically the<br>
-same as scenario 1.</p>
-<h4 id="key-value-stores">Key-Value Stores</h4>
-<p>Using key-value stores is possible to have a <a href="https://en.wikipedia.org/wiki/Single_version_of_the_truth">single source of<br>
-truth</a>. A couple of<br>
-solutions are available:</p>
-<ul>
-<li><a href="https://vaultproject.io/">Vault</a></li>
-<li><a href="https://square.github.io/keywhiz/">Keywhiz</a></li>
-<li><a href="https://github.com/coreos/etcd">Etcd </a> <em>with</em> <a href="http://xordataexchange.github.io/crypt/">Crypt</a></li>
-<li><a href="https://zookeeper.apache.org/">Zookeeper</a></li>
-</ul>
-<p>The vault solution is the most interesting one. The simplest way is using *Vault<br>
-*with <a href="https://github.com/hashicorp/consul-template">consul-template</a> and the<br>
-most advanced scenarios will need application rewrite to use <a href="https://www.vaultproject.io/docs/http/libraries.html">native<br>
-libraries</a> (and to a<br>
-certain degree coupling).</p>
-<p>However with this approach developers will need to run a *Vault *container and<br>
-some bootstrap process to load all the needed configurations.</p>
-<h4 id="conclusion">Conclusion</h4>
-<p>The most interesting approaches from the operational point of view are<br>
-relatively complex for developer’s everyday use and end up sacrificing<br>
-environment parity.</p>
-<p>How are you shipping configurations, any different approach?</p>
-
-        </div>
-    </article>
-
-    <hr />
-
-    <div class="post-info">
-        
-        
-    <p>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-
-        <span class="tag"><a href="https://www.jacoelho.com/categories/docker/">docker</a></span>
-        
-    </p>
-
-    </div>
-</main>
-
-            </div>
-
-            
-                <footer class="footer">
-    
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>&copy; 2025</span>
-            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
-            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
-            <span><a href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
-            
-        </div>
-    </div>
-    
-    
-</footer>
-            
-        </div>
-
-        
-
-
-
-
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.908900dc2e07f8e32ffd6d1405df0d337b6aecaff233e8551b43a679393ed2b033974b6d1151b2d97ca25722a7c880f508bb953081bd4606f742ff4c7de5029e.js" integrity="sha512-kIkA3C4H&#43;OMv/W0UBd8NM3tq7K/yM&#43;hVG0OmeTk&#43;0rAzl0ttEVGy2XyiVyKnyID1CLuVMIG9Rgb3Qv9MfeUCng=="></script>
-
-
-
-    </body>
-</html>
+you will find a non-exhaustive list."><meta property="article:published_time" content="2016-08-14 10:24:46 +0000 UTC"><meta property="article:section" content="docker"></head><body><header class=header><div class=container><div class=header-inner><a href=https://www.jacoelho.com/ class=logo>Jose Coelho</a><nav class=nav><ul class=menu><li class=menu-item><a href=https://www.jacoelho.com/about/>About</a></li></ul><button class=menu-trigger aria-label="Toggle menu" aria-expanded=false>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<button class=theme-toggle aria-label="Toggle theme">
+<svg class="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+<svg class="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+</button>
+<a href=https://www.jacoelho.com/index.xml class=rss-link target=_blank rel=noopener aria-label=RSS><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></nav></div></div></header><div class=container><div class=content><main class=post><article><header class=post-header><h1 class=post-title>Docker: Configuration files</h1><div class=post-meta><span class=post-meta-item><time datetime=2016-08-14>August 14, 2016</time></span></div></header><div class=post-content><h2 id=things-no-one-tells-you-about>Things no one tells you about.</h2><p>One of <a href=https://www.docker.com/>Docker</a>’s killer features is the environment<br>parity, yet it feels like one little detail was left untold: <strong>how to handle<br>configuration files</strong>.</p><p>Unless you are using the same configuration between <em>development</em>, <em>quality</em>,<br><em>production</em>, <em>etc</em>. you will end up with different endpoints, API keys, secret<br>tokens and feature switches for each environment.</p><h3 id=available-options>Available Options</h3><p>There are a couple of different ways to handle configuration in <em>Docker.</em> Below,<br>you will find a non-exhaustive list.</p><h4 id=bake-into-the-image>Bake into the image</h4><p>The simplest way is to ignore all the complexity and bake the configuration<br>files inside the container, by adding explicitly in the<br><a href=https://docs.docker.com/engine/reference/builder/>Dockerfile</a>:</p><pre tabindex=0><code>COPY secrets.yml /var/www/config/secrets.yml
+</code></pre><p>This approach could be compared to committing secrets to a <a href=https://avicoder.me/2016/07/22/Twitter-Vine-Source-code-dump/>public<br>repository.</a></p><h4 id=environment-variables>Environment Variables</h4><p>Following <a href=http://12factor.net/>twelve-factor methodology</a>, <a href=http://12factor.net/config>point<br>3</a>, configs should be set using environment<br>variables:</p><pre tabindex=0><code>$ docker run --env secret=foo --env othersecret=bar myapp
+</code></pre><p>This approach lacks expressiveness and it’s quite easy to leak into logs. If you<br>commit the running container, it’s the same as scenario 1. Several articles<br>(<a href=http://movingfast.io/articles/environment-variables-considered-harmful/>article<br>1</a>,<br><a href=https://support.cloud.engineyard.com/hc/en-us/articles/205407508-Environment-Variables-and-Why-You-Shouldn-t-Use-Them>article<br>2</a>)<br>have been written on why this is a bad idea for storing secrets.</p><h4 id=bind-mount>Bind mount</h4><p>Mounting a host directory/file directly in the container:</p><pre tabindex=0><code>$ docker run -v /config/config.yml:/var/www/config.yml:ro myapp
+</code></pre><p>The configuration files are mounted from the host server, probably copied using<br>a configuration management tool like <a href=https://www.chef.io/chef/>Chef</a>* *or<br><a href=https://puppetlabs.com/>Puppet</a>.</p><p>This approach is the most similar to <em>pre-docker</em> days, issues like rollback<br>configuration and keeping the configuration updated still persist.</p><p>With this approach the docker deployment process (besides running the<br>containers) should ensure that the right configuration is available and updated.</p><p><a href=http://kubernetes.io/>Kubernetes </a>uses a similar<br><a href=http://kubernetes.io/docs/user-guide/secrets/>solution</a>.</p><p>One possible variation is using tools like<br><a href=https://github.com/Shopify/ejson>ejson</a> or<br><a href=https://github.com/StackExchange/blackbox>blackbox</a>. Using this type of tools,<br>configuration files are added along with the code. During container boot, by<br>using a bind mounted secret key, configuration files are decrypted.</p><h4 id=data-volumes>Data Volumes</h4><p>Instead of mounting a host file directly, another solution is loading the<br>configuration from another container:</p><pre tabindex=0><code>$ docker run --volumes-from app-conf myapp
+</code></pre><p>This approach is usually applicable with a entry-point script that copies the<br>configurations into the right location before starting the application. This<br>solution is the simplest in a rollback situation, although it is basically the<br>same as scenario 1.</p><h4 id=key-value-stores>Key-Value Stores</h4><p>Using key-value stores is possible to have a <a href=https://en.wikipedia.org/wiki/Single_version_of_the_truth>single source of<br>truth</a>. A couple of<br>solutions are available:</p><ul><li><a href=https://vaultproject.io/>Vault</a></li><li><a href=https://square.github.io/keywhiz/>Keywhiz</a></li><li><a href=https://github.com/coreos/etcd>Etcd </a><em>with</em> <a href=http://xordataexchange.github.io/crypt/>Crypt</a></li><li><a href=https://zookeeper.apache.org/>Zookeeper</a></li></ul><p>The vault solution is the most interesting one. The simplest way is using *Vault<br>*with <a href=https://github.com/hashicorp/consul-template>consul-template</a> and the<br>most advanced scenarios will need application rewrite to use <a href=https://www.vaultproject.io/docs/http/libraries.html>native<br>libraries</a> (and to a<br>certain degree coupling).</p><p>However with this approach developers will need to run a *Vault *container and<br>some bootstrap process to load all the needed configurations.</p><h4 id=conclusion>Conclusion</h4><p>The most interesting approaches from the operational point of view are<br>relatively complex for developer’s everyday use and end up sacrificing<br>environment parity.</p><p>How are you shipping configurations, any different approach?</p></div><div class=post-categories><a href=https://www.jacoelho.com/categories/docker class=category>docker</a></div></article></main></div></div><footer class=footer><div class=container><div class=footer-content><span>&copy; 2025 Jose Coelho</span></div></div></footer><script src=https://www.jacoelho.com/js/bundle.min.2868f841c78e77d7b473d034a52bb46f21b12eef84caba5767ed9a65576ecb3c.js integrity="sha256-KGj4QceOd9e0c9A0pSu0byGxLu+EyrpXZ+2aZVduyzw=" crossorigin=anonymous></script></body></html>

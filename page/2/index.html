@@ -1,316 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-	<meta name="generator" content="Hugo 0.145.0">
-        <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author"
-    content="">
-<meta name="keywords"
-    content="go, golang, kubernetes, ansible, chef, kafka, docker, containers" />
-<meta name="robots" content="noodp" />
-<meta name="theme-color" content="#252627" />
-<meta name="description" content="Notes on building software">
-<link rel="canonical" href="https://www.jacoelho.com/" />
-
-
-<title>
-    
-    Posts 
-    
-</title>
-
-
-
-
-
-<link rel="stylesheet" href="https://www.jacoelho.com/main.min.83e433d285f1a569e54dc9705b02c8c0c8fd81be6c274aa542a3321903fa24b5.css" integrity="sha256-g&#43;Qz0oXxpWnlTclwWwLIwMj9gb5sJ0qlQqMyGQP6JLU=" crossorigin="anonymous">
-
-
-
-
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="https://www.jacoelho.com/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://www.jacoelho.com/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://www.jacoelho.com/favicon-16x16.png">
-    <link rel="mask-icon" href="https://www.jacoelho.com/safari-pinned-tab.svg" color="#252627">
-    <link rel="shortcut icon" href="https://www.jacoelho.com/favicon.ico">
-    <meta name="msapplication-TileColor" content="#252627">
-    <meta name="theme-color" content="#252627">
-
-
-
-  <meta itemprop="name" content="Posts">
-  <meta itemprop="description" content="Ramblings about software engineering">
-  <meta itemprop="datePublished" content="2025-05-11T10:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-05-11T10:00:00+00:00">
-  <meta itemprop="image" content="https://www.jacoelho.com/">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://www.jacoelho.com/">
-  <meta name="twitter:title" content="Posts">
-  <meta name="twitter:description" content="Ramblings about software engineering">
-
-
-
-<meta property="og:url" content="https://www.jacoelho.com/">
-  <meta property="og:site_name" content="Posts">
-  <meta property="og:title" content="Posts">
-  <meta property="og:description" content="Ramblings about software engineering">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="website">
-    <meta property="og:image" content="https://www.jacoelho.com/">
-
-
-
-
-
-
-
-
-
-<link rel="alternate" type="application/rss+xml" href="https://www.jacoelho.com/index.xml" title="Posts" />
-
-
-
-
-
-<script type="text/javascript">
-    (function (c, l, a, r, i, t, y) {
-        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
-        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-    })(window, document, "clarity", "script", "3wjiv20hsj");
-</script>
-    </head>
-
-    <body class="dark-theme">
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="https://www.jacoelho.com/" style="text-decoration: none;">
-    <div class="logo">
-        
-            <span class="logo__text">Jose Coelho</span>
-            <span class="logo__cursor" style=
-                  "visibility:hidden;
-                   
-                   ">
-            </span>
-        
-    </div>
-</a>
-
-
-        <span class="header__right">
-            
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="https://www.jacoelho.com/about/">About</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-            
-
-            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
-  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
-  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
-</svg>
-</span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-
-
-
-<main class="posts">
-    <h1>Posts</h1>
-
-    
-
-    
-    <div class="posts-group">
-        <div class="post-year">2016</div>
-
-        <ul class="posts-list">
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2016/11/kafka-accelerating/">
-                    <span class="post-title">Kafka — Accelerating!</span>
-                    <span class="post-day">
-                        
-                        Nov 22
-                        
-                    </span>
-                </a>
-            </li>
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/">
-                    <span class="post-title">Stability Patterns — Circuit Breaker</span>
-                    <span class="post-day">
-                        
-                        Aug 20
-                        
-                    </span>
-                </a>
-            </li>
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/">
-                    <span class="post-title">Ansible vs PCI</span>
-                    <span class="post-day">
-                        
-                        Aug 16
-                        
-                    </span>
-                </a>
-            </li>
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2016/08/docker-configuration-files/">
-                    <span class="post-title">Docker: Configuration files</span>
-                    <span class="post-day">
-                        
-                        Aug 14
-                        
-                    </span>
-                </a>
-            </li>
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/">
-                    <span class="post-title">Collectd plugins made easy</span>
-                    <span class="post-day">
-                        
-                        Aug 9
-                        
-                    </span>
-                </a>
-            </li>
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2016/07/chef-custom-resources/">
-                    <span class="post-title">Chef Custom Resources</span>
-                    <span class="post-day">
-                        
-                        Jul 13
-                        
-                    </span>
-                </a>
-            </li>
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2016/02/ansible-in-aws-lambda/">
-                    <span class="post-title">Ansible in AWS Lambda</span>
-                    <span class="post-day">
-                        
-                        Feb 18
-                        
-                    </span>
-                </a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="posts-group">
-        <div class="post-year">2015</div>
-
-        <ul class="posts-list">
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2015/11/secure-redis/">
-                    <span class="post-title">Secure Redis</span>
-                    <span class="post-day">
-                        
-                        Nov 18
-                        
-                    </span>
-                </a>
-            </li>
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2015/06/docker-images/">
-                    <span class="post-title">Docker Images</span>
-                    <span class="post-day">
-                        
-                        Jun 1
-                        
-                    </span>
-                </a>
-            </li>
-            
-            <li class="post-item">
-                <a href="https://www.jacoelho.com/blog/2015/05/locally-developing-microservices/">
-                    <span class="post-title">Locally Developing Microservices</span>
-                    <span class="post-day">
-                        
-                        May 25
-                        
-                    </span>
-                </a>
-            </li>
-            
-        </ul>
-    </div>
-    
-    <div class="pagination">
-    <div class="pagination__buttons">
-        
-            <span class="button previous">
-                <a href="https://www.jacoelho.com/">
-                    <span class="button__icon">←</span>
-                    <span class="button__text">Newer posts</span>
-                </a>
-            </span>
-        
-        
-    </div>
-</div>
-
-</main>
-
-            </div>
-
-            
-                <footer class="footer">
-    
-    <div class="footer__inner">
-        <div class="footer__content">
-            <span>&copy; 2025</span>
-            <span><a href="https://www.jacoelho.com/">Jose Coelho</a></span>
-            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
-            <span><a href="https://www.jacoelho.com/blog/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
-            
-        </div>
-    </div>
-    
-    
-</footer>
-            
-        </div>
-
-        
-
-
-
-
-<script type="text/javascript" src="https://www.jacoelho.com/bundle.min.908900dc2e07f8e32ffd6d1405df0d337b6aecaff233e8551b43a679393ed2b033974b6d1151b2d97ca25722a7c880f508bb953081bd4606f742ff4c7de5029e.js" integrity="sha512-kIkA3C4H&#43;OMv/W0UBd8NM3tq7K/yM&#43;hVG0OmeTk&#43;0rAzl0ttEVGy2XyiVyKnyID1CLuVMIG9Rgb3Qv9MfeUCng=="></script>
-
-
-
-    </body>
-</html>
+<!doctype html><html lang=en><head><meta name=generator content="Hugo 0.151.0"><meta charset=UTF-8><meta http-equiv=X-UA-Compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=author content="map[name:Jose Coelho]"><meta name=description content="Ramblings about software engineering"><meta name=keywords content="go,golang,kubernetes,ansible,chef,kafka,docker,containers"><link rel=canonical href=https://www.jacoelho.com/><title>Posts</title><link rel=stylesheet href=https://www.jacoelho.com/css/main.min.119ac2c18046a4ef9e7705b9cd71e1fc8cbe5a5139a1234cfdae109d1baedb3c.css integrity="sha256-EZrCwYBGpO+edwW5zXHh/Iy+WlE5oSNM/a4QnRuu2zw=" crossorigin=anonymous><link rel=alternate type=application/rss+xml href=https://www.jacoelho.com/index.xml title=Posts><meta itemprop=name content="Posts"><meta itemprop=description content="Ramblings about software engineering"><meta itemprop=datePublished content="2025-05-11T10:00:00+00:00"><meta itemprop=dateModified content="2025-05-11T10:00:00+00:00"><meta property="og:url" content="https://www.jacoelho.com/"><meta property="og:site_name" content="Posts"><meta property="og:title" content="Posts"><meta property="og:description" content="Ramblings about software engineering"><meta property="og:locale" content="en_us"><meta property="og:type" content="website"><meta name=twitter:card content="summary"><meta name=twitter:title content="Posts"><meta name=twitter:description content="Ramblings about software engineering"></head><body><header class=header><div class=container><div class=header-inner><a href=https://www.jacoelho.com/ class=logo>Jose Coelho</a><nav class=nav><ul class=menu><li class=menu-item><a href=https://www.jacoelho.com/about/>About</a></li></ul><button class=menu-trigger aria-label="Toggle menu" aria-expanded=false>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
+<button class=theme-toggle aria-label="Toggle theme">
+<svg class="theme-icon-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+<svg class="theme-icon-dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+</button>
+<a href=https://www.jacoelho.com/index.xml class=rss-link target=_blank rel=noopener aria-label=RSS><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg></a></nav></div></div></header><div class=container><div class=content><main class=posts><div class=posts-group><h2 class=posts-group-title>2016</h2><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2016/11/kafka-accelerating/>Kafka — Accelerating!</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2016-11-22>November 22, 2016</time></span></div><p class=post-summary><p>Quick tips and insights on how to make <a href=https://kafka.apache.org/>Apache Kafka</a><br>work faster!</p><h3 id=hardware>Hardware</h3><ul><li>CPU doesn&rsquo;t matter that much.</li><li>Memory helps a lot (a lot) in performance.</li><li>SSDs are not required, since most operations are sequential read and writes.</li><li>If possible run in <a href=https://www.ibm.com/blogs/cloud-computing/2014/07/bare-metal-vs-virtual-servers-choice-right/>bare<br>metal</a>.</li></ul><h3 id=linux>Linux</h3><ul><li>Configure to <a href=http://www.makelinux.net/books/lkd2/ch15lev1sec4>maximize memory<br>usage</a> (tweak until you feel comfortable):</li></ul><pre tabindex=0><code>vm.dirty_background_ratio = 5
+vm.dirty_ratio = 80
+vm.swappiness = 1
+</code></pre><ul><li>Assuming you are using <em>ext4</em>, don’t waste space with reserved blocks:</li></ul><pre tabindex=0><code>tune2fs -m 0 -i 0 -c -1 /dev/device
+</code></pre><ul><li>Mount with <em>noatime</em>:</li></ul><pre tabindex=0><code>/dev/device       /mountpoint       ext4    defaults,noatime
+</code></pre><ul><li>Keep an eye on the number of free <em>inodes</em>:</li></ul><pre tabindex=0><code>tune2fs -l /dev/device | grep -i inode
+</code></pre><ul><li>Increase limits, for example, using <em>systemd</em>:</li></ul><pre tabindex=0><code>$ cat /etc/systemd/system/kafka.service.d/limits.conf
+[Service]
+LimitNOFILE=10000
+</code></pre><ul><li>Tweak your network settings, for example:</li></ul><pre tabindex=0><code>net.core.somaxconn = 1024
+net.core.rmem_max = 67108864
+net.core.wmem_max = 67108864
+net.ipv4.tcp_rmem = 4096 87380 33554432
+net.ipv4.tcp_wmem = 4096 65536 33554432
+net.ipv4.tcp_max_syn_backlog = 4096
+net.ipv4.tcp_syncookies = 1
+</code></pre><h3 id=kafka>Kafka</h3><ul><li><em>log.dirs</em> accepts a comma separated list of disks and will distribute<br>partitions across them, however:</li></ul><ol><li>Doesn’t rebalance, some disks could be full and others empty.</li><li>Doesn’t tolerate any disk failure, more info in<br><a href=https://cwiki.apache.org/confluence/display/KAFKA/KIP-18+-+JBOD+Support>KIP-18</a>.</li><li><em>Raid 10</em> is probably the best middle ground between performance and<br>reliability.</li></ol><ul><li>*num.io.threads, *number of I/O threads that the server uses for executing<br>requests. You should have at least as many threads as you have disks.</li><li><em>num.network.threads</em>, number of network threads that the server uses for<br>handling network requests. Increase based on number of producers/consumers and<br>replication factor.</li><li>Use Java 1.8 and <a href=http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html>G1 Garbage<br>collector</a>:</li></ul><pre tabindex=0><code>-XX:MetaspaceSize=96m
+-XX:+UseG1GC            # use G1
+-XX:MaxGCPauseMillis=20 # gc deadline
+-XX:InitiatingHeapOccupancyPercent=35
+-XX:G1HeapRegionSize=16M
+-XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80
+</code></pre><ul><li><em>KAFKA_HEAP_OPTS</em>, 5–8Gb heap should be enough for most deployments, file system<br>cache is way more important. <em>Linkedin</em> runs <a href=http://docs.confluent.io/1.0/kafka/deployment.html>5Gb heap in 32Gb RAM<br>servers</a>.</li><li><a href=https://github.com/tobert/pcstat>pcstat</a> can help understand how well the<br>system is caching:</li></ul><pre tabindex=0><code>./pcstat /kafka/data/*
+</code></pre><hr><p>Any comments or suggestions are welcome!</p></p></article><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2016/08/stability-patterns-circuit-breaker/>Stability Patterns — Circuit Breaker</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2016-08-20>August 20, 2016</time></span></div><p class=post-summary><blockquote><p>A circuit breaker is an automatically operated electrical switch designed to<br>protect an electrical circuit from damage caused by over-current or overload or<br>short circuit. Its basic function is to interrupt current flow after protective<br>relays detect a fault. A circuit breaker can be reset (either manually or<br>automatically) to resume normal operation.</p></blockquote><p>The software analogue as described in <a href=https://pragprog.com/book/mnee/release-it>Release<br>it!</a> chapter 5.2 can prevent repeated<br>calls to a failing service by detecting issues and providing a fallback, by<br>using this pattern it is possible to avoid cascading failures.</p></p></article><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2016/08/ansible-vs-pci/>Ansible vs PCI</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2016-08-16>August 16, 2016</time></span></div><p class=post-summary><p>If you need to comply with <a href=https://www.pcisecuritystandards.org/documents/PCIDSS_QRGv3_1.pdf>PCI<br>requirements</a><br>like:</p><blockquote><p><em>Requirement 2: Maintain an inventory of system components in scope for PCI DSS<br>to support effective scoping practices.</em></p></blockquote><p>You will find that using public-key authentication is sometimes<br><a href=https://security.stackexchange.com/questions/47213/pci-dss-2-0-and-ssh-keys>forbidden</a><br>as it’s almost impossible to ensure employees are rotating the keys, keeping the<br>private key safe and with a strong password.</p><p>Using <em>Ansible</em> without ssh key based authentication is painful if you need to<br>run a playbook against hundreds of servers, as you will need to insert your<br>password <em>ad nauseam</em>.</p></p></article><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2016/08/docker-configuration-files/>Docker: Configuration files</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2016-08-14>August 14, 2016</time></span></div><p class=post-summary><h2 id=things-no-one-tells-you-about>Things no one tells you about.</h2><p>One of <a href=https://www.docker.com/>Docker</a>’s killer features is the environment<br>parity, yet it feels like one little detail was left untold: <strong>how to handle<br>configuration files</strong>.</p><p>Unless you are using the same configuration between <em>development</em>, <em>quality</em>,<br><em>production</em>, <em>etc</em>. you will end up with different endpoints, API keys, secret<br>tokens and feature switches for each environment.</p><h3 id=available-options>Available Options</h3><p>There are a couple of different ways to handle configuration in <em>Docker.</em> Below,<br>you will find a non-exhaustive list.</p></p></article><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2016/08/collectd-plugins-made-easy/>Collectd plugins made easy</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2016-08-09>August 9, 2016</time></span></div><p class=post-summary><blockquote><p><strong>Collectd</strong> is a Unix daemon that collects, transfers and stores performance<br>data of computers and network equipment. The acquired data is meant to help<br>system administrators maintain an overview over available resources to detect<br>existing or looming bottlenecks.</p></blockquote><p><a href=https://collectd.org/>Collectd</a> provides a <a href=https://collectd.org/wiki/index.php/Table_of_Plugins>long list of<br>plugins</a> available<br>out-of-box. However, if you need to collect additional metrics, one of the<br>easiest ways to do so is using the <a href=https://collectd.org/wiki/index.php/Plugin:Exec>exec<br>plugin</a>.</p><p>In order to use the exec plugin, create an <em>Collectd</em> configuration file:</p></p></article><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2016/07/chef-custom-resources/>Chef Custom Resources</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2016-07-13>July 13, 2016</time></span></div><p class=post-summary><p>Lately I’ve been writing some <em>Chef</em> code. One of the best things about <em>Chef</em><br>is custom resources:<br><a href=https://docs.chef.io/custom_resources.html>https://docs.chef.io/custom_resources.html</a></p><p>Let’s see an example on how to create a <a href=https://kafka.apache.org/>Kafka</a> topic<br>using <em>Chef</em> and how to make it<br><a href=https://en.wikipedia.org/wiki/Idempotence>idempotent</a>.</p><p>Before writing any <em>Chef</em> code it is important to understand how to manage a<br><em>topic</em> (grouping of messages of a similar type).</p><p>From the <em>Kafka</em> install directory, first check if the <em>topic</em> already exists:</p><pre tabindex=0><code>bin/kafka-topics.sh
+    --zookeeper localhost:2181 \
+    --describe \
+    --topic &lt;name&gt;
+</code></pre><p>If it doesn&rsquo;t exist, create it:</p></p></article><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2016/02/ansible-in-aws-lambda/>Ansible in AWS Lambda</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2016-02-18>February 18, 2016</time></span></div><p class=post-summary><p>Originally published at <a href=https://medium.com/@jacoelho/ansible-in-aws-lambda-980bb8b5791b>https://medium.com/@jacoelho/ansible-in-aws-lambda-980bb8b5791b</a></p></p></article></div><div class=posts-group><h2 class=posts-group-title>2015</h2><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2015/11/secure-redis/>Secure Redis</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2015-11-18>November 18, 2015</time></span></div><p class=post-summary><p>Originally published at <a href=https://medium.com/@jacoelho/secure-redis-dff568ef0ea0>https://medium.com/@jacoelho/secure-redis-dff568ef0ea0</a></p></p></article><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2015/06/docker-images/>Docker Images</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2015-06-01>June 1, 2015</time></span></div><p class=post-summary><p>Originally published at <a href=https://medium.com/@jacoelho/docker-images-f3c5a39baa65>https://medium.com/@jacoelho/docker-images-f3c5a39baa65</a></p></p></article><article class=post-item><h3 class=post-title><a href=https://www.jacoelho.com/blog/2015/05/locally-developing-microservices/>Locally Developing Microservices</a></h3><div class=post-meta><span class=post-meta-item><time datetime=2015-05-25>May 25, 2015</time></span></div><p class=post-summary><p>Originally published at <a href=https://medium.com/@jacoelho/locally-developing-microservices-d06f3e384e>https://medium.com/@jacoelho/locally-developing-microservices-d06f3e384e</a></p></p></article></div><nav class=pagination><div class="pagination-item left"><a class=button href=https://www.jacoelho.com/>← Newer posts</a></div><div class="pagination-item right"><span class="button button-disabled">Older posts →</span></div></nav></main></div></div><footer class=footer><div class=container><div class=footer-content><span>&copy; 2025 Jose Coelho</span></div></div></footer><script src=https://www.jacoelho.com/js/bundle.min.2868f841c78e77d7b473d034a52bb46f21b12eef84caba5767ed9a65576ecb3c.js integrity="sha256-KGj4QceOd9e0c9A0pSu0byGxLu+EyrpXZ+2aZVduyzw=" crossorigin=anonymous></script></body></html>

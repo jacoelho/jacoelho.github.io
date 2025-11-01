@@ -1,20 +1,83 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Kafka on Posts</title>
-    <link>https://www.jacoelho.com/categories/kafka/</link>
-    <description>Recent content in Kafka on Posts</description>
-    <generator>Hugo</generator>
-    <language>en</language>
-    <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Tue, 22 Nov 2016 10:24:46 +0000</lastBuildDate>
-    <atom:link href="https://www.jacoelho.com/categories/kafka/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Kafka — Accelerating!</title>
-      <link>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</link>
-      <pubDate>Tue, 22 Nov 2016 10:24:46 +0000</pubDate>
-      <guid>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</guid>
-      <description>&lt;p&gt;Quick tips and insights on how to make &lt;a href=&#34;https://kafka.apache.org/&#34;&gt;Apache Kafka&lt;/a&gt;&lt;br&gt;&#xA;work faster!&lt;/p&gt;&#xA;&lt;h3 id=&#34;hardware&#34;&gt;Hardware&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;CPU doesn&amp;rsquo;t matter that much.&lt;/li&gt;&#xA;&lt;li&gt;Memory helps a lot (a lot) in performance.&lt;/li&gt;&#xA;&lt;li&gt;SSDs are not required, since most operations are sequential read and writes.&lt;/li&gt;&#xA;&lt;li&gt;If possible run in &lt;a href=&#34;https://www.ibm.com/blogs/cloud-computing/2014/07/bare-metal-vs-virtual-servers-choice-right/&#34;&gt;bare&lt;br&gt;&#xA;metal&lt;/a&gt;.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;linux&#34;&gt;Linux&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Configure to &lt;a href=&#34;http://www.makelinux.net/books/lkd2/ch15lev1sec4&#34;&gt;maximize memory&lt;br&gt;&#xA;usage&lt;/a&gt; (tweak until you feel comfortable):&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vm.dirty_background_ratio = 5&#xA;vm.dirty_ratio = 80&#xA;vm.swappiness = 1&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;Assuming you are using &lt;em&gt;ext4&lt;/em&gt;, don’t waste space with reserved blocks:&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;tune2fs -m 0 -i 0 -c -1 /dev/device&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;Mount with &lt;em&gt;noatime&lt;/em&gt;:&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;/dev/device       /mountpoint       ext4    defaults,noatime&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;Keep an eye on the number of free &lt;em&gt;inodes&lt;/em&gt;:&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;tune2fs -l /dev/device | grep -i inode&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;Increase limits, for example, using &lt;em&gt;systemd&lt;/em&gt;:&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;$ cat /etc/systemd/system/kafka.service.d/limits.conf&#xA;[Service]&#xA;LimitNOFILE=10000&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;Tweak your network settings, for example:&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;net.core.somaxconn = 1024&#xA;net.core.rmem_max = 67108864&#xA;net.core.wmem_max = 67108864&#xA;net.ipv4.tcp_rmem = 4096 87380 33554432&#xA;net.ipv4.tcp_wmem = 4096 65536 33554432&#xA;net.ipv4.tcp_max_syn_backlog = 4096&#xA;net.ipv4.tcp_syncookies = 1&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;kafka&#34;&gt;Kafka&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;em&gt;log.dirs&lt;/em&gt; accepts a comma separated list of disks and will distribute&lt;br&gt;&#xA;partitions across them, however:&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Doesn’t rebalance, some disks could be full and others empty.&lt;/li&gt;&#xA;&lt;li&gt;Doesn’t tolerate any disk failure, more info in&lt;br&gt;&#xA;&lt;a href=&#34;https://cwiki.apache.org/confluence/display/KAFKA/KIP-18&amp;#43;-&amp;#43;JBOD&amp;#43;Support&#34;&gt;KIP-18&lt;/a&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;em&gt;Raid 10&lt;/em&gt; is probably the best middle ground between performance and&lt;br&gt;&#xA;reliability.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;*num.io.threads, *number of I/O threads that the server uses for executing&lt;br&gt;&#xA;requests. You should have at least as many threads as you have disks.&lt;/li&gt;&#xA;&lt;li&gt;&lt;em&gt;num.network.threads&lt;/em&gt;, number of network threads that the server uses for&lt;br&gt;&#xA;handling network requests. Increase based on number of producers/consumers and&lt;br&gt;&#xA;replication factor.&lt;/li&gt;&#xA;&lt;li&gt;Use Java 1.8 and &lt;a href=&#34;http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html&#34;&gt;G1 Garbage&lt;br&gt;&#xA;collector&lt;/a&gt;:&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;-XX:MetaspaceSize=96m&#xA;-XX:+UseG1GC            # use G1&#xA;-XX:MaxGCPauseMillis=20 # gc deadline&#xA;-XX:InitiatingHeapOccupancyPercent=35&#xA;-XX:G1HeapRegionSize=16M&#xA;-XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;&#xA;&lt;li&gt;&lt;em&gt;KAFKA_HEAP_OPTS&lt;/em&gt;, 5–8Gb heap should be enough for most deployments, file system&lt;br&gt;&#xA;cache is way more important. &lt;em&gt;Linkedin&lt;/em&gt; runs &lt;a href=&#34;http://docs.confluent.io/1.0/kafka/deployment.html&#34;&gt;5Gb heap in 32Gb RAM&lt;br&gt;&#xA;servers&lt;/a&gt;.&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://github.com/tobert/pcstat&#34;&gt;pcstat&lt;/a&gt; can help understand how well the&lt;br&gt;&#xA;system is caching:&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./pcstat /kafka/data/*&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;&#xA;&lt;p&gt;Any comments or suggestions are welcome!&lt;/p&gt;</description>
-    </item>
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kafka on Posts</title><link>https://www.jacoelho.com/categories/kafka/</link><description>Recent content in Kafka on Posts</description><generator>Hugo</generator><language>en-us</language><copyright>&lt;a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener"&gt;CC BY-NC 4.0&lt;/a&gt;</copyright><lastBuildDate>Tue, 22 Nov 2016 10:24:46 +0000</lastBuildDate><atom:link href="https://www.jacoelho.com/categories/kafka/index.xml" rel="self" type="application/rss+xml"/><item><title>Kafka — Accelerating!</title><link>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</link><pubDate>Tue, 22 Nov 2016 10:24:46 +0000</pubDate><guid>https://www.jacoelho.com/blog/2016/11/kafka-accelerating/</guid><description>&lt;p&gt;Quick tips and insights on how to make &lt;a href="https://kafka.apache.org/"&gt;Apache Kafka&lt;/a&gt;&lt;br&gt;
+work faster!&lt;/p&gt;
+&lt;h3 id="hardware"&gt;Hardware&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;CPU doesn&amp;rsquo;t matter that much.&lt;/li&gt;
+&lt;li&gt;Memory helps a lot (a lot) in performance.&lt;/li&gt;
+&lt;li&gt;SSDs are not required, since most operations are sequential read and writes.&lt;/li&gt;
+&lt;li&gt;If possible run in &lt;a href="https://www.ibm.com/blogs/cloud-computing/2014/07/bare-metal-vs-virtual-servers-choice-right/"&gt;bare&lt;br&gt;
+metal&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="linux"&gt;Linux&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Configure to &lt;a href="http://www.makelinux.net/books/lkd2/ch15lev1sec4"&gt;maximize memory&lt;br&gt;
+usage&lt;/a&gt; (tweak until you feel comfortable):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;vm.dirty_background_ratio = 5
+vm.dirty_ratio = 80
+vm.swappiness = 1
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Assuming you are using &lt;em&gt;ext4&lt;/em&gt;, don’t waste space with reserved blocks:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;tune2fs -m 0 -i 0 -c -1 /dev/device
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Mount with &lt;em&gt;noatime&lt;/em&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;/dev/device /mountpoint ext4 defaults,noatime
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Keep an eye on the number of free &lt;em&gt;inodes&lt;/em&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;tune2fs -l /dev/device | grep -i inode
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Increase limits, for example, using &lt;em&gt;systemd&lt;/em&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;$ cat /etc/systemd/system/kafka.service.d/limits.conf
+[Service]
+LimitNOFILE=10000
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;Tweak your network settings, for example:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;net.core.somaxconn = 1024
+net.core.rmem_max = 67108864
+net.core.wmem_max = 67108864
+net.ipv4.tcp_rmem = 4096 87380 33554432
+net.ipv4.tcp_wmem = 4096 65536 33554432
+net.ipv4.tcp_max_syn_backlog = 4096
+net.ipv4.tcp_syncookies = 1
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id="kafka"&gt;Kafka&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;log.dirs&lt;/em&gt; accepts a comma separated list of disks and will distribute&lt;br&gt;
+partitions across them, however:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;Doesn’t rebalance, some disks could be full and others empty.&lt;/li&gt;
+&lt;li&gt;Doesn’t tolerate any disk failure, more info in&lt;br&gt;
+&lt;a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-18+-+JBOD+Support"&gt;KIP-18&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;Raid 10&lt;/em&gt; is probably the best middle ground between performance and&lt;br&gt;
+reliability.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;*num.io.threads, *number of I/O threads that the server uses for executing&lt;br&gt;
+requests. You should have at least as many threads as you have disks.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;num.network.threads&lt;/em&gt;, number of network threads that the server uses for&lt;br&gt;
+handling network requests. Increase based on number of producers/consumers and&lt;br&gt;
+replication factor.&lt;/li&gt;
+&lt;li&gt;Use Java 1.8 and &lt;a href="http://www.oracle.com/technetwork/articles/java/g1gc-1984535.html"&gt;G1 Garbage&lt;br&gt;
+collector&lt;/a&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;-XX:MetaspaceSize=96m
+-XX:+UseG1GC # use G1
+-XX:MaxGCPauseMillis=20 # gc deadline
+-XX:InitiatingHeapOccupancyPercent=35
+-XX:G1HeapRegionSize=16M
+-XX:MinMetaspaceFreeRatio=50 -XX:MaxMetaspaceFreeRatio=80
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;KAFKA_HEAP_OPTS&lt;/em&gt;, 5–8Gb heap should be enough for most deployments, file system&lt;br&gt;
+cache is way more important. &lt;em&gt;Linkedin&lt;/em&gt; runs &lt;a href="http://docs.confluent.io/1.0/kafka/deployment.html"&gt;5Gb heap in 32Gb RAM&lt;br&gt;
+servers&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/tobert/pcstat"&gt;pcstat&lt;/a&gt; can help understand how well the&lt;br&gt;
+system is caching:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex="0"&gt;&lt;code&gt;./pcstat /kafka/data/*
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;Any comments or suggestions are welcome!&lt;/p&gt;</description></item></channel></rss>
