@@ -2,7 +2,8 @@
 &lt;p&gt;&lt;strong&gt;Collectd&lt;/strong&gt; is a Unix daemon that collects, transfers and stores performance&lt;br&gt;
 data of computers and network equipment. The acquired data is meant to help&lt;br&gt;
 system administrators maintain an overview over available resources to detect&lt;br&gt;
-existing or looming bottlenecks.&lt;/p&gt;&lt;/blockquote&gt;
+existing or looming bottlenecks.&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;&lt;a href="https://collectd.org/"&gt;Collectd&lt;/a&gt; provides a &lt;a href="https://collectd.org/wiki/index.php/Table_of_Plugins"&gt;long list of&lt;br&gt;
 plugins&lt;/a&gt; available&lt;br&gt;
 out-of-box. However, if you need to collect additional metrics, one of the&lt;br&gt;
