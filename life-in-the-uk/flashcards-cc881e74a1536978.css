@@ -1,0 +1,55 @@
+@layer components {
+  :root[data-theme="theme"] .flashcard-card,
+  :root[data-theme="theme"] .flashcard-face,
+  :root[data-theme="theme"] .flashcard-content,
+  :root[data-theme="theme"] .flashcard-empty {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  :root[data-theme="theme"] .flashcard-card {
+    gap: var(--space-5);
+  }
+
+  :root[data-theme="theme"] .flashcard-card__top {
+    justify-content: flex-end;
+  }
+
+  :root[data-theme="theme"] .flashcard-face {
+    gap: var(--space-3);
+  }
+
+  :root[data-theme="theme"] .flashcard-face--answer {
+    padding-top: var(--space-1);
+  }
+
+  :root[data-theme="theme"] .flashcard-divider {
+    border-top: 1px solid var(--line);
+  }
+
+  :root[data-theme="theme"] .flashcard-content {
+    gap: var(--space-3);
+  }
+
+  :root[data-theme="theme"] .flashcard-content p,
+  :root[data-theme="theme"] .flashcard-content li {
+    font-size: var(--fs-md);
+    line-height: 1.5;
+  }
+
+  :root[data-theme="theme"] .flashcard-content__list {
+    padding-left: 1.1rem;
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  :root[data-theme="theme"] .flashcard-empty {
+    min-height: 12rem;
+    place-content: center;
+    justify-items: start;
+  }
+
+  :root[data-theme="theme"] .flashcard-done {
+    min-height: 16rem;
+  }
+}

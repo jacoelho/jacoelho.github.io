@@ -1,0 +1,117 @@
+@layer base {
+  :root[data-theme="theme"] * {
+    box-sizing: border-box;
+  }
+
+  :root[data-theme="theme"] html,
+  :root[data-theme="theme"] body {
+    min-height: 100%;
+  }
+
+  :root[data-theme="theme"] body {
+    margin: 0;
+    background:
+      radial-gradient(circle at top left, rgb(112 181 255 / 0.18), transparent 24%),
+      radial-gradient(circle at top right, rgb(176 212 255 / 0.18), transparent 22%),
+      linear-gradient(180deg, var(--bg-strong) 0%, var(--bg) 46%, #eef2f7 100%);
+    color: var(--text);
+    font:
+      500 var(--fs-md) / 1.45 "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+      system-ui, sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  :root[data-theme="theme"] body::before,
+  :root[data-theme="theme"] body::after {
+    content: "";
+    position: fixed;
+    z-index: 0;
+    inset: auto;
+    pointer-events: none;
+    filter: blur(60px);
+    opacity: 0.5;
+  }
+
+  :root[data-theme="theme"] body::before {
+    inset: -3rem auto auto -4rem;
+    inline-size: 18rem;
+    block-size: 18rem;
+    background: rgb(126 194 255 / 0.22);
+  }
+
+  :root[data-theme="theme"] body::after {
+    inset: auto -3rem 12rem auto;
+    inline-size: 15rem;
+    block-size: 15rem;
+    background: rgb(196 224 255 / 0.24);
+  }
+
+  :root[data-theme="theme"] .shell {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  :root[data-theme="theme"] button,
+  :root[data-theme="theme"] input,
+  :root[data-theme="theme"] textarea,
+  :root[data-theme="theme"] select {
+    font: inherit;
+    color: inherit;
+  }
+
+  :root[data-theme="theme"] button {
+    appearance: none;
+    background: none;
+    border: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :root[data-theme="theme"] h1,
+  :root[data-theme="theme"] h2,
+  :root[data-theme="theme"] h3,
+  :root[data-theme="theme"] p,
+  :root[data-theme="theme"] ul,
+  :root[data-theme="theme"] ol {
+    margin: 0;
+  }
+
+  :root[data-theme="theme"] ul,
+  :root[data-theme="theme"] ol {
+    padding: 0;
+  }
+
+  :root[data-theme="theme"] h1,
+  :root[data-theme="theme"] h2,
+  :root[data-theme="theme"] h3 {
+    color: var(--text);
+    font-weight: 760;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
+  :root[data-theme="theme"] h1 {
+    font-size: clamp(2.2rem, 5vw, 3.25rem);
+  }
+
+  :root[data-theme="theme"] h2 {
+    font-size: clamp(1.35rem, 3.2vw, 1.9rem);
+  }
+
+  :root[data-theme="theme"] h3 {
+    font-size: var(--fs-lg);
+  }
+
+  :root[data-theme="theme"] p {
+    color: var(--text-soft);
+  }
+
+  :root[data-theme="theme"] strong {
+    color: var(--text);
+  }
+
+  :root[data-theme="theme"] :focus-visible {
+    outline: none;
+  }
+}
