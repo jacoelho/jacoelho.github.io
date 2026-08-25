@@ -136,7 +136,7 @@ unstructured or plain text: similar to print statements, free-form text semi-str
 </span></span></span><span class=line><span class=cl><span class=c1>// {&#34;time&#34;:&#34;2023-01-01T09:00:00.000000+01:00&#34;,&#34;level&#34;:&#34;INFO&#34;,&#34;msg&#34;:&#34;hello world&#34;,&#34;a&#34;:5}</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=c1>// {&#34;time&#34;:&#34;2023-01-01T09:00:00.000000+01:00&#34;,&#34;level&#34;:&#34;INFO&#34;,&#34;msg&#34;:&#34;hello world&#34;,&#34;a&#34;:5}</span><span class=w>
 </span></span></span></code></pre></div><p>The <a href=https://pkg.go.dev/log/slog#LogValuer>LogValuer</a> interface makes for an interesting addition:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=c1>// A LogValuer is any Go value that can convert itself into a Value for logging.</span><span class=w>
-</span></span></span><span class=line><span class=cl><span class=c1>//  
+</span></span></span><span class=line><span class=cl><span class=c1>//  </span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=c1>// This mechanism may be used to defer expensive operations until they are  </span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=c1>// needed, or to expand a single value into a sequence of components.  </span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=kd>type</span><span class=w> </span><span class=nx>LogValuer</span><span class=w> </span><span class=kd>interface</span><span class=w> </span><span class=p>{</span><span class=w>  
