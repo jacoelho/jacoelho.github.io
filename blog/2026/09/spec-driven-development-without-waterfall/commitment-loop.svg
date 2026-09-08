@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="450" height="760" viewBox="0 0 450 760" role="img" aria-labelledby="title desc">
+  <title id="title">Commitment and feedback</title>
+  <desc id="desc">Ask the next consequential question. If evidence is insufficient, investigate and return with findings. If sufficient, commit one increment and build and verify it. A counterexample returns to the question. An accepted delivery may be released and observed; new evidence returns to the question.</desc>
+  <style>
+    :root { --ink: #343b58; --line: #6b7280; --paper: #f8f8f2; --panel: #e9e9e4; }
+    @media (prefers-color-scheme: dark) { :root { --ink: #c0caf5; --line: #7982a9; --paper: #1f2335; --panel: #2a2f47; } }
+    .node { fill: var(--panel); stroke: var(--line); stroke-width: 1.6; }
+    .edge { fill: none; stroke: var(--line); stroke-width: 1.8; marker-end: url(#arrow); }
+    text { font-family: system-ui, sans-serif; font-size: 19px; fill: var(--ink); text-anchor: middle; }
+    .label { font-size: 17px; }
+    .back { fill: var(--paper); }
+  </style>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="var(--line)"/></marker></defs>
+  <rect width="450" height="760" rx="8" class="back"/>
+  <path class="edge" d="M250 105V149"/>
+  <path class="edge" d="M160 200H126"/>
+  <path class="edge" d="M70 160V65H144"/>
+  <path class="edge" d="M250 250V309"/>
+  <path class="edge" d="M250 370V439"/>
+  <path class="edge" d="M250 500V599"/>
+  <path class="edge" d="M355 470H405V65H356"/>
+  <path class="edge" d="M250 660V725H425V65H356"/>
+  <rect class="node" x="145" y="25" width="210" height="80" rx="8"/>
+  <text x="250" y="58"><tspan x="250">Next consequential</tspan><tspan x="250" dy="26">question</tspan></text>
+  <path class="node" d="M250 150L340 200L250 250L160 200Z"/>
+  <text x="250" y="195"><tspan x="250">Enough</tspan><tspan x="250" dy="24">evidence?</tspan></text>
+  <rect class="node" x="15" y="160" width="110" height="80" rx="8"/>
+  <text x="70" y="185" class="label"><tspan x="70">Discovery</tspan><tspan x="70" dy="21">or</tspan><tspan x="70" dy="21">experiment</tspan></text>
+  <rect class="back" x="22" y="110" width="96" height="24"/>
+  <text class="label" x="70" y="128">Findings</text>
+  <text class="label" x="143" y="183">No</text>
+  <text class="label" x="276" y="286">Yes</text>
+  <rect class="node" x="145" y="310" width="210" height="60" rx="8"/>
+  <text x="250" y="336"><tspan x="250">Commit one</tspan><tspan x="250" dy="24">increment</tspan></text>
+  <rect class="node" x="145" y="440" width="210" height="60" rx="8"/>
+  <text x="250" y="477">Build and verify</text>
+  <text class="label" x="393" y="296" transform="rotate(-90 393 296)">Counterexample</text>
+  <text class="label" x="302" y="549"><tspan x="302">Delivery</tspan><tspan x="302" dy="22">accepted</tspan></text>
+  <rect class="node" x="145" y="600" width="210" height="60" rx="8"/>
+  <text x="250" y="637">Release and observe</text>
+  <text class="label" x="331" y="713">New evidence</text>
+</svg>

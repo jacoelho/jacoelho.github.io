@@ -1,0 +1,36 @@
+/* Opt-in table wrappers for posts with params.scroll_tables: true. */
+.post-content .table-scroll-hint {
+  margin: 1.5rem 0 0.4rem;
+  color: var(--text-secondary, #6b7280);
+  font-size: 0.875rem;
+}
+
+.post-content .table-scroll-hint:not([hidden]) + .table-scroll {
+  margin-top: 0;
+}
+
+.post-content .table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  overscroll-behavior-x: contain;
+}
+
+.post-content .table-scroll table {
+  width: 100%;
+  margin: 0;
+}
+
+.post-content .table-scroll--wide table {
+  min-width: 36rem;
+}
+
+.post-content .table-scroll th,
+.post-content .table-scroll td {
+  vertical-align: top;
+}
+
+.post-content .table-scroll:focus-visible {
+  outline: 2px solid var(--link, #2e5cb8);
+  outline-offset: 3px;
+}
