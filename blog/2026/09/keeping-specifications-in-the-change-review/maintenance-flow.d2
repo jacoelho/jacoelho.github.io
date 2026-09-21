@@ -1,0 +1,45 @@
+# title: Keep the review attached to the current state
+# description: Identify the applicable requirement. If intent changes, settle the decision and reconcile consumers; an ordinary repair keeps the requirement. Repair or investigate, exercise affected boundaries, and record evidence and the decision for handoff. A relevant later edit or merge returns to the affected checks.
+direction: down
+style.fill: transparent
+classes: {
+  flow
+  step: {
+    width: 290
+    height: 90
+    style: {
+      fill: "#F0F3F6"
+      stroke: "#354A5F"
+      font-color: "#273849"
+      font-size: 23
+      stroke-width: 2
+      border-radius: 8
+    }
+  }
+}
+(* -> *)[*].class: flow
+(* -> *)[*].style: {
+  stroke: "#536579"
+  stroke-width: 2
+  font-color: "#354A5F"
+  font-size: 19
+}
+
+requirement: Identify the\napplicable requirement {
+  top: 0
+  left: 0
+  class: step
+  style.fill: "#E0EBF1"
+}
+repair: Repair or\ninvestigate {top: 320; left: 0; class: step}
+check: Exercise affected\nboundaries {top: 480; left: 0; class: step}
+record: Record evidence\nand the decision {top: 690; left: 0; class: step}
+handoff: Hand off the\ncurrent state {top: 850; left: 0; class: step; style.fill: "#DBEBDD"}
+change: Settle intent and\nreconcile consumers {top: 160; left: 0; class: step; style.fill: "#F5E8BE"}
+requirement -> repair: Ordinary\nrepair
+requirement -> change: Intent\nchanges
+change -> repair
+repair -> check -> record -> handoff
+record -> check: Later edit\nor merge {
+  style.stroke-dash: 3
+}

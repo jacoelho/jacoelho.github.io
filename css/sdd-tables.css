@@ -34,3 +34,48 @@
   outline: 2px solid var(--link, #2e5cb8);
   outline-offset: 3px;
 }
+
+/* Disclosure blocks used by the SDD articles. Native details/summary provide
+   keyboard and no-script behaviour; this only keeps long examples readable. */
+.post-content .sdd-details {
+  margin: 1.5rem 0;
+  border: 1px solid var(--border, #d1d5db);
+  border-radius: var(--radius, 4px);
+  background: var(--bg-secondary, #e9e9e4);
+}
+
+.post-content .sdd-details > summary {
+  padding: 0.75rem 1rem;
+  color: var(--text, #343b58);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.post-content .sdd-details > summary:focus-visible {
+  outline: 2px solid var(--link, #2e5cb8);
+  outline-offset: -2px;
+}
+
+.post-content .sdd-details[open] > summary {
+  border-bottom: 1px solid var(--border, #d1d5db);
+}
+
+.post-content .sdd-details > :not(summary) {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.post-content .sdd-details > :last-child {
+  margin-bottom: 1rem;
+}
+
+@media print {
+  .post-content .sdd-details {
+    border: 0;
+    background: transparent;
+  }
+
+  .post-content .sdd-details > summary {
+    padding-left: 0;
+  }
+}

@@ -1,0 +1,88 @@
+# title: Commitment and feedback loop
+# description: Ask the next consequential question. Investigate when evidence is insufficient; return with findings. Otherwise commit one increment, build and verify, then release an accepted delivery and observe. Counterexamples and new evidence return to the question.
+direction: down
+style.fill: transparent
+
+classes: {
+  flow
+  step: {
+    style: {
+      fill: "#F0F3F6"
+      stroke: "#354A5F"
+      font-color: "#273849"
+      font-size: 23
+      stroke-width: 2
+      border-radius: 8
+    }
+  }
+}
+
+question: Next question {
+  top: 0
+  left: 250
+  width: 210
+  height: 70
+  class: step
+  style.fill: "#E0EBF1"
+}
+evidence: Enough evidence\nto commit? {
+  top: 150
+  left: 240
+  width: 230
+  height: 120
+  class: step
+  style.fill: "#F5E8BE"
+}
+investigate: Discover or\nexperiment {
+  top: 350
+  left: 0
+  width: 180
+  height: 100
+  class: step
+  style.fill: "#F5E8BE"
+}
+commit: Commit one\nincrement {
+  class: step
+  top: 350
+  left: 250
+  width: 210
+  height: 100
+}
+build: Build and\nverify {
+  class: step
+  top: 530
+  left: 250
+  width: 210
+  height: 100
+}
+release: Release and\nobserve {
+  top: 750
+  left: 250
+  width: 210
+  height: 100
+  class: step
+  style.fill: "#DBEBDD"
+}
+
+question -> evidence
+evidence -> investigate: Not yet
+evidence -> commit: Yes
+investigate -> question: Findings
+commit -> build
+build -> release: Delivery accepted
+build -> question: Counterexample {
+  style.stroke: "#9B5B45"
+  style.stroke-dash: 3
+}
+release -> question: New evidence {
+  style.stroke: "#4C715D"
+  style.stroke-dash: 3
+}
+
+(* -> *)[*].class: flow
+(* -> *)[*].style: {
+  stroke: "#536579"
+  stroke-width: 2
+  font-color: "#354A5F"
+  font-size: 19
+}

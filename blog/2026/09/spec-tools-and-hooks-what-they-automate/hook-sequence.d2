@@ -1,0 +1,33 @@
+# title: From hook event to review action
+# description: An event passes through a matcher to a bounded command or agent prompt. The result returns context to the agent. A reviewer examines evidence; receiving a notice does not establish approval.
+direction: down
+style.fill: transparent
+classes: {
+  flow
+  step: {
+    width: 290
+    height: 90
+    style: {
+      fill: "#F0F3F6"
+      stroke: "#354A5F"
+      font-color: "#273849"
+      font-size: 23
+      stroke-width: 2
+      border-radius: 8
+    }
+  }
+}
+(* -> *)[*].class: flow
+(* -> *)[*].style: {
+  stroke: "#536579"
+  stroke-width: 2
+  font-color: "#354A5F"
+  font-size: 19
+}
+
+event: Event occurs {top: 0; left: 0; class: step; style.fill: "#E0EBF1"}
+matcher: Matcher selects\na handler {top: 130; left: 0; class: step}
+handler: Bounded command\nor agent prompt {top: 260; left: 0; class: step; style.fill: "#F5E8BE"}
+context: Result returns\ncontext to the agent {top: 390; left: 0; class: step}
+review: Reviewer examines\nthe evidence {top: 520; left: 0; class: step; style.fill: "#DBEBDD"}
+event -> matcher -> handler -> context -> review

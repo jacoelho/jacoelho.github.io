@@ -1,0 +1,33 @@
+/* Keep the diagram's type at reading size instead of stretching a narrow flow. */
+.post-content .article-diagram {
+  max-width: 42rem;
+  margin: 2rem auto;
+}
+
+.post-content .article-diagram--medium {
+  max-width: 32rem;
+}
+
+.post-content .article-diagram--narrow {
+  max-width: 22rem;
+}
+
+.post-content .article-diagram > a > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.post-content .article-diagram > a:focus-visible {
+  display: block;
+  outline: 2px solid var(--link, #2e5cb8);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.post-content .article-diagram figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.875rem;
+  text-align: center;
+}
