@@ -1,0 +1,57 @@
+.post-content .sdd-series {
+  margin: 0 0 2rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.sdd-series summary {
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.sdd-series-position {
+  display: inline-block;
+  margin-left: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.post-content .sdd-series ol {
+  margin: 0 1rem 1rem;
+  padding-left: 1.5rem;
+}
+
+.post-content .sdd-series li {
+  padding: 0.25rem 0 0.25rem 0.25rem;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.sdd-series-current {
+  font-weight: 600;
+}
+
+.sdd-series-current::marker {
+  color: var(--accent);
+}
+
+.sdd-series summary:focus-visible,
+.sdd-series a:focus-visible,
+.sdd-series-pagination a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.post-content .sdd-series-pagination {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.sdd-series-pagination p:last-child {
+  margin-bottom: 0;
+}
