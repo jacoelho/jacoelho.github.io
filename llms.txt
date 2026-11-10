@@ -1,0 +1,13 @@
+# Jose Coelho
+
+> The personal site of Jose Coelho: articles about software engineering, and a few small apps and libraries hosted under their own paths.
+
+## Apps with agent instructions
+
+- [Mise](https://www.jacoelho.com/mise/llms.txt): turns a recipe into a page to cook from. Its instructions say how to open a recipe in it by building a link.
+
+## Pages
+
+- [Articles](https://www.jacoelho.com/blog/): the posts, newest first.
+- [Projects](https://www.jacoelho.com/projects/): the other apps and libraries.
+- [RSS feed](https://www.jacoelho.com/index.xml)
